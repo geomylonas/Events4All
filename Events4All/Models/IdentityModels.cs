@@ -129,5 +129,7 @@ namespace Events4All.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<Events4All.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }
