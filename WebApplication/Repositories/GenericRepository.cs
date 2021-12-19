@@ -35,11 +35,16 @@ namespace WebApplication.Repositories
 
         public void Delete(T entity)
         {
+            if (_context.Entry(entity).State == EntityState.Detached)
+            {
+                _context.Set<T>().Attach(entity);
+            }
             _context.Set<T>().Remove(entity);
         }
 
         public void Update(T entity)
         {
+            _context.Set<T>().Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
         }
     }

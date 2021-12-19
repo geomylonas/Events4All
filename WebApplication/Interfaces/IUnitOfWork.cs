@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace WebApplication.Interfaces
@@ -12,6 +13,6 @@ namespace WebApplication.Interfaces
         IPictureRepository Pictures { get; }
         IPurchaseRepository Purchases { get; }
         ITicketRepository Tickets { get; }
-        int Complete();
+        Task<int> Complete();
     }
 }

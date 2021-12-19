@@ -7,9 +7,9 @@ using WebApplication.Interfaces;
 
 namespace WebApplication.Repositories
 {
-    public class PicturesRepository : GenericRepository<Picture>, IPictureRepository
+    public class PictureRepository : GenericRepository<Picture>, IPictureRepository
     {
-        public PicturesRepository(ApplicationDbContext context) : base(context)
+        public PictureRepository(ApplicationDbContext context) : base(context)
         {
 
         }

@@ -5,6 +5,10 @@ using System.Net.Http;
 using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
+using Unity;
+using Unity.Lifetime;
+using WebApplication.Interfaces;
+using WebApplication.Repositories;
 
 namespace WebApplication
 {
@@ -25,6 +29,12 @@ namespace WebApplication
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            var container = new UnityContainer();
+           
+            //container.RegisterType<IUnitOfWork, UnitOfWork>(new HierarchicalLifetimeManager());
+
+            //config.DependencyResolver = new UnityResolver(container);
         }
     }
 }
