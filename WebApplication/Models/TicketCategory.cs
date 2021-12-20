@@ -8,6 +8,7 @@ namespace WebApplication.Models
 { 
     public class TicketCategory
     {
+        public TicketCategory() { }
         public int TicketId { get; set; }
         public Ticket Ticket { get; set; }
 

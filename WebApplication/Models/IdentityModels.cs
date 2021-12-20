@@ -56,6 +56,8 @@ namespace WebApplication.Models
         {
         }
 
+        
+
 
         //internal static void RelateFluent(System.Data.Entity.DbModelBuilder builder)
         protected override void OnModelCreating(DbModelBuilder builder)

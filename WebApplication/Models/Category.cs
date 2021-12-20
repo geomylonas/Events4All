@@ -9,6 +9,8 @@ namespace WebApplication.Models
 {
     public class Category
     {
+        public Category() { }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 

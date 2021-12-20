@@ -9,6 +9,7 @@ namespace WebApplication.Models
 { 
     public class Ticket
     {
+       
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -16,6 +17,8 @@ namespace WebApplication.Models
         public ICollection<TicketCategory> TicketCategories { get; set; }
         public ICollection<PurchaseDetail> PurchaseDetails { get; set; }
 
+
+        public Ticket() { }
 
 
     }

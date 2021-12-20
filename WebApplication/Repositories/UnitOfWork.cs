@@ -27,12 +27,25 @@ namespace WebApplication.Repositories
         {
             this._context = events4AllDbContext;
 
-            this.Categories= categoriesRepository;
+            this.Categories = categoriesRepository;
             this.Events = eventsRepository;
             this.Pictures = picturesRepository;
             this.Purchases = purchasesRepository;
             this.Tickets = ticketsRepository;
         }
+
+        //public UnitOfWork()
+        //{
+        //    this._context = new ApplicationDbContext();
+
+        //    this.Categories = new CategoryRepository(_context);
+        //    this.Events = new EventRepository(_context);
+        //    this.Pictures = new PictureRepository(_context);
+        //    this.Purchases = new PurchaseRepository(_context);
+        //    this.Tickets = new TicketRepository(_context);
+
+        //}
+
         public async Task<int> Complete()
         {
             return await _context.SaveChangesAsync();
