@@ -10,11 +10,6 @@ namespace WebApplication.Models
 
     public class Organizer : Person
     {
-        //[Key]
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-
-        //public int Id { get; set; }
-
         public virtual ICollection<Event> Events { get; set; }
 
     }

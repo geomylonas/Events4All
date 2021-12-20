@@ -1,6 +1,4 @@
-﻿
-using DAL.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -11,6 +9,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using DAL.Entities;
 using WebApplication.Interfaces;
 using WebApplication.Models;
 using WebApplication.Repositories;
@@ -20,113 +19,110 @@ namespace WebApplication.Controllers
     public class CategoriesController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        private IUnitOfWork UnitOfWork;
+        private IUnitOfWork UnitOfWork { get;}
 
         public CategoriesController(IUnitOfWork UnitOfWork)
         {
             this.UnitOfWork = UnitOfWork;
         }
 
-
-
         // GET: api/Categories
         public Task<IEnumerable<Category>> GetCategories()
         {
-            //return db.Categories.ToList();
-            return UnitOfWork.Categories.GetAll();
+            return  UnitOfWork.Categories.GetAll();
         }
 
-        //// GET: api/Categories/5
-        //[ResponseType(typeof(Category))]
-        //public IHttpActionResult GetCategory(int id)
-        //{
-        //    Category category = db.Categories.Find(id);
-        //    if (category == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // GET: api/Categories/5
+        [ResponseType(typeof(Category))]
+        public async Task<IHttpActionResult> GetCategory(int id)
+        {
+            Category category = await db.Categories.FindAsync(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
 
-        //    return Ok(category);
-        //}
+            return Ok(category);
+        }
 
-        //// PUT: api/Categories/5
-        //[ResponseType(typeof(void))]
-        //public IHttpActionResult PutCategory(int id, Category category)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
+        // PUT: api/Categories/5
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> PutCategory(int id, Category category)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //    if (id != category.Id)
-        //    {
-        //        return BadRequest();
-        //    }
+            if (id != category.Id)
+            {
+                return BadRequest();
+            }
 
-        //    db.Entry(category).State = EntityState.Modified;
+            db.Entry(category).State = EntityState.Modified;
 
-        //    try
-        //    {
-        //        db.SaveChanges();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!CategoryExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CategoryExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-        //    return StatusCode(HttpStatusCode.NoContent);
-        //}
+            return StatusCode(HttpStatusCode.NoContent);
+        }
 
-        //// POST: api/Categories
-        //[ResponseType(typeof(Category))]
-        //public IHttpActionResult PostCategory(Category category)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
+        // POST: api/Categories
+        [ResponseType(typeof(Category))]
+        public async Task<IHttpActionResult> PostCategory(Category category)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //    db.Categories.Add(category);
-        //    db.SaveChanges();
+            db.Categories.Add(category);
+            await db.SaveChangesAsync();
 
-        //    return CreatedAtRoute("DefaultApi", new { id = category.Id }, category);
-        //}
+            return CreatedAtRoute("DefaultApi", new { id = category.Id }, category);
+        }
 
-        //// DELETE: api/Categories/5
-        //[ResponseType(typeof(Category))]
-        //public IHttpActionResult DeleteCategory(int id)
-        //{
-        //    Category category = db.Categories.Find(id);
-        //    if (category == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // DELETE: api/Categories/5
+        [ResponseType(typeof(Category))]
+        public async Task<IHttpActionResult> DeleteCategory(int id)
+        {
+            Category category = await db.Categories.FindAsync(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
 
-        //    db.Categories.Remove(category);
-        //    db.SaveChanges();
+            db.Categories.Remove(category);
+            await db.SaveChangesAsync();
 
-        //    return Ok(category);
-        //}
+            return Ok(category);
+        }
 
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-        //private bool CategoryExists(int id)
-        //{
-        //    return db.Categories.Count(e => e.Id == id) > 0;
-        //}
+        private bool CategoryExists(int id)
+        {
+            return db.Categories.Count(e => e.Id == id) > 0;
+        }
     }
 }

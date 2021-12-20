@@ -1,9 +1,11 @@
 namespace WebApplication.Migrations
 {
+    using DAL.Entities;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using WebApplication.Models;
 
     internal sealed class Configuration : DbMigrationsConfiguration<WebApplication.Models.ApplicationDbContext>
     {
@@ -26,6 +28,10 @@ namespace WebApplication.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+          
+            context.Categories.AddOrUpdate( c=>c.Name, new Category{ Name = "Normal" }, new Category{ Name = "VIP" });
+
         }
     }
 }
