@@ -230,6 +230,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TicketsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -241,25 +242,20 @@
     <Compile Include="Interfaces\IPurchaseRepository.cs" />
     <Compile Include="Interfaces\ITicketRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
-    <Compile Include="Migrations\202112182208398_InitialCreate.cs" />
-    <Compile Include="Migrations\202112182208398_InitialCreate.Designer.cs">
-      <DependentUpon>202112182208398_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\202112201510045_InitialCreate.cs" />
+    <Compile Include="Migrations\202112201510045_InitialCreate.Designer.cs">
+      <DependentUpon>202112201510045_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Category.cs" />
-    <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Picture.cs" />
-    <Compile Include="Models\Purchase.cs" />
-    <Compile Include="Models\PurchaseDetail.cs" />
-    <Compile Include="Models\Ticket.cs" />
-    <Compile Include="Models\TicketCategory.cs" />
+    <Compile Include="Models\Organizer.cs" />
+    <Compile Include="Models\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Repositories\CategoryRepository.cs" />
-    <Compile Include="Repositories\DependencyInjections.cs" />
     <Compile Include="Repositories\EventRepository.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
     <Compile Include="Repositories\PictureRepository.cs" />
@@ -358,8 +354,14 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202112182208398_InitialCreate.resx">
-      <DependentUpon>202112182208398_InitialCreate.cs</DependentUpon>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{2adbd406-fc25-42ed-889f-d76cfe6e4016}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202112201510045_InitialCreate.resx">
+      <DependentUpon>202112201510045_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
