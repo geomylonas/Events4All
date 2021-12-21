@@ -18,7 +18,7 @@ namespace WebApplication.Controllers
 {
     public class CategoriesController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        
         private IUnitOfWork UnitOfWork { get;}
 
         public CategoriesController(IUnitOfWork UnitOfWork)
@@ -36,7 +36,7 @@ namespace WebApplication.Controllers
         [ResponseType(typeof(Category))]
         public async Task<IHttpActionResult> GetCategory(int id)
         {
-            Category category = await db.Categories.FindAsync(id);
+            Category category = await UnitOfWork.Categories.Get(id);
             if (category == null)
             {
                 return NotFound();
@@ -59,11 +59,11 @@ namespace WebApplication.Controllers
                 return BadRequest();
             }
 
-            db.Entry(category).State = EntityState.Modified;
+            UnitOfWork.Categories.Update(category);
 
             try
             {
-                await db.SaveChangesAsync();
+                await UnitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -89,8 +89,8 @@ namespace WebApplication.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Categories.Add(category);
-            await db.SaveChangesAsync();
+            UnitOfWork.Categories.Add(category);
+            await UnitOfWork.Complete();
 
             return CreatedAtRoute("DefaultApi", new { id = category.Id }, category);
         }
@@ -99,14 +99,14 @@ namespace WebApplication.Controllers
         [ResponseType(typeof(Category))]
         public async Task<IHttpActionResult> DeleteCategory(int id)
         {
-            Category category = await db.Categories.FindAsync(id);
+            Category category = await UnitOfWork.Categories.Get(id);
             if (category == null)
             {
                 return NotFound();
             }
 
-            db.Categories.Remove(category);
-            await db.SaveChangesAsync();
+            UnitOfWork.Categories.Delete(category);
+            await UnitOfWork.Complete();
 
             return Ok(category);
         }
@@ -115,14 +115,14 @@ namespace WebApplication.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                UnitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool CategoryExists(int id)
         {
-            return db.Categories.Count(e => e.Id == id) > 0;
+            return UnitOfWork.Categories.GetAll().Result.Count(e => e.Id == id) > 0;
         }
     }
 }
