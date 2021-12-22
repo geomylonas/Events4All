@@ -18,25 +18,22 @@ namespace WebApplication.Controllers
 {
     public class CategoriesController : ApiController
     {
-        
-        private IUnitOfWork UnitOfWork { get;}
 
-        public CategoriesController(IUnitOfWork UnitOfWork)
-        {
-            this.UnitOfWork = UnitOfWork;
-        }
+        private IUnitOfWork unit = new UnitOfWork();
+
+   
 
         // GET: api/Categories
         public Task<IEnumerable<Category>> GetCategories()
         {
-            return  UnitOfWork.Categories.GetAll();
+            return  unit.Categories.GetAll();
         }
 
         // GET: api/Categories/5
         [ResponseType(typeof(Category))]
         public async Task<IHttpActionResult> GetCategory(int id)
         {
-            Category category = await UnitOfWork.Categories.Get(id);
+            Category category = await unit.Categories.Get(id);
             if (category == null)
             {
                 return NotFound();
@@ -58,23 +55,18 @@ namespace WebApplication.Controllers
             {
                 return BadRequest();
             }
+            
 
-            UnitOfWork.Categories.Update(category);
 
             try
-            {
-                await UnitOfWork.Complete();
+            {            
+                    unit.Categories.Update(category);
+                    await unit.Complete();
+           
             }
             catch (DbUpdateConcurrencyException)
-            {
-                if (!CategoryExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+            { 
+                    return NotFound();    
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -89,8 +81,8 @@ namespace WebApplication.Controllers
                 return BadRequest(ModelState);
             }
 
-            UnitOfWork.Categories.Add(category);
-            await UnitOfWork.Complete();
+            unit.Categories.Add(category);
+            await unit.Complete();
 
             return CreatedAtRoute("DefaultApi", new { id = category.Id }, category);
         }
@@ -99,14 +91,14 @@ namespace WebApplication.Controllers
         [ResponseType(typeof(Category))]
         public async Task<IHttpActionResult> DeleteCategory(int id)
         {
-            Category category = await UnitOfWork.Categories.Get(id);
+            Category category = await unit.Categories.Get(id);
             if (category == null)
             {
                 return NotFound();
             }
 
-            UnitOfWork.Categories.Delete(category);
-            await UnitOfWork.Complete();
+            unit.Categories.Delete(category);
+            await unit.Complete();
 
             return Ok(category);
         }
@@ -115,14 +107,10 @@ namespace WebApplication.Controllers
         {
             if (disposing)
             {
-                UnitOfWork.Dispose();
+                unit.Dispose();
             }
             base.Dispose(disposing);
         }
 
-        private bool CategoryExists(int id)
-        {
-            return UnitOfWork.Categories.GetAll().Result.Count(e => e.Id == id) > 0;
-        }
     }
 }

@@ -44,12 +44,13 @@ namespace WebApplication.Repositories
 
         public void Update(T entity)
         {
-            //if (_context.Entry(entity).State == EntityState.Detached)
+            //if (_context.Entry(entity).State != EntityState.Detached)
             //{
-            //    _context.Set<T>().Attach(entity);
+                
             //}
             //_context.Entry(entity).CurrentValues.SetValues(entity);
             _context.Entry(entity).State = EntityState.Modified;
+
 
         }
     }

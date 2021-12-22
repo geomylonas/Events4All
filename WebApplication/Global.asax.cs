@@ -27,6 +27,7 @@ namespace WebApplication
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             UnityConfig.RegisterComponents();
+            
         }
     }
 }
