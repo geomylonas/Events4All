@@ -8,6 +8,7 @@ using DAL.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using WebApplication.Interfaces;
 
 namespace WebApplication.Models
 {
@@ -26,7 +27,7 @@ namespace WebApplication.Models
 
     }
 
-    public class ApplicationDbContext : IdentityDbContext<Person>
+    public class ApplicationDbContext : IdentityDbContext<Person>,IApplicationDbContext
     {
         
         public ApplicationDbContext()

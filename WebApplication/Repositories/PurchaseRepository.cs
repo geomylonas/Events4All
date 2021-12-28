@@ -10,7 +10,7 @@ namespace WebApplication.Repositories
 {
     public class PurchaseRepository : GenericRepository<Purchase>, IPurchaseRepository
     {
-        public PurchaseRepository(ApplicationDbContext context) : base(context)
+        public PurchaseRepository(IApplicationDbContext context) : base(context)
         {
 
         }

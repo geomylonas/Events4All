@@ -10,7 +10,7 @@ namespace WebApplication.Repositories
 {
     public class TicketRepository : GenericRepository<Ticket>, ITicketRepository 
     {
-            public TicketRepository(ApplicationDbContext context) : base(context)
+            public TicketRepository(IApplicationDbContext context) : base(context)
             {
 
             }

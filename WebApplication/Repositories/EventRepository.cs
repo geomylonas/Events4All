@@ -10,7 +10,7 @@ namespace WebApplication.Repositories
 {
     public class EventRepository : GenericRepository<Event>, IEventRepository
     {
-        public EventRepository(ApplicationDbContext context) : base(context)
+        public EventRepository(IApplicationDbContext context) : base(context)
         {
 
         }

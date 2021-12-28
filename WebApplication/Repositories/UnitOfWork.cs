@@ -10,7 +10,7 @@ namespace WebApplication.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         public ICategoryRepository Categories { get; }
         public IEventRepository Events { get; }
         public IPictureRepository Pictures { get; }
@@ -18,7 +18,7 @@ namespace WebApplication.Repositories
         public ITicketRepository Tickets { get; }
 
 
-        public UnitOfWork(ApplicationDbContext events4AllDbContext,
+        public UnitOfWork(IApplicationDbContext events4AllDbContext,
             ICategoryRepository categoriesRepository,
             IEventRepository eventsRepository,
             IPictureRepository picturesRepository,
@@ -50,7 +50,7 @@ namespace WebApplication.Repositories
         {
             if (disposing)
             {
-                _context.Dispose();
+                //_context.Dispose();
             }
         }
     }

@@ -10,7 +10,7 @@ namespace WebApplication.Repositories
 {
     public class PictureRepository : GenericRepository<Picture>, IPictureRepository
     {
-        public PictureRepository(ApplicationDbContext context) : base(context)
+        public PictureRepository(IApplicationDbContext context) : base(context)
         {
 
         }
