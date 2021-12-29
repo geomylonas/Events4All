@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using DAL.Entities;
+using WebApplication.App_Start;
 using WebApplication.Interfaces;
 using WebApplication.Models;
 using WebApplication.Repositories;
@@ -18,13 +19,10 @@ namespace WebApplication.Controllers
 {
     public class CategoriesController : ApiController
     {
-        
-        private IUnitOfWork UnitOfWork { get;}
 
-        public CategoriesController(IUnitOfWork UnitOfWork)
-        {
-            this.UnitOfWork = UnitOfWork;
-        }
+        private IUnitOfWork UnitOfWork = WindsorConfig.RegisterContainer();
+
+        
 
         // GET: api/Categories
         public Task<IEnumerable<Category>> GetCategories()

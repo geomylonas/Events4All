@@ -50,7 +50,7 @@ namespace WebApplication.Repositories
         {
             if (disposing)
             {
-                //_context.Dispose();
+                _context.Dispose();
             }
         }
     }
