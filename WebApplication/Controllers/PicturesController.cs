@@ -14,59 +14,56 @@ using DAL.Entities;
 using WebApplication.App_Start;
 using WebApplication.Interfaces;
 using WebApplication.Models;
-using WebApplication.Repositories;
 
 namespace WebApplication.Controllers
 {
     [EnableCors("*", "*", "*")]
-    public class CategoriesController : ApiController
+    public class PicturesController : ApiController
     {
-        
         private IUnitOfWork UnitOfWork = WindsorConfig.RegisterContainer();
 
-        
-
-        // GET: api/Categories
-        public Task<IEnumerable<Category>> GetCategories()
+        // GET: api/Pictures
+        public Task<IEnumerable<Picture>> GetPictures()
         {
-            return  UnitOfWork.Categories.GetAll();
+            return UnitOfWork.Pictures.GetAll();
         }
 
-        // GET: api/Categories/5
-        [ResponseType(typeof(Category))]
-        public async Task<IHttpActionResult> GetCategory(int id)
+        // GET: api/Pictures/5
+        [ResponseType(typeof(Picture))]
+        public async Task<IHttpActionResult> GetPicture(int id)
         {
-            Category category = await UnitOfWork.Categories.Get(id);
-            if (category == null)
+            Picture picture = await UnitOfWork.Pictures.Get(id);
+            if (picture == null)
             {
                 return NotFound();
             }
 
-            return Ok(category);
+            return Ok(picture);
         }
 
-        // PUT: api/Categories/5
+        // PUT: api/Pictures/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutCategory(int id, Category category)
+        public async Task<IHttpActionResult> PutPicture(int id, Picture picture)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != category.Id)
+            if (id != picture.Id)
             {
                 return BadRequest();
             }
 
-            UnitOfWork.Categories.Update(category);
+            UnitOfWork.Pictures.Update(picture);
 
             try
             {
-                await UnitOfWork.Complete();            }
+                await UnitOfWork.Complete();
+            }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CategoryExists(id))
+                if (!PictureExists(id))
                 {
                     return NotFound();
                 }
@@ -79,35 +76,35 @@ namespace WebApplication.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Categories
-        [ResponseType(typeof(Category))]
-        public async Task<IHttpActionResult> PostCategory(Category category)
+        // POST: api/Pictures
+        [ResponseType(typeof(Picture))]
+        public async Task<IHttpActionResult> PostPicture(Picture picture)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            UnitOfWork.Categories.Add(category);
+            UnitOfWork.Pictures.Add(picture);
             await UnitOfWork.Complete();
 
-            return CreatedAtRoute("DefaultApi", new { id = category.Id }, category);
+            return CreatedAtRoute("DefaultApi", new { id = picture.Id }, picture);
         }
 
-        // DELETE: api/Categories/5
-        [ResponseType(typeof(Category))]
-        public async Task<IHttpActionResult> DeleteCategory(int id)
+        // DELETE: api/Pictures/5
+        [ResponseType(typeof(Picture))]
+        public async Task<IHttpActionResult> DeletePicture(int id)
         {
-            Category category = await UnitOfWork.Categories.Get(id);
-            if (category == null)
+            Picture picture = await UnitOfWork.Pictures.Get(id);
+            if (picture == null)
             {
                 return NotFound();
             }
 
-            UnitOfWork.Categories.Delete(category);
+            UnitOfWork.Pictures.Delete(picture);
             await UnitOfWork.Complete();
 
-            return Ok(category);
+            return Ok(picture);
         }
 
         protected override void Dispose(bool disposing)
@@ -119,9 +116,9 @@ namespace WebApplication.Controllers
             base.Dispose(disposing);
         }
 
-        private bool CategoryExists(int id)
+        private bool PictureExists(int id)
         {
-            return UnitOfWork.Categories.GetAll().Result.Count(e => e.Id == id) > 0;
+            return UnitOfWork.Pictures.GetAll().Result.Count(e => e.Id == id) > 0;
         }
     }
 }

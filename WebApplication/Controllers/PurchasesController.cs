@@ -14,59 +14,56 @@ using DAL.Entities;
 using WebApplication.App_Start;
 using WebApplication.Interfaces;
 using WebApplication.Models;
-using WebApplication.Repositories;
 
 namespace WebApplication.Controllers
 {
     [EnableCors("*", "*", "*")]
-    public class CategoriesController : ApiController
+    public class PurchasesController : ApiController
     {
-        
         private IUnitOfWork UnitOfWork = WindsorConfig.RegisterContainer();
 
-        
-
-        // GET: api/Categories
-        public Task<IEnumerable<Category>> GetCategories()
+        // GET: api/Purchases
+        public Task<IEnumerable<Purchase>> GetPurchases()
         {
-            return  UnitOfWork.Categories.GetAll();
+            return UnitOfWork.Purchases.GetAll();
         }
 
-        // GET: api/Categories/5
-        [ResponseType(typeof(Category))]
-        public async Task<IHttpActionResult> GetCategory(int id)
+        // GET: api/Purchases/5
+        [ResponseType(typeof(Purchase))]
+        public async Task<IHttpActionResult> GetPurchase(int id)
         {
-            Category category = await UnitOfWork.Categories.Get(id);
-            if (category == null)
+            Purchase purchase = await UnitOfWork.Purchases.Get(id);
+            if (purchase == null)
             {
                 return NotFound();
             }
 
-            return Ok(category);
+            return Ok(purchase);
         }
 
-        // PUT: api/Categories/5
+        // PUT: api/Purchases/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutCategory(int id, Category category)
+        public async Task<IHttpActionResult> PutPurchase(int id, Purchase purchase)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != category.Id)
+            if (id != purchase.Id)
             {
                 return BadRequest();
             }
 
-            UnitOfWork.Categories.Update(category);
+            UnitOfWork.Purchases.Update(purchase);
 
             try
             {
-                await UnitOfWork.Complete();            }
+                await UnitOfWork.Complete();
+            }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CategoryExists(id))
+                if (!PurchaseExists(id))
                 {
                     return NotFound();
                 }
@@ -79,35 +76,35 @@ namespace WebApplication.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Categories
-        [ResponseType(typeof(Category))]
-        public async Task<IHttpActionResult> PostCategory(Category category)
+        // POST: api/Purchases
+        [ResponseType(typeof(Purchase))]
+        public async Task<IHttpActionResult> PostPurchase(Purchase purchase)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            UnitOfWork.Categories.Add(category);
+            UnitOfWork.Purchases.Add(purchase);
             await UnitOfWork.Complete();
 
-            return CreatedAtRoute("DefaultApi", new { id = category.Id }, category);
+            return CreatedAtRoute("DefaultApi", new { id = purchase.Id }, purchase);
         }
 
-        // DELETE: api/Categories/5
-        [ResponseType(typeof(Category))]
-        public async Task<IHttpActionResult> DeleteCategory(int id)
+        // DELETE: api/Purchases/5
+        [ResponseType(typeof(Purchase))]
+        public async Task<IHttpActionResult> DeletePurchase(int id)
         {
-            Category category = await UnitOfWork.Categories.Get(id);
-            if (category == null)
+            Purchase purchase = await UnitOfWork.Purchases.Get(id);
+            if (purchase == null)
             {
                 return NotFound();
             }
 
-            UnitOfWork.Categories.Delete(category);
+            UnitOfWork.Purchases.Delete(purchase);
             await UnitOfWork.Complete();
 
-            return Ok(category);
+            return Ok(purchase);
         }
 
         protected override void Dispose(bool disposing)
@@ -119,9 +116,9 @@ namespace WebApplication.Controllers
             base.Dispose(disposing);
         }
 
-        private bool CategoryExists(int id)
+        private bool PurchaseExists(int id)
         {
-            return UnitOfWork.Categories.GetAll().Result.Count(e => e.Id == id) > 0;
+            return UnitOfWork.Purchases.GetAll().Result.Count(e => e.Id == id) > 0;
         }
     }
 }

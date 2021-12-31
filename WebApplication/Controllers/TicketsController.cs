@@ -8,27 +8,31 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using DAL.Entities;
+using WebApplication.App_Start;
+using WebApplication.Interfaces;
 using WebApplication.Models;
 
 namespace WebApplication.Controllers
 {
+    [EnableCors("*", "*", "*")]
     public class TicketsController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private IUnitOfWork UnitOfWork = WindsorConfig.RegisterContainer();
 
         // GET: api/Tickets
-        public IQueryable<Ticket> GetTickets()
+        public Task<IEnumerable<Ticket>> GetTickets()
         {
-            return db.Tickets;
+            return UnitOfWork.Tickets.GetAll();
         }
 
         // GET: api/Tickets/5
         [ResponseType(typeof(Ticket))]
         public async Task<IHttpActionResult> GetTicket(int id)
         {
-            Ticket ticket = await db.Tickets.FindAsync(id);
+            Ticket ticket = await UnitOfWork.Tickets.Get(id);
             if (ticket == null)
             {
                 return NotFound();
@@ -51,11 +55,11 @@ namespace WebApplication.Controllers
                 return BadRequest();
             }
 
-            db.Entry(ticket).State = EntityState.Modified;
+            UnitOfWork.Tickets.Update(ticket);
 
             try
             {
-                await db.SaveChangesAsync();
+                await UnitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -81,8 +85,8 @@ namespace WebApplication.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Tickets.Add(ticket);
-            await db.SaveChangesAsync();
+            UnitOfWork.Tickets.Add(ticket);
+            await  UnitOfWork.Complete();
 
             return CreatedAtRoute("DefaultApi", new { id = ticket.Id }, ticket);
         }
@@ -91,14 +95,14 @@ namespace WebApplication.Controllers
         [ResponseType(typeof(Ticket))]
         public async Task<IHttpActionResult> DeleteTicket(int id)
         {
-            Ticket ticket = await db.Tickets.FindAsync(id);
+            Ticket ticket = await UnitOfWork.Tickets.Get(id);
             if (ticket == null)
             {
                 return NotFound();
             }
 
-            db.Tickets.Remove(ticket);
-            await db.SaveChangesAsync();
+            UnitOfWork.Tickets.Delete(ticket);
+            await UnitOfWork.Complete();
 
             return Ok(ticket);
         }
@@ -107,14 +111,14 @@ namespace WebApplication.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                UnitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool TicketExists(int id)
         {
-            return db.Tickets.Count(e => e.Id == id) > 0;
+            return UnitOfWork.Tickets.GetAll().Result.Count(e => e.Id == id) > 0;
         }
     }
 }

@@ -14,59 +14,56 @@ using DAL.Entities;
 using WebApplication.App_Start;
 using WebApplication.Interfaces;
 using WebApplication.Models;
-using WebApplication.Repositories;
 
 namespace WebApplication.Controllers
 {
     [EnableCors("*", "*", "*")]
-    public class CategoriesController : ApiController
+    public class EventsController : ApiController
     {
-        
         private IUnitOfWork UnitOfWork = WindsorConfig.RegisterContainer();
 
-        
-
-        // GET: api/Categories
-        public Task<IEnumerable<Category>> GetCategories()
+        // GET: api/Events
+        public Task<IEnumerable<Event>> GetEvents()
         {
-            return  UnitOfWork.Categories.GetAll();
+            return UnitOfWork.Events.GetAll();
         }
 
-        // GET: api/Categories/5
-        [ResponseType(typeof(Category))]
-        public async Task<IHttpActionResult> GetCategory(int id)
+        // GET: api/Events/5
+        [ResponseType(typeof(Event))]
+        public async Task<IHttpActionResult> GetEvent(int id)
         {
-            Category category = await UnitOfWork.Categories.Get(id);
-            if (category == null)
+            Event @event = await UnitOfWork.Events.Get(id);
+            if (@event == null)
             {
                 return NotFound();
             }
 
-            return Ok(category);
+            return Ok(@event);
         }
 
-        // PUT: api/Categories/5
+        // PUT: api/Events/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutCategory(int id, Category category)
+        public async Task<IHttpActionResult> PutEvent(int id, Event @event)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != category.Id)
+            if (id != @event.Id)
             {
                 return BadRequest();
             }
 
-            UnitOfWork.Categories.Update(category);
+            UnitOfWork.Events.Update(@event);
 
             try
             {
-                await UnitOfWork.Complete();            }
+                await UnitOfWork.Complete();
+            }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CategoryExists(id))
+                if (!EventExists(id))
                 {
                     return NotFound();
                 }
@@ -79,35 +76,35 @@ namespace WebApplication.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Categories
-        [ResponseType(typeof(Category))]
-        public async Task<IHttpActionResult> PostCategory(Category category)
+        // POST: api/Events
+        [ResponseType(typeof(Event))]
+        public async Task<IHttpActionResult> PostEvent(Event @event)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            UnitOfWork.Categories.Add(category);
+            UnitOfWork.Events.Add(@event);
             await UnitOfWork.Complete();
 
-            return CreatedAtRoute("DefaultApi", new { id = category.Id }, category);
+            return CreatedAtRoute("DefaultApi", new { id = @event.Id }, @event);
         }
 
-        // DELETE: api/Categories/5
-        [ResponseType(typeof(Category))]
-        public async Task<IHttpActionResult> DeleteCategory(int id)
+        // DELETE: api/Events/5
+        [ResponseType(typeof(Event))]
+        public async Task<IHttpActionResult> DeleteEvent(int id)
         {
-            Category category = await UnitOfWork.Categories.Get(id);
-            if (category == null)
+            Event @event = await UnitOfWork.Events.Get(id);
+            if (@event == null)
             {
                 return NotFound();
             }
 
-            UnitOfWork.Categories.Delete(category);
+            UnitOfWork.Events.Delete(@event);
             await UnitOfWork.Complete();
 
-            return Ok(category);
+            return Ok(@event);
         }
 
         protected override void Dispose(bool disposing)
@@ -119,9 +116,9 @@ namespace WebApplication.Controllers
             base.Dispose(disposing);
         }
 
-        private bool CategoryExists(int id)
+        private bool EventExists(int id)
         {
-            return UnitOfWork.Categories.GetAll().Result.Count(e => e.Id == id) > 0;
+            return UnitOfWork.Events.GetAll().Result.Count(e => e.Id == id) > 0;
         }
     }
 }
