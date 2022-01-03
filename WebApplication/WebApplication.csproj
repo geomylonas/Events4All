@@ -246,7 +246,9 @@
     <Compile Include="Interfaces\IGenericRepository.cs" />
     <Compile Include="Interfaces\IEventRepository.cs" />
     <Compile Include="Interfaces\IPictureRepository.cs" />
+    <Compile Include="Interfaces\IPurchaseDetailRepository.cs" />
     <Compile Include="Interfaces\IPurchaseRepository.cs" />
+    <Compile Include="Interfaces\ITicketCategoryRepository.cs" />
     <Compile Include="Interfaces\ITicketRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Migrations\202112201510045_InitialCreate.cs" />
@@ -266,7 +268,9 @@
     <Compile Include="Repositories\EventRepository.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
     <Compile Include="Repositories\PictureRepository.cs" />
+    <Compile Include="Repositories\PurchaseDetailRepository.cs" />
     <Compile Include="Repositories\PurchaseRepository.cs" />
+    <Compile Include="Repositories\TicketCategoryRepository.cs" />
     <Compile Include="Repositories\TicketRepository.cs" />
     <Compile Include="Repositories\UnitOfWork.cs" />
     <Compile Include="Results\ChallengeResult.cs" />

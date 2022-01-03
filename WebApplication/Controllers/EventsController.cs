@@ -23,9 +23,12 @@ namespace WebApplication.Controllers
         private IUnitOfWork UnitOfWork = WindsorConfig.RegisterContainer();
 
         // GET: api/Events
-        public Task<IEnumerable<Event>> GetEvents()
+        [Route("api/Events/{pageNumber}/{pageSize}")]
+        public IEnumerable<Event> GetAllByPage(int pageNumber, int pageSize)
         {
-            return UnitOfWork.Events.GetAll();
+            
+            var test = UnitOfWork.Events.GetByPage(pageNumber, pageSize);
+            return test;
         }
 
         // GET: api/Events/5

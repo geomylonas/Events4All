@@ -23,6 +23,9 @@ namespace WebApplication.App_Start
             container.Register(Component.For<IPictureRepository>().ImplementedBy<PictureRepository>());
             container.Register(Component.For<ITicketRepository>().ImplementedBy<TicketRepository>());
             container.Register(Component.For<IPurchaseRepository>().ImplementedBy<PurchaseRepository>());
+            container.Register(Component.For<ITicketCategoryRepository>().ImplementedBy<TicketCategoryRepository>());
+            container.Register(Component.For<IPurchaseDetailRepository>().ImplementedBy<PurchaseDetailRepository>());
+
 
             return container.Resolve<UnitOfWork>();
 

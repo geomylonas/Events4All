@@ -11,6 +11,6 @@ namespace WebApplication.Interfaces
 {
     public interface IEventRepository : IGenericRepository<Event>
     {
-
+        IEnumerable<Event> GetByPage(int pageNumber, int pageSize);
     }
 }

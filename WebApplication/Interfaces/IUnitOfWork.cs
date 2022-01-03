@@ -13,6 +13,9 @@ namespace WebApplication.Interfaces
         IPictureRepository Pictures { get; }
         IPurchaseRepository Purchases { get; }
         ITicketRepository Tickets { get; }
+        IPurchaseDetailRepository PurchaseDetail { get; }
+
+        ITicketCategoryRepository TicketCategory { get; }
         Task<int> Complete();
     }
 }
