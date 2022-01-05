@@ -40,7 +40,9 @@ namespace DAL.Entities
         public virtual ICollection<Ticket> Tickets { get; set; }
         public virtual ICollection<Picture> Pictures { get; set; }
 
-        public virtual EventCategory EventCategory { get; set; }
+        public EventCategory EventCategory { get; set; }
+
+        public Event() { }
 
     }
 }

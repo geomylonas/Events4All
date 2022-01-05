@@ -15,6 +15,6 @@ namespace DAL.Entities
         [Required]
         [MaxLength(200)]
         public string Url { get; set; }
-        public virtual Event Event { get; set; }
+        public Event Event { get; set; }
     }
 }

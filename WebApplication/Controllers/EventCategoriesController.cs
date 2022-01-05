@@ -17,9 +17,10 @@ using WebApplication.Models;
 
 namespace WebApplication.Controllers
 {
+    [EnableCors("*", "*", "*")]
     public class EventCategoriesController : ApiController
     {
-        [EnableCors("*", "*", "*")]
+       
         private IUnitOfWork UnitOfWork = WindsorConfig.RegisterContainer();
 
         // GET: api/EventCategories

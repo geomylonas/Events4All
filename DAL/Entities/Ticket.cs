@@ -22,7 +22,7 @@ namespace DAL.Entities
         public virtual Event Event { get; set; }
         public ICollection<PurchaseDetail> PurchaseDetails { get; set; }
 
-        public virtual Category Category { get; set; }
+        public Category Category { get; set; }
         public Ticket() { }
 
 

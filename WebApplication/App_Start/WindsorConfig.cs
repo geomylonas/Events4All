@@ -25,6 +25,7 @@ namespace WebApplication.App_Start
             container.Register(Component.For<IPurchaseRepository>().ImplementedBy<PurchaseRepository>());
             container.Register(Component.For<IPurchaseDetailRepository>().ImplementedBy<PurchaseDetailRepository>());
             container.Register(Component.For<IEventCategoryRepository>().ImplementedBy<EventCategoryRepository>());
+            container.Register(Component.For<IViewEventDTORepository>().ImplementedBy<ViewEventDTORepository>());
 
 
             return container.Resolve<UnitOfWork>();

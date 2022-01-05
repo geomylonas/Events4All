@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -22,16 +23,28 @@ namespace WebApplication.Controllers
     {
         private IUnitOfWork UnitOfWork = WindsorConfig.RegisterContainer();
 
-        // GET: api/Events
+        // GET: api/Events/0/5
         [Route("api/Events/{pageNumber}/{pageSize}")]
         public IEnumerable<Event> GetAllByPage(int pageNumber, int pageSize)
-        { 
-            return UnitOfWork.Events.GetByPage(pageNumber, pageSize);
+        {
+            try
+            {
+                return UnitOfWork.Events.GetByPage(pageNumber, pageSize);
+            }catch (Exception ex)
+            {
+                Debug.Write(ex);
+            }
+           return null;
         }
+
+        // GET: api/Events/0/5/3
         [Route("api/Events/{pageNumber}/{pageSize}/{eventCategoryId}")]
         public IEnumerable<Event> GetAllByPageByCategory(int pageNumber, int pageSize, int eventcategoryId)
-        {     
-            return UnitOfWork.Events.GetByCategory(pageNumber,pageSize,eventcategoryId);
+        {
+            
+            
+                return UnitOfWork.Events.GetByCategory(pageNumber, pageSize, eventcategoryId);
+           
         }
 
 

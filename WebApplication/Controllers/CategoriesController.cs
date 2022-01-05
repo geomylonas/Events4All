@@ -61,7 +61,7 @@ namespace WebApplication.Controllers
                 await UnitOfWork.Complete();            }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CategoryExists(category.id))
+                if (!CategoryExists(category.Id))
                 {
                     return NotFound();
                 }

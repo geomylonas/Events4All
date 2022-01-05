@@ -10,7 +10,7 @@ namespace WebApplication.Models
 
     public class Organizer : Person
     {
-        public virtual ICollection<Event> Events { get; set; }
+        public  ICollection<Event> Events { get; set; }
 
     }
 }

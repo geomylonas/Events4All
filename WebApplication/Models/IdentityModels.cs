@@ -31,7 +31,7 @@ namespace WebApplication.Models
     {
         
         public ApplicationDbContext()
-            : base("EventDbStringV2", throwIfV1Schema: false)
+            : base("EventDbStringV3", throwIfV1Schema: false)
         {
         }
 
