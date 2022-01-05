@@ -1,0 +1,18 @@
+/* white: #F6F4F2, mpez: #C6AD8F, dark: #425664 */
+
+
+
+
+
+.UpButton img{
+width: 50px;
+position: fixed; 
+right: 50px;
+bottom: 40px;
+z-index: 1;
+cursor: pointer;
+}
+
+.UpButton img:hover{
+    opacity: 0.8;
+}

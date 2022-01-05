@@ -1,0 +1,11 @@
+body{
+  background-image: url("/src/images/cheap_diagonal_fabric.png") ;
+  
+}
+
+.customContainer{
+  width: 1200px;
+  margin: 0 auto;
+}
+
+
