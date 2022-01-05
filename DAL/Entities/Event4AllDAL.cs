@@ -28,6 +28,7 @@ namespace DAL
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Picture> Pictures { get; set; }
         public virtual DbSet<PurchaseDetail> PurchaseDetails { get; set; }
+        public virtual DbSet<EventCategory> EventCategories { get; set; }
 
 
 

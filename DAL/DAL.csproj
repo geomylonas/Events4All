@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Entities\Category.cs" />
+    <Compile Include="Entities\EventCategory.cs" />
     <Compile Include="Entities\Event.cs" />
     <Compile Include="Entities\Picture.cs" />
     <Compile Include="Entities\Purchase.cs" />

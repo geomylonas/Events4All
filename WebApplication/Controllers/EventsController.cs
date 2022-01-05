@@ -25,11 +25,15 @@ namespace WebApplication.Controllers
         // GET: api/Events
         [Route("api/Events/{pageNumber}/{pageSize}")]
         public IEnumerable<Event> GetAllByPage(int pageNumber, int pageSize)
-        {
-            
-            var test = UnitOfWork.Events.GetByPage(pageNumber, pageSize);
-            return test;
+        { 
+            return UnitOfWork.Events.GetByPage(pageNumber, pageSize);
         }
+        [Route("api/Events/{pageNumber}/{pageSize}/{eventCategoryId}")]
+        public IEnumerable<Event> GetAllByPageByCategory(int pageNumber, int pageSize, int eventcategoryId)
+        {     
+            return UnitOfWork.Events.GetByCategory(pageNumber,pageSize,eventcategoryId);
+        }
+
 
         // GET: api/Events/5
         [ResponseType(typeof(Event))]

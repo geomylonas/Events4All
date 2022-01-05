@@ -270,6 +270,10 @@
     <Compile Include="Migrations\202201050135257_updateDbV4.Designer.cs">
       <DependentUpon>202201050135257_updateDbV4.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201051121599_updateDbV5.cs" />
+    <Compile Include="Migrations\202201051121599_updateDbV5.Designer.cs">
+      <DependentUpon>202201051121599_updateDbV5.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -399,6 +403,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201050135257_updateDbV4.resx">
       <DependentUpon>202201050135257_updateDbV4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201051121599_updateDbV5.resx">
+      <DependentUpon>202201051121599_updateDbV5.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
