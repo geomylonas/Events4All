@@ -14,7 +14,7 @@ namespace DAL
         // If you wish to target a different database and/or database provider, modify the 'Event4AllDAL' 
         // connection string in the application configuration file.
         public Event4AllDAL()
-            : base("name=Events4AllModelConString")
+            : base("name=EventDbStringV2")
         {
         }
 
@@ -27,6 +27,7 @@ namespace DAL
         public virtual DbSet<Purchase> Purchases { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Picture> Pictures { get; set; }
+        public virtual DbSet<PurchaseDetail> PurchaseDetails { get; set; }
 
 
 
@@ -56,29 +57,10 @@ namespace DAL
                 .HasForeignKey(q => q.TicketId);
 
 
-
-
-
-            builder.Entity<Ticket>().HasKey(q => q.Id);
-            builder.Entity<Category>().HasKey(q => q.Id);
-            builder.Entity<TicketCategory>().HasKey(q =>
-                new
-                {
-                    q.CategoryId,
-                    q.TicketId
-                });
-
-            // Relationships
-            builder.Entity<TicketCategory>()
-                .HasRequired(q => q.Ticket)
-                .WithMany(q => q.TicketCategories)
-                .HasForeignKey(q => q.TicketId);
-
-            builder.Entity<TicketCategory>()
-                .HasRequired(q => q.Category)
-                .WithMany(q => q.TicketCategories)
-                .HasForeignKey(q => q.CategoryId);
         }
+
+
+            
     }
 
         //public class MyEntity

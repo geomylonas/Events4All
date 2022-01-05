@@ -16,7 +16,7 @@ namespace DAL.Entities
         [RegularExpression(@"^\d+(\.\d{1,2})?$")]
         [Range(0, 99999.99)]
         public decimal Amount { get; set; }
-        //public ApplicationUser User { get; set; }
+        
         public DateTime DateOfPurchase { get; set; }
         public ICollection<PurchaseDetail> PurchaseDetails { get; set; }
     }

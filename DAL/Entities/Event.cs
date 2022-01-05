@@ -30,16 +30,14 @@ namespace DAL.Entities
         [MaxLength(50)]
         public string PlaceAddress { get; set; }
 
-        [Required]
+        
         public DateTime DateOfEvent { get; set; }
 
-        [Required]
+        
         public int MaxTickets { get; set; }
 
-        //[Required]
-        //public virtual ApplicationUser User { get; set; }
-
-        public ICollection<Ticket> Tickets { get; set; }
+       
+        public virtual ICollection<Ticket> Tickets { get; set; }
         public virtual ICollection<Picture> Pictures { get; set; }
 
     }

@@ -17,7 +17,6 @@ namespace WebApplication.Repositories
         public IPurchaseRepository Purchases { get; }
         public ITicketRepository Tickets { get; }
 
-        public ITicketCategoryRepository TicketCategory { get; }
         public IPurchaseDetailRepository PurchaseDetail { get; }
 
 
@@ -27,7 +26,6 @@ namespace WebApplication.Repositories
             IPictureRepository picturesRepository,
             IPurchaseRepository purchasesRepository,
             ITicketRepository ticketsRepository, 
-            ITicketCategoryRepository TicketCategory,
             IPurchaseDetailRepository PurchaseDetail)
         {
             this._context = events4AllDbContext;
@@ -37,7 +35,6 @@ namespace WebApplication.Repositories
             this.Pictures = picturesRepository;
             this.Purchases = purchasesRepository;
             this.Tickets = ticketsRepository;
-            this.TicketCategory = TicketCategory;
             this.PurchaseDetail = PurchaseDetail;
         }
 

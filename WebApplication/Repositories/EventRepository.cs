@@ -11,10 +11,8 @@ namespace WebApplication.Repositories
 {
     public class EventRepository : GenericRepository<Event>, IEventRepository
     {
-        private IApplicationDbContext _context;
         public EventRepository(IApplicationDbContext context) : base(context)
-        {
-            this._context = context;
+        {       
         }
 
         public IEnumerable<Event> GetByPage(int pageNumber, int pageSize)

@@ -31,7 +31,7 @@ namespace WebApplication.Models
     {
         
         public ApplicationDbContext()
-            : base("EventDbString", throwIfV1Schema: false)
+            : base("EventDbStringV2", throwIfV1Schema: false)
         {
         }
 
@@ -42,6 +42,8 @@ namespace WebApplication.Models
         public virtual DbSet<Picture> Pictures { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Organizer> Organizers { get; set; }
+
+        public virtual DbSet<PurchaseDetail> PurchaseDetails { get; set; }
 
 
 

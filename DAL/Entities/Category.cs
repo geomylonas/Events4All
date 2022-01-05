@@ -18,6 +18,6 @@ namespace DAL.Entities
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
-        public virtual ICollection<TicketCategory> TicketCategories { get; set; }
+        public virtual ICollection<Ticket> Tickets { get; set; }
     }
 }
