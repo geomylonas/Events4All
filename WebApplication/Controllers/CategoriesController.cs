@@ -27,9 +27,9 @@ namespace WebApplication.Controllers
         
 
         // GET: api/Categories
-        public Task<IEnumerable<Category>> GetCategories()
+        public async Task<IEnumerable<Category>> GetCategories()
         {
-            return  UnitOfWork.Categories.GetAll();
+            return  await UnitOfWork.Categories.GetAll();
         }
 
         // GET: api/Categories/5
@@ -47,16 +47,11 @@ namespace WebApplication.Controllers
 
         // PUT: api/Categories/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutCategory(int id, Category category)
+        public async Task<IHttpActionResult> PutCategory(Category category)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-
-            if (id != category.Id)
-            {
-                return BadRequest();
             }
 
             UnitOfWork.Categories.Update(category);
@@ -66,7 +61,7 @@ namespace WebApplication.Controllers
                 await UnitOfWork.Complete();            }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CategoryExists(id))
+                if (!CategoryExists(category.id))
                 {
                     return NotFound();
                 }

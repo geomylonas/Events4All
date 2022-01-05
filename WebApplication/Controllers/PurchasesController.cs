@@ -23,9 +23,9 @@ namespace WebApplication.Controllers
         private IUnitOfWork UnitOfWork = WindsorConfig.RegisterContainer();
 
         // GET: api/Purchases
-        public Task<IEnumerable<Purchase>> GetPurchases()
+        public async Task<IEnumerable<Purchase>> GetPurchases()
         {
-            return UnitOfWork.Purchases.GetAll();
+            return await UnitOfWork.Purchases.GetAll();
         }
 
         // GET: api/Purchases/5
@@ -43,17 +43,14 @@ namespace WebApplication.Controllers
 
         // PUT: api/Purchases/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutPurchase(int id, Purchase purchase)
+        public async Task<IHttpActionResult> PutPurchase(Purchase purchase)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != purchase.Id)
-            {
-                return BadRequest();
-            }
+       
 
             UnitOfWork.Purchases.Update(purchase);
 
@@ -63,7 +60,7 @@ namespace WebApplication.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PurchaseExists(id))
+                if (!PurchaseExists(purchase.Id))
                 {
                     return NotFound();
                 }

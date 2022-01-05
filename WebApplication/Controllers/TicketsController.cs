@@ -23,9 +23,9 @@ namespace WebApplication.Controllers
         private IUnitOfWork UnitOfWork = WindsorConfig.RegisterContainer();
 
         // GET: api/Tickets
-        public Task<IEnumerable<Ticket>> GetTickets()
+        public async Task<IEnumerable<Ticket>> GetTickets()
         {
-            return UnitOfWork.Tickets.GetAll();
+            return await UnitOfWork.Tickets.GetAll();
         }
 
         // GET: api/Tickets/5
@@ -43,17 +43,13 @@ namespace WebApplication.Controllers
 
         // PUT: api/Tickets/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutTicket(int id, Ticket ticket)
+        public async Task<IHttpActionResult> PutTicket(Ticket ticket)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != ticket.Id)
-            {
-                return BadRequest();
-            }
 
             UnitOfWork.Tickets.Update(ticket);
 
@@ -63,7 +59,7 @@ namespace WebApplication.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TicketExists(id))
+                if (!TicketExists(ticket.Id))
                 {
                     return NotFound();
                 }

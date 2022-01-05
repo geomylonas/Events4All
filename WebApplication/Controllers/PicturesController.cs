@@ -23,9 +23,9 @@ namespace WebApplication.Controllers
         private IUnitOfWork UnitOfWork = WindsorConfig.RegisterContainer();
 
         // GET: api/Pictures
-        public Task<IEnumerable<Picture>> GetPictures()
+        public async Task<IEnumerable<Picture>> GetPictures()
         {
-            return UnitOfWork.Pictures.GetAll();
+            return await UnitOfWork.Pictures.GetAll();
         }
 
         // GET: api/Pictures/5
@@ -43,27 +43,21 @@ namespace WebApplication.Controllers
 
         // PUT: api/Pictures/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutPicture(int id, Picture picture)
+        public async Task<IHttpActionResult> PutPicture(Picture picture)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != picture.Id)
-            {
-                return BadRequest();
-            }
-
-            UnitOfWork.Pictures.Update(picture);
-
+           
             try
             {
                 await UnitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PictureExists(id))
+                if (!PictureExists(picture.Id))
                 {
                     return NotFound();
                 }

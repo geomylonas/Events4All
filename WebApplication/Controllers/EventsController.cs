@@ -50,17 +50,13 @@ namespace WebApplication.Controllers
 
         // PUT: api/Events/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutEvent(int id, Event @event)
+        public async Task<IHttpActionResult> PutEvent(Event @event)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != @event.Id)
-            {
-                return BadRequest();
-            }
 
             UnitOfWork.Events.Update(@event);
 
@@ -70,7 +66,7 @@ namespace WebApplication.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EventExists(id))
+                if (!EventExists(@event.Id))
                 {
                     return NotFound();
                 }

@@ -14,6 +14,7 @@ namespace WebApplication.Interfaces
         IPurchaseRepository Purchases { get; }
         ITicketRepository Tickets { get; }
         IPurchaseDetailRepository PurchaseDetail { get; }
+        IEventCategoryRepository EventCategories { get; }
 
         Task<int> Complete();
     }
