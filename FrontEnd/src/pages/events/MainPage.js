@@ -17,46 +17,51 @@ class FeaturedEvents extends React.Component {
       openModalPurchase: false,
       activeItem: '',
       loading: false,
-      checked: '',
+      checked: 0,
       page: 0,
-      prevY: 0,
-      eventcategoryname:''
+      prevY: 0
     };
   }
 
 
   
 
-  getEvents(page, eventcategories) {
-    console.log(eventcategories);
-    this.setState({ loading: true });
-    axios.get(`https://localhost:44359/api/Events/${page}/12`
-    )
-    .then((res) => {
-      this.setState({ events: [...this.state.events, ...res.data] });
-      this.setState({ loading: false });
-     
-    })
-    .catch((err) => {
-      console.log(err);
-      
-    });
-    
-    // }
-    // else{
-    //   this.setState({ loading: true });
-    //   axios.get(`https://localhost:44359/api/Events/${page}/12/${this.state.events.category}`
-    //   )
-    //   .then((res) => {
-    //     this.setState({ events: [...this.state.events, ...res.data] });
-    //     this.setState({ loading: false });
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
+  getEvents(page, eventcategory) {
+    console.log(eventcategory);
+    // if( this.state.checked == 0){
+      console.log(this.state.checked)
+      this.setState({ loading: true });
+      axios.get(`https://localhost:44359/api/Events/${page}/12/`
+      )
+      .then((res) => {
+        this.setState({ events: [...this.state.events, ...res.data] });
+        this.setState({ loading: false });
         
-    //   });
-     
+      })
+      .catch((err) => {
+        console.log(err);
+        
+      });
     // }
+      // else{
+      //   console.log(this.state.checked);
+      //   this.setState({ loading: true });
+      // axios.get(`https://localhost:44359/api/Events/${page}/12/${eventcategory}`
+      // )
+      // .then((res) => {
+      //   this.setState({ events: [...this.state.events, ...res.data] });
+      //   this.setState({ loading: false });
+        
+      // })
+      // .catch((err) => {
+      //   console.log(err);
+        
+      // });
+
+
+
+      // }
+    
 
   };
 
@@ -81,7 +86,7 @@ class FeaturedEvents extends React.Component {
 
   componentDidMount() {
     this.getEventCategories();
-    this.getEvents(this.state.page);     
+    this.getEvents(this.state.page, this.state.checked);     
 
       var options = {
         root: null,
@@ -138,7 +143,15 @@ class FeaturedEvents extends React.Component {
     }
 }
 
+componentDidUpdate(prevState, prevProps){
+  if(prevProps.checked !== this.state.checked){
+    console.log(prevProps.checked)
+    console.log(this.state.checked)
+    console.log("HSHEFH")
 
+  }
+
+}
 
 
 
@@ -146,6 +159,9 @@ selectCategory(cat){
    const {name, value} = cat.target;
    this.setState({[name]: value});
    this.setState({checked: name})
+   this.state.checked = name;
+   console.log(this.state.checked)
+   
 }
 
   render() {
@@ -163,8 +179,8 @@ selectCategory(cat){
             
                 {this.state.eventcategories.map(cat =>(
                 <div key={cat.Id}>
-                <input type="radio" value={cat.Name} name={cat.Name} checked={this.state.checked == cat.Name} onChange={(cat) =>this.selectCategory(cat)}/>
-                <label htmlFor={cat.Id}>{cat.Name}</label>
+                <input type="radio" value={cat.Id} name={cat.Id} checked={this.state.checked == cat.Id} onChange={(cat) =>this.selectCategory(cat)}/>
+                <label htmlFor={cat}>{cat.Name}</label>
                 </div>
                 ))}
             
