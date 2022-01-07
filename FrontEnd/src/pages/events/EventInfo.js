@@ -48,7 +48,7 @@ function EventInfo() {
                             <div>Price</div>
                         </div>
                     </div>
-                    <button className={classes.filledButton} onClick={() => setModalShow(true)}>Purchase</button>
+                    <button className={classes.filledButton} onClick={() => setModalShow(true)}>Add to Cart</button>
                 </div>
             </div>
 

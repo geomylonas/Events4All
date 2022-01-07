@@ -1,7 +1,8 @@
-import { Nav, Row, Container, Col, Image, Button } from "react-bootstrap";
+import { Nav, Row, Container, Col, Image, Button, Badge} from "react-bootstrap";
 import { LinkContainer } from 'react-router-bootstrap';
 import classes from './NavigationBar.module.css';
 import { useRef } from "react";
+
 
 function NavigationBar() {
 
@@ -50,7 +51,14 @@ function NavigationBar() {
                 <Nav.Item className={classes.navButtons}>
                     <button className={classes.outlineButton}>Log in</button>
                     <button className={classes.filledButton}>Register</button>
+                    <div className="cart">
+                        <LinkContainer to ='#'>
+                            <Image src={require("../../images/cart2.png")} className={classes.CartImage} />
+                        </LinkContainer>
+                        <div className={classes.badge}>1</div>
+                    </div>
                 </Nav.Item>
+                
             </div>   
            
           

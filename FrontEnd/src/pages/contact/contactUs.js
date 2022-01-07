@@ -11,19 +11,18 @@ function ContactUs() {
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>First Name</Form.Label>
           <Form.Control size="lg" type="text" />
-          <br />
+          
         </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>Last Name</Form.Label>
           <Form.Control size="lg" type="text" />
-          <br />
+          
         </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>Email address</Form.Label>
           <Form.Control type="email" size="lg" placeholder="name@example.com" />
           
           
-          <br />
         </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
           <Form.Label>Description</Form.Label>
@@ -31,8 +30,9 @@ function ContactUs() {
             
         </Form.Group>
       </Form>
-      <br />
-      <Button type="submit" variant="success">Submit</Button>
+      <div>
+      <button className={classes.detailsButton}>Submit</button>
+      </div>
     </div>
 
 

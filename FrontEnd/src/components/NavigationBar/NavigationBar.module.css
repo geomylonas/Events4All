@@ -42,7 +42,7 @@ color: #F6F4F2;
 
 
 .navButtons{
-    width: 180px;
+    width: 400px;
     flex-direction: row;
     margin-right: 20px;
     display: flex;
@@ -108,4 +108,24 @@ color: #F6F4F2;
 .outlineButton:hover{
     background-color: #C6AD8F;
     color:#425664;
+}
+
+.CartImage {
+    width: 40px; 
+}
+
+.cart {
+    width: 60px;
+    position: relative;
+}
+
+.badge {
+    position: absolute;
+    display: inline-block;
+    width: 20px;
+    background-color: #C6AD8F;
+    border-radius: 10rem;
+    text-align: center;
+    font-size: 12px;
+    top: 25px;
 }
