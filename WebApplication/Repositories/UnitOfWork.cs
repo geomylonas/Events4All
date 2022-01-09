@@ -20,7 +20,7 @@ namespace WebApplication.Repositories
         public IPurchaseDetailRepository PurchaseDetail { get; }
 
         public IEventCategoryRepository EventCategories { get; }
-        public IViewEventDTORepository ViewEventDTO { get; }
+       
 
 
 
@@ -31,8 +31,8 @@ namespace WebApplication.Repositories
             IPurchaseRepository purchasesRepository,
             ITicketRepository ticketsRepository, 
             IPurchaseDetailRepository PurchaseDetailRepository,
-            IEventCategoryRepository EventCategoryRepository,
-            IViewEventDTORepository ViewEventDTO)
+            IEventCategoryRepository EventCategoryRepository
+            )
         {
             this._context = events4AllDbContext;
 
@@ -43,7 +43,7 @@ namespace WebApplication.Repositories
             this.Tickets = ticketsRepository;
             this.PurchaseDetail = PurchaseDetailRepository;
             this.EventCategories = EventCategoryRepository;
-            this.ViewEventDTO = ViewEventDTO;
+            
         }
 
         

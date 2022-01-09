@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,6 +16,7 @@ namespace DAL.Entities
         [Required]
         [MaxLength(200)]
         public string Url { get; set; }
-        public Event Event { get; set; }
+        [JsonIgnore]
+        public virtual Event Event { get; set; }
     }
 }

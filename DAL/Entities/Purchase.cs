@@ -18,6 +18,6 @@ namespace DAL.Entities
         public decimal Amount { get; set; }
         
         public DateTime DateOfPurchase { get; set; }
-        public ICollection<PurchaseDetail> PurchaseDetails { get; set; }
+        public virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; }
     }
 }

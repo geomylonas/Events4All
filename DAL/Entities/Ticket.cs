@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -19,11 +20,12 @@ namespace DAL.Entities
         [Range(0, 99999.99)]
         public decimal Price { get; set; }
 
+        [JsonIgnore]
         public virtual Event Event { get; set; }
-        public ICollection<PurchaseDetail> PurchaseDetails { get; set; }
+        public virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; }
 
-        public Category Category { get; set; }
-        public Ticket() { }
+        public virtual Category Category { get; set; }
+        public  Ticket() { }
 
 
     }

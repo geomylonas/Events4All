@@ -239,8 +239,6 @@
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\PurchasesController.cs" />
     <Compile Include="Controllers\TicketsController.cs" />
-    <Compile Include="Controllers\ViewEventDTOController.cs" />
-    <Compile Include="DTO\ViewEventDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -254,7 +252,6 @@
     <Compile Include="Interfaces\IPurchaseRepository.cs" />
     <Compile Include="Interfaces\ITicketRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
-    <Compile Include="Interfaces\IViewEventDTORepository.cs" />
     <Compile Include="Migrations\202201042327257_InitialCreate.cs" />
     <Compile Include="Migrations\202201042327257_InitialCreate.Designer.cs">
       <DependentUpon>202201042327257_InitialCreate.cs</DependentUpon>
@@ -297,7 +294,6 @@
     <Compile Include="Repositories\PurchaseRepository.cs" />
     <Compile Include="Repositories\TicketRepository.cs" />
     <Compile Include="Repositories\UnitOfWork.cs" />
-    <Compile Include="Repositories\ViewEventDTORepository.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

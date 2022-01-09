@@ -14,5 +14,7 @@ namespace WebApplication.Interfaces
         IEnumerable<Event> GetByPage(int pageNumber, int pageSize);
         IEnumerable<Event> GetByCategory(int pageNumber, int pageSize, int eventCategoryId);
 
+        IEnumerable<Event> GetByOrganizerId(int id);
+
     }
 }
