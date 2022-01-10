@@ -2,8 +2,8 @@ import React from 'react';
 import classes from "./MainPage.module.css";
 import { Link } from "react-router-dom";
 import axios from 'axios';
-import PurchaseModal from './PurchaseModal';
 import DeleteModal from './DeleteEventModal';
+import { act } from 'react-dom/test-utils';
 
 
 class FeaturedEvents extends React.Component {
@@ -28,7 +28,6 @@ class FeaturedEvents extends React.Component {
 
   getEvents(page, eventcategory) {
     console.log(eventcategory);
-    // if( this.state.checked == 0){
       console.log(this.state.checked)
       this.setState({ loading: true });
       axios.get(`https://localhost:44359/api/Events/${page}/12/`
@@ -42,25 +41,6 @@ class FeaturedEvents extends React.Component {
         console.log(err);
         
       });
-    // }
-      // else{
-      //   console.log(this.state.checked);
-      //   this.setState({ loading: true });
-      // axios.get(`https://localhost:44359/api/Events/${page}/12/${eventcategory}`
-      // )
-      // .then((res) => {
-      //   this.setState({ events: [...this.state.events, ...res.data] });
-      //   this.setState({ loading: false });
-        
-      // })
-      // .catch((err) => {
-      //   console.log(err);
-        
-      // });
-
-
-
-      // }
     
 
   };
@@ -116,16 +96,17 @@ class FeaturedEvents extends React.Component {
     console.log(this.state.prevY);
   }
 
-
-
-  onClickButtonPurchase= (ev)=>{
-    this.setState({ activeItem: ev }, () => this.setState({ openModalPurchase: true }));
-    console.log(ev.Id)
+  addToCart = (ev) =>{
+    const selectedProduct = { id: ev.Id, title: ev.Title}
+    console.log(selectedProduct)
+    this.props.addToCart(selectedProduct)
   }
+
 
   onClickButton = (ev) => {
     this.setState({ activeItem: ev }, () => this.setState({ openModal: true }));
     console.log(ev.Id)
+    
   }
   onCloseModal = () => {
     this.setState({ openModal: false, openModalPurchase: false })
@@ -174,7 +155,7 @@ selectCategory(cat){
 
 
       <div className={classes.allEvents}>
-        <div onClick={() => this.showEventCategories}>
+        {/* <div onClick={() => this.showEventCategories}>
                 Click
             
                 {this.state.eventcategories.map(cat =>(
@@ -184,8 +165,10 @@ selectCategory(cat){
                 </div>
                 ))}
             
-            </div>
+            </div> */}
+            
         {this.state.events.map(ev => (
+          
             <div className={classes.individualSampleEvent} key={ev.Id}>
               {ev.Id}
               <Link to={`/events/info/${ev.Id}`}>
@@ -198,7 +181,7 @@ selectCategory(cat){
                   <Link to={`/events/info/${ev.Id}`}>
                     <button className={classes.detailsButton}>Details</button>
                   </Link>
-                  <button className={classes.purchaseButton} onClick={() => this.onClickButtonPurchase(ev)}>Quick Purchase</button>
+                  <button className={classes.purchaseButton} onClick={() => this.addToCart(ev)}>Add to Cart</button>
                 </div>
                   <img className={classes.trashcan} src={require("../../images/trashcan.png")} alt="trashcan" onClick={() => this.onClickButton(ev)} />
               </div>
@@ -214,7 +197,6 @@ selectCategory(cat){
           >
           <span style={loadingTextCSS}>Loading....</span>
         </div>
-        <PurchaseModal show={this.state.openModalPurchase} onHide={this.onCloseModal} />
       </div>
 
     );
@@ -225,20 +207,3 @@ export default FeaturedEvents;
 
 
 
-{/* <Card className={classes.wholeCard}>
-  {ev.Id}
-  <Link to={`/events/info/${ev.Id}`}>
-    <Card.Img variant="top" src="https://images.pexels.com/photos/3171837/pexels-photo-3171837.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
-  </Link>
-  <Card.Body className={classes.singleEventBody}>
-    <Card.Title>{ev.Title}</Card.Title>
-    <Card.Text className={classes.overflow}>
-      {ev.Description}
-    </Card.Text>
-    <Link to={`/events/info/${ev.Id}`}>
-      <button className={classes.outlineButtonCard}>Details</button>
-    </Link>
-    <button className={classes.filledButtonCard} onClick={() => this.onClickButtonPurchase(ev)} >Quick Purchase</button>
-    <img className={classes.trashcan} src={require("../../images/trashcan.png")} alt="trashcan" onClick={() => this.onClickButton(ev)} />
-  </Card.Body>
-</Card> */}

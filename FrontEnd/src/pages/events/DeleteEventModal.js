@@ -9,12 +9,12 @@ import axios from "axios";
 
 function DeleteModal(props) {
     
-    const [showModal, setShow] = useState(true);
+    // const [showModal, setShow] = useState(true);
     
     function deleteEvent() {
         axios.delete(`https://localhost:44359/api/Events/${props.eventchosen}`);
-        setShow(false);
-        console.log(showModal)
+        props.onHide();
+        
     }
     
     return (
@@ -36,7 +36,7 @@ function DeleteModal(props) {
 
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={() => {  deleteEvent();}}>Delete</Button>
+                <Button onClick={() => {  deleteEvent()}}>Delete</Button>
                 <Button onClick={props.onHide} variant="secondary">Cancel</Button>
             </Modal.Footer>
         </Modal>

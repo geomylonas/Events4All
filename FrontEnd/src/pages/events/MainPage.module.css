@@ -18,7 +18,6 @@
     width: 330px;
     border-radius: 5px;
     box-shadow: 4px 4px 3px rgba(5, 5, 5, 0.384);;
-    height: auto;
     background-color:#425664;
     display: flex;
     flex-direction: column;
@@ -31,16 +30,17 @@
     border-radius: 2px;
 }
 
-.individualSampleEvent:nth-last-of-type(even){
+.individualSampleEvent:nth-of-type(even){
     background-color:#425664;
 }
 
-.individualSampleEvent:nth-last-of-type(odd){
+.individualSampleEvent:nth-of-type(odd){
     background-color:#C6AD8F;
 }
 
 .allEvents div div h4{
     color: #F6F4F2;
+    height: 60px;
 }
 
 
@@ -49,11 +49,6 @@
     width: 100%;
 }
 
-
-
-.individualSampleEvent h4{
-    color:#C6AD8F;
-    }
     
 
 .sampleEventBody{

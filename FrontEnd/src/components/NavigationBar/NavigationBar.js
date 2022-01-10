@@ -1,72 +1,92 @@
-import { Nav, Row, Container, Col, Image, Button, Badge} from "react-bootstrap";
+import React from "react";
+import { Nav, Row, Container, Col, Image, Button, Badge } from "react-bootstrap";
 import { LinkContainer } from 'react-router-bootstrap';
 import classes from './NavigationBar.module.css';
-import { useRef } from "react";
+import Cart from "../Cart/Cart";
 
 
-function NavigationBar() {
-
-
+class NavigationBar extends React.Component {
+    constructor(props) {
+        super(props);
     
-    return (
-        <header>
-            <div>
-                <Nav.Item>
-                    <Container>
-                        <Row>
+        this.state = {
+         cartModal: false
+        };
+      }
 
-                            <Col xs={6} md={4}>
-                                <LinkContainer to='/'>
-                                    <Image src={require("../../images/logo-mpez.png")} roundedCircle className={classes.LogoImage} />
-                                </LinkContainer>
-                            </Col>
+      openCartModal = () =>{
+          this.setState({cartModal: true});
+      }
 
-                        </Row>
-                    </Container>
-                </Nav.Item>
-            </div>
-            <div className={classes.navLinks}>
-                <Nav.Item>
-                    <LinkContainer to='/'>
-                        <Nav.Link>About Us</Nav.Link>
-                    </LinkContainer>
-                </Nav.Item>
-                <Nav.Item>
-                    <LinkContainer to='/events/mainpage'>
-                        <Nav.Link>Events</Nav.Link>
-                    </LinkContainer>
-                </Nav.Item>
-                <Nav.Item>
-                    <LinkContainer to='/contact'>
-                        <Nav.Link>Contact us</Nav.Link>
-                    </LinkContainer>
-                </Nav.Item>
-                <Nav.Item>
-                    <LinkContainer to='/createnewevent'>
-                        <Nav.Link>Create Event</Nav.Link>
-                    </LinkContainer>
-                </Nav.Item>
-            </div>
-            <div>
-                <Nav.Item className={classes.navButtons}>
-                    <button className={classes.outlineButton}>Log in</button>
-                    <button className={classes.filledButton}>Register</button>
-                    <div className="cart">
-                        <LinkContainer to ='#'>
-                            <Image src={require("../../images/cart2.png")} className={classes.CartImage} />
+      onCloseCartModal  = () =>{
+          this.setState({cartModal: false});
+      }
+
+    render() {
+        const cartAttributes ={
+            chosenproducts: this.props.chosenproducts,
+            emptyitems: this.props.emptycart
+        }
+
+
+        return (
+            <header>
+                <div>
+                    <Nav.Item>
+                        <Container>
+                            <Row>
+
+                                <Col xs={6} md={4}>
+                                    <LinkContainer to='/'>
+                                        <Image src={require("../../images/logo-mpez.png")} roundedCircle className={classes.LogoImage} />
+                                    </LinkContainer>
+                                </Col>
+
+                            </Row>
+                        </Container>
+                    </Nav.Item>
+                </div>
+                <div className={classes.navLinks}>
+                    <Nav.Item>
+                        <LinkContainer to='/'>
+                            <Nav.Link>About Us</Nav.Link>
                         </LinkContainer>
-                        <div className={classes.badge}>1</div>
-                    </div>
-                </Nav.Item>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <LinkContainer to='/events/mainpage'>
+                            <Nav.Link>Events</Nav.Link>
+                        </LinkContainer>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <LinkContainer to='/contact'>
+                            <Nav.Link>Contact us</Nav.Link>
+                        </LinkContainer>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <LinkContainer to='/createnewevent'>
+                            <Nav.Link>Create Event</Nav.Link>
+                        </LinkContainer>
+                    </Nav.Item>
+                </div>
+                <div>
+                    <Nav.Item className={classes.navButtons}>
+                        <button className={classes.outlineButton}>Log in</button>
+                        <button className={classes.filledButton}>Register</button>
+                        <div className="cart">
+                            <img src={require("../../images/cart2.png")} className={classes.CartImage} onClick={this.openCartModal}/>
+                            <div className={classes.badge}>1</div>
+                        </div>
+                    </Nav.Item>
+                    <Cart show={this.state.cartModal} onHide={this.onCloseCartModal} {...cartAttributes}/>
+                </div>
+
                 
-            </div>   
-           
-          
 
-        </header>
+            </header>
 
 
-    )
+        )
+    }
 }
 
 

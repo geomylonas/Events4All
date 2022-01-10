@@ -114,6 +114,11 @@ color: #F6F4F2;
     width: 40px; 
 }
 
+.CartImage:hover{
+    cursor: pointer;
+
+}
+
 .cart {
     width: 60px;
     position: relative;
@@ -129,3 +134,5 @@ color: #F6F4F2;
     font-size: 12px;
     top: 25px;
 }
+
+

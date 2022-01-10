@@ -101,6 +101,7 @@ namespace WebApplication.Controllers
                 return BadRequest(ModelState);
             }
 
+           
             UnitOfWork.Events.Add(@event);
             await UnitOfWork.Complete();
 

@@ -3,29 +3,60 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import classes from './EventInfo.module.css';
 import { Image, Card, Button, Modal } from "react-bootstrap";
-import PurchaseModal from './PurchaseModal';
+import Cart from '../../components/Cart/Cart';
+import { propTypes } from 'react';
 
 
 
-function EventInfo() {
+function EventInfo(props) {
     const { id } = useParams();
     const [data, setData] = useState([]);
+    const [product, setProduct] = useState([]);
+    const [cartModal, setCartModal] = useState(false);
+    const [checked, setChecked] = useState(false);
+
+
 
     useEffect(() => {
         fetchEvent();
     }, []);
     const fetchEvent = () => {
-        axios
-            .get(
-                `https://localhost:44359/api/Events/?id=${id}`
-            )
-            .then((res) => {
-                setData(res.data);
-            })
-            .catch((err) => console.log(err));
-    };
-    const [modalShow, setModalShow] = React.useState(false);
+        if (id != null) {
 
+
+            axios
+                .get(
+                    `https://localhost:44359/api/Events/?id=${id}`
+                )
+                .then((res) => {
+                    setData(res.data);
+                })
+                .catch((err) => console.log(err));
+        }
+    };
+
+
+    // const addToCart = (ev) => {
+    //     setProduct(ev);
+    //     console.log(ev);
+    // }
+
+    function openCartModal() {
+        setCartModal(true);
+    }
+
+    function onCloseCartModal() {
+        setCartModal(false);
+    }
+
+    function handleChange(e){
+        const price = e.target.name;
+        const isChecked = e.target.checked;
+        console.log(price);
+    }
+
+    if(data.length == 0) return null;
+    const selectedProduct = { id: data.Id, title: data.Title}
     return (
         <div className={classes.eventSection} key={data.Id}>
 
@@ -38,19 +69,28 @@ function EventInfo() {
                     <div className={classes.categorytickets}>
                         <div>
                             <h6>Category</h6>
-                            <div>Category</div>
-                            <div>Category</div>
-
+                            {data.Tickets.map(p => (
+                                
+                                <div key={p.Id}>{p.Category}</div>
+                                
+                            ))}
                         </div>
                         <div>
                             <h6>Price</h6>
-                            <div>Price</div>
-                            <div>Price</div>
+                            {data.Tickets.map(p => (
+
+                                <div key={p.Id}>{p.Price}
+                                <input type="checkbox" name={p.Price} checked={p.Price} onChange={() => handleChange()}/>
+                                </div>
+                                
+                            ))}
                         </div>
                     </div>
-                    <button className={classes.filledButton} onClick={() => setModalShow(true)}>Add to Cart</button>
+                    <button className={classes.filledButton} onClick={() => props.addToCart(selectedProduct)}>Add to Cart</button>
+
                 </div>
             </div>
+            {/* <Cart productchosen={product} onClick={onCloseCartModal} show={cartModal}/> */}
 
 
 
@@ -71,10 +111,7 @@ function EventInfo() {
                 </Card>
             </div>
 
-            <PurchaseModal
-                show={modalShow}
-                onHide={() => setModalShow(false)}
-            />
+
 
         </div>
 
