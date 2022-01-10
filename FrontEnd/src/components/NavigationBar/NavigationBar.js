@@ -74,7 +74,7 @@ class NavigationBar extends React.Component {
                         <button className={classes.filledButton}>Register</button>
                         <div className="cart">
                             <img src={require("../../images/cart2.png")} className={classes.CartImage} onClick={this.openCartModal}/>
-                            <div className={classes.badge}>1</div>
+                            <div className={classes.badge}>{1}</div>
                         </div>
                     </Nav.Item>
                     <Cart show={this.state.cartModal} onHide={this.onCloseCartModal} {...cartAttributes}/>
