@@ -25,11 +25,11 @@ namespace WebApplication.Controllers
 
         // GET: api/Events/0/5
         [Route("api/Events/{pageNumber}/{pageSize}")]
-        public IEnumerable<Event> GetAllByPage(int pageNumber, int pageSize)
+        public  async Task<IEnumerable<Event>> GetAllByPage(int pageNumber, int pageSize)
         {
             try
             {
-                return UnitOfWork.Events.GetByPage(pageNumber, pageSize);
+                return await Task.FromResult(UnitOfWork.Events.GetByPage(pageNumber, pageSize));
             }catch (Exception ex)
             {
                 Debug.Write(ex);
@@ -39,14 +39,21 @@ namespace WebApplication.Controllers
 
         // GET: api/Events/0/5/3
         [Route("api/Events/{pageNumber}/{pageSize}/{eventCategoryId}")]
-        public IEnumerable<Event> GetAllByPageByCategory(int pageNumber, int pageSize, int eventcategoryId)
+        public async Task<IEnumerable<Event>> GetAllByPageByCategory(int pageNumber, int pageSize, int eventcategoryId)
         {
             
             
-                return UnitOfWork.Events.GetByCategory(pageNumber, pageSize, eventcategoryId);
+                return await Task.FromResult(UnitOfWork.Events.GetByCategory(pageNumber, pageSize, eventcategoryId));
            
         }
 
+        // GET: api/Events/organizer/5
+        [ResponseType(typeof(Event))]
+        public async Task<IEnumerable<Event>> GetEventsByOrganizerId(int id)
+        {
+             return await Task.FromResult(UnitOfWork.Events.GetByOrganizerId(id));
+           
+        }
 
         // GET: api/Events/5
         [ResponseType(typeof(Event))]
