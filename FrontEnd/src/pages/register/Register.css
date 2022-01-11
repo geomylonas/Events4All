@@ -1,0 +1,26 @@
+.sectionForm{
+    display: flex;
+    align-items: center;
+    
+}
+
+.sectionForm div{
+    background-color: #C6AD8F;
+    color: #425664;
+    
+}
+
+
+
+
+.sectionForm div button{
+    background-color: #425664;
+    border-color: #425664;
+}
+
+
+.registerArea{
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+}

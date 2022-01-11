@@ -38,10 +38,6 @@ function EventInfo(props) {
     };
 
 
-    // const addToCart = (ev) => {
-    //     setProduct(ev);
-    //     console.log(ev);
-    // }
 
     function openCartModal() {
         setCartModal(true);

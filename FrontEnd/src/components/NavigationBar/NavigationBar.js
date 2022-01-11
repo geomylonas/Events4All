@@ -27,7 +27,8 @@ class NavigationBar extends React.Component {
             chosenproducts: this.props.chosenproducts,
             emptyitems: this.props.emptycart,
             addquantity: this.props.addquantity,
-            subtractquantity: this.props.subtractquantity
+            subtractquantity: this.props.subtractquantity,
+            removeproduct: this.props.removeproduct
         }
 
         let badge;
@@ -78,7 +79,9 @@ class NavigationBar extends React.Component {
                 <div>
                     <Nav.Item className={classes.navButtons}>
                         <button className={classes.outlineButton}>Log in</button>
+                        <LinkContainer to='/register'>
                         <button className={classes.filledButton}>Register</button>
+                        </LinkContainer>
                         <div className="cart">
                             <img src={require("../../images/cart2.png")} className={classes.CartImage} onClick={this.openCartModal}/>
                             {badge}

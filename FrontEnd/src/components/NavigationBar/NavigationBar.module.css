@@ -39,10 +39,15 @@ transform: scale(1.2);
 color: #F6F4F2;
 }
 
+.navLinks a:focus{
+    transform: scale(1.2);
+    color: #F6F4F2;
+}
+    
 
 
 .navButtons{
-    width: 400px;
+    width: 250px;
     flex-direction: row;
     margin-right: 20px;
     display: flex;

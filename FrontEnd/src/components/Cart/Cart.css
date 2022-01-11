@@ -4,19 +4,53 @@
 .cartitem{
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    padding: 10px 10px;
+}
+.cartitem:nth-child(odd){
+    background-color: #42566457;
 }
 
 .cartitem div{
     display: flex;
-    flex-direction: column;
-    flex: 1;
     align-items: center;
+    flex-direction: column;
+    justify-content: center;
 }
 
 #cartbuttons{
     display: flex;
-    flex-direction: row;
-    gap: 5px;
     justify-content: center;
+    align-items: center;
+    gap: 5px;
 }
+
+
+#modalbody{
+display: flex;
+flex-direction: column;
+}
+
+#totalPrice{
+    align-self: flex-end;
+}
+
+.title{
+    flex: 3;
+}
+
+.category{
+    flex: 1;
+}
+
+.price{
+    flex: 1;
+}
+
+.remove{
+    flex: 1;
+}
+
+.quantity{
+    flex: 1;
+}
+

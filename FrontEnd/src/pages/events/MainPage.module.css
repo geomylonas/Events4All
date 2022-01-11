@@ -203,13 +203,16 @@
     border-color: #425664;
 }
 
-.purchaseButton:hover{
+.purchaseButton:hover:enabled{
     background-color: #425664;
     color:#C6AD8F;
     border: 1px solid #C6AD8F;
 }
 
-
+.purchaseButton:disabled{
+    opacity: 50%;
+    cursor: auto;
+}
 
 
 .loader {

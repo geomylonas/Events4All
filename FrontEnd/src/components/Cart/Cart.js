@@ -6,7 +6,6 @@ import { render } from "@testing-library/react";
 import "./Cart.css"
 
 export default function Cart(props) {
-
     let cartText;
     if (props.chosenproducts.length == 0) {
         cartText = <h5> Your cart is Empty</h5>
@@ -17,14 +16,14 @@ export default function Cart(props) {
     else {
         cartText = <h5>You have {props.chosenproducts.length} products in your Cart</h5>
     }
-
-    function addQuantity(num){
-        console.log("fff");
-        num++;
-        
+    
+    
+    
+    let totalPriceText;
+    if(props.chosenproducts.reduce((c, p) => c + (p.count*p.ticketPrice), 0)){
+        totalPriceText=<p>Total Price: {props.chosenproducts.reduce((c, p) => c + (p.count*p.ticketPrice), 0)} &euro;</p>
     }
-
-
+   
     return (
         <>
             <Modal 
@@ -37,36 +36,45 @@ export default function Cart(props) {
                         Your selected Events
                     </Modal.Title>
                 </Modal.Header>
-                <Modal.Body >
+                <Modal.Body id="modalbody">
                     {cartText}
                     {
                         props.chosenproducts.map(p => (
-                            <div className="cartitem" key={p.eventId}>
-
-                                <div>
+                                
+                            <div  className="cartitem" key={p.eventId + p.ticketCategory}>
+                                            
+                                <div className="quantity">
                                     <p>Quantity</p>
-                                    <div id="cartbuttons">
-                                        <button onClick={() => props.subtractquantity(p)}>-</button>
-                                        {p.count}
-                                        <button  onClick={() => props.addquantity(p)}>+</button>
-                                    </div>
+                                    <span id="cartbuttons">
+                                        <p><button onClick={() => props.subtractquantity(p)}>-</button></p>
+                                        <p>{p.count}</p>
+                                        <p><button  onClick={() => props.addquantity(p)}>+</button></p>
+                                    </span>
                                 </div>
-                                <div>
+                                <div className="title">
                                     <p>Title</p>
                                     <p>{p.eventTitle}</p>
                                 </div>
-                                <div>
+                                <div className="category">
                                     <p>Category</p>
                                     <p>{p.ticketCategory}</p>
                                 </div>
-                                <div>
+                                <div className="price">
                                     <p>Price</p>
                                     <p>{p.ticketPrice} &euro;</p>
                                 </div>
+                                <div className="remove">
+                                <button onClick={() => props.removeproduct(p)}>Remove</button>
+                                </div>
                                 <hr/>
                             </div>
+                        
                         ))
                     }
+                    <div id="totalPrice">
+                        {totalPriceText} 
+                    </div>
+                    
 
 
 

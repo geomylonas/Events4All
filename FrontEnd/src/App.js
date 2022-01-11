@@ -13,6 +13,7 @@ import ContactUs from './pages/contact/contactUs';
 import FooterDiv from './components/Footer/Footer';
 import UpButton from './components/UpButton/UpButton';
 import Cart from './components/Cart/Cart';
+import RegisterPage from './pages/register/Register';
 
 
 class App extends Component {
@@ -45,6 +46,7 @@ class App extends Component {
   addQuantity = (p) => {
     var num = ++p.count
       this.setState({num})  
+      
   }
 
   subtractQuantity = (p) => {
@@ -55,6 +57,12 @@ class App extends Component {
     
   }
 
+  removeProduct = (p) =>{
+    console.log(p);
+    console.log("fffffff");
+    this.state.cartItems.splice(this.state.cartItems.indexOf(p),1);
+    this.setState({cartItems: this.state.cartItems})
+  }
 
   emptyCart = () =>{
     this.setState({cartItems: []})
@@ -66,7 +74,8 @@ class App extends Component {
       chosenproducts: this.state.cartItems,
       emptycart: this.emptyCart,
       addquantity: this.addQuantity,
-      subtractquantity: this.subtractQuantity
+      subtractquantity: this.subtractQuantity,
+      removeproduct: this.removeProduct
     }
 
 
@@ -80,6 +89,7 @@ class App extends Component {
           <Route path="/events/info/:id" element={<EventInfo addToCart={this.addToCart}/>} />
           <Route path="/createnewevent" element={<CreateNewEvent />} />
           <Route path="/contact" element={<ContactUs />} />
+          <Route path="/register" element={<RegisterPage />} />
         </Routes>
         <UpButton />
         <FooterDiv />

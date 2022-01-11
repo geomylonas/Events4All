@@ -62,7 +62,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: api/Events/5
-        [Authorize]
+        //[Authorize]
         [ResponseType(typeof(Event))]
         public async Task<IHttpActionResult> GetEvent(int id)
         {

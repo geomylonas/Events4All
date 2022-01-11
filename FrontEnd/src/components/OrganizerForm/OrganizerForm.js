@@ -1,15 +1,15 @@
 import React from "react";
-import { Form, Col, Row, Card, Button } from "react-bootstrap";
-import classes from "./CustomerForm.module.css";
+import { Form, Col, Row, Card } from "react-bootstrap";
+import "./OrganizerForm.css";
 
 
 
-function CustomerForm() {
+function OrganizerForm() {
     return (
-        <div className={classes.customerBoxForm}>
+        <div className="organizerBoxForm">
         <Card style={{ width: '500px', height: '500px' }} >
-            <div className={classes.customerForm}>
-                <Card.Title className={classes.title}>Become A Customer</Card.Title>
+            <div className="organizerForm">
+                <Card.Title className="organizertitle">Become A Partner</Card.Title>
                 <Form>
                     <Row>
                         <Col>
@@ -55,16 +55,8 @@ function CustomerForm() {
                         />
                         <label htmlFor="confirmPasswordCustom">Confirm Password</label>
                     </Form.Floating>
-                    <Form.Floating style={{ margin: "15px 0" }}>
-                        <Form.Control
-                            id="dateOfBirth"
-                            type="text"
-                            placeholder="dateOfBirth"
-                        />
-                        <label htmlFor="dateOfBirth">Date Of Birth</label>
-                    </Form.Floating>
-                    <div  className={classes.customerButton}>
-                        <button className={classes.filledButton}>Register</button>
+                    <div  className="organizerButton">
+                        <button className="organizerfilledButton">Register</button>
                     </div>
                 </Form >
             </div>
@@ -74,4 +66,4 @@ function CustomerForm() {
 }
 
 
-export default CustomerForm;
+export default OrganizerForm;
