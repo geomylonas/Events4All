@@ -23,7 +23,7 @@ namespace WebApplication.Repositories
             return await _context.Set<T>().FindAsync(id);
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public async Task<ICollection<T>> GetAll()
         {
             return await _context.Set<T>().ToListAsync();
         }
@@ -44,13 +44,7 @@ namespace WebApplication.Repositories
 
         public void Update(T entity)
         {
-            //if (_context.Entry(entity).State == EntityState.Detached)
-            //{
-            //    _context.Set<T>().Attach(entity);
-            //}
-            //_context.Entry(entity).CurrentValues.SetValues(entity);
             _context.Entry(entity).State = EntityState.Modified;
-
         }
     }
 }

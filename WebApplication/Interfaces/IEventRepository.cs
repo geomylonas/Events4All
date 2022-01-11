@@ -1,4 +1,5 @@
 ﻿
+
 using DAL.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,10 @@ namespace WebApplication.Interfaces
 {
     public interface IEventRepository : IGenericRepository<Event>
     {
-        IEnumerable<Event> GetByPage(int pageNumber, int pageSize);
-        IEnumerable<Event> GetByCategory(int pageNumber, int pageSize, int eventCategoryId);
+        ICollection<Event> GetByPage(int pageNumber, int pageSize);
+        ICollection<Event> GetByCategory(int pageNumber, int pageSize, int eventCategoryId);
 
-        IEnumerable<Event> GetByOrganizerId(int id);
+        ICollection<Event> GetByOrganizerId(string id);
 
     }
 }

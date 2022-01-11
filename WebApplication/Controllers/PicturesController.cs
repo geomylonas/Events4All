@@ -23,7 +23,7 @@ namespace WebApplication.Controllers
         private IUnitOfWork UnitOfWork = WindsorConfig.RegisterContainer();
 
         // GET: api/Pictures
-        public async Task<IEnumerable<Picture>> GetPictures()
+        public async Task<ICollection<Picture>> GetPictures()
         {
             return await UnitOfWork.Pictures.GetAll();
         }

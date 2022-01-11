@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -328,10 +329,12 @@ namespace WebApplication.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-
+            var user = new Organizer() { UserName = model.Email, Email = model.Email , FirstName=model.FirstName , LastName = model.LastName, Mobile=model.Mobile };
+            
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-
+            //UserManager.AddToRole(user.Id, "Organizer");
+            //var newUser = UserManager.FindByEmail(user.Email);
+            await UserManager.AddToRoleAsync(user.Id, "Organizer");
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
@@ -339,6 +342,35 @@ namespace WebApplication.Controllers
 
             return Ok();
         }
+
+        // POST api/Account/Register/Customer
+        [AllowAnonymous]
+        [Route("Register/Customer")]
+        public async Task<IHttpActionResult> RegisterCustomer(RegisterBindingModelCustomer model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = new Customer() { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Mobile = model.Mobile , DateOfBirth=model.DateOfBirth };
+
+            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+            //UserManager.AddToRole(user.Id, "Organizer");
+            //var newUser = UserManager.FindByEmail(user.Email);
+            await UserManager.AddToRoleAsync(user.Id, "Customer");
+            if (!result.Succeeded)
+            {
+                return GetErrorResult(result);
+            }
+
+            return Ok();
+        }
+
+
+
+
+
 
         // POST api/Account/RegisterExternal
         [OverrideAuthentication]
@@ -371,6 +403,11 @@ namespace WebApplication.Controllers
                 return GetErrorResult(result); 
             }
             return Ok();
+        }
+
+        public static string getUserID()
+        {
+            return System.Web.HttpContext.Current.User.Identity.GetUserId();
         }
 
         protected override void Dispose(bool disposing)

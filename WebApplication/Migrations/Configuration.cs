@@ -1,7 +1,10 @@
 namespace WebApplication.Migrations
 {
     using DAL.Entities;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -28,17 +31,21 @@ namespace WebApplication.Migrations
             //    );
             //
 
-            context.EventCategories.AddOrUpdate(e=>e.Name, new EventCategory { Name = "Concert" } );
-            context.EventCategories.AddOrUpdate(e=>e.Name, new EventCategory { Name = "Business Meeting" } );
-            context.EventCategories.AddOrUpdate(e=>e.Name, new EventCategory { Name = "Convention" } );
-            context.EventCategories.AddOrUpdate(e=>e.Name, new EventCategory { Name = "Party" } );
-            context.EventCategories.AddOrUpdate(e=>e.Name, new EventCategory { Name = "Lecture" } );
-            context.EventCategories.AddOrUpdate(e=>e.Name, new EventCategory { Name = "Other" } );
+
+            context.Roles.AddOrUpdate(r => r.Name, new IdentityRole { Name = "Organizer" });
+            context.Roles.AddOrUpdate(r => r.Name, new IdentityRole { Name = "Customer" });
+
+            context.EventCategories.AddOrUpdate(e => e.Name, new EventCategory { Name = "Concert" });
+            context.EventCategories.AddOrUpdate(e => e.Name, new EventCategory { Name = "Business Meeting" });
+            context.EventCategories.AddOrUpdate(e => e.Name, new EventCategory { Name = "Convention" });
+            context.EventCategories.AddOrUpdate(e => e.Name, new EventCategory { Name = "Party" });
+            context.EventCategories.AddOrUpdate(e => e.Name, new EventCategory { Name = "Lecture" });
+            context.EventCategories.AddOrUpdate(e => e.Name, new EventCategory { Name = "Other" });
 
             context.SaveChanges();
+           
 
-
-            context.Events.AddOrUpdate(e => e.Title, new Event { Title = "Bon Jovi", Description = "Rock concert of Bon Jovi Band", DateOfEvent = new DateTime(2021, 12, 25), MaxTickets = 60000, PlaceName = "OAKA", PlaceAddress = "OAKA stadium EIRHNH",EventCategory=context.EventCategories.Find(1) });
+            context.Events.AddOrUpdate(e => e.Title, new Event { Title = "Bon Jovi", Description = "Rock concert of Bon Jovi Band", DateOfEvent = new DateTime(2021, 12, 25), MaxTickets = 60000, PlaceName = "OAKA", PlaceAddress = "OAKA stadium EIRHNH", EventCategory = context.EventCategories.Find(1)});
             context.Events.AddOrUpdate(e => e.Title, new Event { Title = "Def Leppard", Description = "Rock concert of Def Leppard Band", DateOfEvent = new DateTime(2021, 6, 15), MaxTickets = 30000, PlaceName = "KARAISKAKH STADIUM", PlaceAddress = "FALIRO", EventCategory = context.EventCategories.Find(1) });
             context.Events.AddOrUpdate(e => e.Title, new Event { Title = "Queensryche", Description = "Acoustic concert from Queensryche", DateOfEvent = new DateTime(2021, 9, 5), MaxTickets = 5000, PlaceName = "SEF STADIUM", PlaceAddress = "FALIRO", EventCategory = context.EventCategories.Find(1) });
             context.Events.AddOrUpdate(e => e.Title, new Event { Title = "METALLICA", Description = "Rock concert from Metallica", DateOfEvent = new DateTime(2022, 1, 1), MaxTickets = 45000, PlaceName = "MALAKASA", PlaceAddress = "MALAKASA", EventCategory = context.EventCategories.Find(1) });
@@ -70,9 +77,9 @@ namespace WebApplication.Migrations
             context.Events.AddOrUpdate(e => e.Title, new Event { Title = "Intrasoft Patras Bootcamp 2024", Description = "Bootcamp in Patras organized by Intrasoft", DateOfEvent = new DateTime(2024, 1, 5), MaxTickets = 200, PlaceName = "Instrasoft Patras Building", PlaceAddress = "Old National Road", EventCategory = context.EventCategories.Find(5) });
             context.Events.AddOrUpdate(e => e.Title, new Event { Title = "Exotic art presentation", Description = "Exotic art presentation in Athens on 2022", DateOfEvent = new DateTime(2022, 5, 15), MaxTickets = 150, PlaceName = "some nice Building", PlaceAddress = "Athens Downtown", EventCategory = context.EventCategories.Find(6) });
             context.Events.AddOrUpdate(e => e.Title, new Event { Title = "Athens Erotica 2022", Description = "Exotic erotic art presentation and performing in Athens on 2022", DateOfEvent = new DateTime(2022, 3, 2), MaxTickets = 550, PlaceName = "some nice club", PlaceAddress = "Monastiraki", EventCategory = context.EventCategories.Find(6) });
-           
+
             context.SaveChanges();
-           
+
             context.Pictures.AddOrUpdate(p => p.Url, new Picture { Url = "Someurl1", Event = context.Events.Find(1), });
             context.Pictures.AddOrUpdate(p => p.Url, new Picture { Url = "Someurl2", Event = context.Events.Find(2), });
             context.Pictures.AddOrUpdate(p => p.Url, new Picture { Url = "Someurl3", Event = context.Events.Find(3), });
@@ -110,7 +117,7 @@ namespace WebApplication.Migrations
             context.Pictures.AddOrUpdate(p => p.Url, new Picture { Url = "Someurl36", Event = context.Events.Find(30), });
             context.Pictures.AddOrUpdate(p => p.Url, new Picture { Url = "Someurl37", Event = context.Events.Find(31), });
             context.Pictures.AddOrUpdate(p => p.Url, new Picture { Url = "Someurl38", Event = context.Events.Find(32), });
-         
+
 
             context.Categories.AddOrUpdate(T => new { T.Id, T.Name }, new Category { Name = "Normal" });
             context.Categories.AddOrUpdate(T => new { T.Id, T.Name }, new Category { Name = "VIP" });
@@ -172,6 +179,5 @@ namespace WebApplication.Migrations
 
 
         }
-
     }
 }

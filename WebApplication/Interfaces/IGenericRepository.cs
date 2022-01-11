@@ -9,7 +9,7 @@ namespace WebApplication.Interfaces
     public interface IGenericRepository<T> where T : class
     {
         Task<T> Get(int id);
-        Task<IEnumerable<T>> GetAll();
+        Task<ICollection<T>> GetAll();
         void Add(T entity);
         void Delete(T entity);
         void Update(T entity);
