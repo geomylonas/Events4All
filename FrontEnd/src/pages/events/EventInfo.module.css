@@ -34,7 +34,7 @@
 }
 
 
-.filledButton:hover{
+.filledButton:hover:enabled{
     color: #425664;
     background-color:#C6AD8F;
     border: 1px solid #425664;    
@@ -109,9 +109,50 @@ font-weight: bold;
 
 
 .categorytickets div div{
-    padding: 15px 15px;
-    background-color: #425664; ;
+    background-color: #425664;
     border-radius: 5px;
     color: #F6F4F2;
     
+}
+
+
+
+.categorydiv{
+    padding: 15px 15px;
+}
+
+
+.filledButton:disabled{
+    opacity: 50%;
+    cursor: auto;
+}
+
+
+
+.categorytickets div div input[type="radio"]{
+    display: none;
+}
+
+.categorytickets div div input[type="radio"]:checked+label{
+    background-color: #425664;
+    color:#F6F4F2;
+}
+
+
+.categorytickets div div label:hover{
+    background-color: #425664;
+    color:#F6F4F2;
+}
+
+.categorytickets div div label{
+    padding: 15px 15px;
+    background-color: #C6AD8F;
+    color: #425664;
+    border: 1px solid #425664;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: color .15s ease-in-out,
+    background-color .15s ease-in-out,
+    border-color .15s ease-in-out,
+    box-shadow .15s ease-in-out;
 }

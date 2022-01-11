@@ -2,8 +2,6 @@
 import './App.css';
 import NavigationBar from './components/NavigationBar/NavigationBar';
 import { Routes, Route } from 'react-router-dom';
-import CategoryComponent from './pages/categories/Components/CategoriesList';
-import AllCategories from './pages/categories/views/AllCategories';
 import Homepage from './pages/homepage/homepage';
 import { Component, React, useLayoutEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
@@ -21,13 +19,42 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state={
-      cartItems: []
+      cartItems: [],
     }
   }
   addToCart = (p) => {
-    this.setState({cartItems: [...this.state.cartItems, p]})
-    console.log(this.state.cartItems);
+    const cartItems = this.state.cartItems.slice();
+    let alreadyInCart;
+    
+    cartItems.map(item => {
+      if(item.eventId == p.eventId && item.ticketCategory == p.ticketCategory){
+        item.count++
+        alreadyInCart=true;
+      }
+    });
+    if(p.ticketPrice == 0){
+      console.log(p.ticketPrice)
+      alreadyInCart=true;
+    }
+    if(!alreadyInCart){
+      cartItems.push({...p, count: 1});
+    } 
+    this.setState({cartItems})
   }
+
+  addQuantity = (p) => {
+    var num = ++p.count
+      this.setState({num})  
+  }
+
+  subtractQuantity = (p) => {
+    if(p.count>1){
+      var num = --p.count
+      this.setState({num})  
+    }
+    
+  }
+
 
   emptyCart = () =>{
     this.setState({cartItems: []})
@@ -37,8 +64,12 @@ class App extends Component {
   render() {
     const attributes = {
       chosenproducts: this.state.cartItems,
-      emptycart: this.emptyCart
+      emptycart: this.emptyCart,
+      addquantity: this.addQuantity,
+      subtractquantity: this.subtractQuantity
     }
+
+
     return (
       <div className="customContainer">
 

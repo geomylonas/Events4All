@@ -3,7 +3,6 @@ import { Link, useParams } from 'react-router-dom';
 import classes from './CreateNewEvent.module.css';
 import { FloatingLabel, Form, Button, Dropdown } from "react-bootstrap";
 import axios from 'axios';
-import TicketCategories from './components/ticketcategories';
 
 
 

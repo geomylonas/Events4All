@@ -49,6 +49,7 @@ namespace WebApplication.Controllers
 
         // GET: api/Events/organizer/5
         [ResponseType(typeof(Event))]
+        [Route("api/Events/organizer/{Id}")]
         public async Task<IEnumerable<Event>> GetEventsByOrganizerId(int id)
         {
              return await Task.FromResult(UnitOfWork.Events.GetByOrganizerId(id));

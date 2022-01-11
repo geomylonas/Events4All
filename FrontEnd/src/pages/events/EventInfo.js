@@ -11,9 +11,11 @@ import { propTypes } from 'react';
 function EventInfo(props) {
     const { id } = useParams();
     const [data, setData] = useState([]);
-    const [product, setProduct] = useState([]);
     const [cartModal, setCartModal] = useState(false);
-    const [checked, setChecked] = useState(false);
+    const [checked, setChecked] = useState(0);
+    const [category, setCategory] = useState('')
+    const [ticketId, setTicketId] = useState(0)
+    const [disabled, setDisabled] = useState(true);
 
 
 
@@ -49,14 +51,20 @@ function EventInfo(props) {
         setCartModal(false);
     }
 
-    function handleChange(e){
-        const price = e.target.name;
-        const isChecked = e.target.checked;
-        console.log(price);
+    function handleChange(p) {
+        const price = p.Price;
+        const pr = p;
+        const ticketId = p.Id
+        const chosenCategory = p.Category.Name;
+        setChecked(price);
+        setCategory(chosenCategory);
+        console.log(pr)
+        setDisabled(false);
     }
 
-    if(data.length == 0) return null;
-    const selectedProduct = { id: data.Id, title: data.Title}
+
+    if (data.length == 0) return null;
+    const selectedProduct = { eventId: data.Id, eventTitle: data.Title, ticketId: ticketId, ticketPrice: checked, ticketCategory: category }
     return (
         <div className={classes.eventSection} key={data.Id}>
 
@@ -70,27 +78,27 @@ function EventInfo(props) {
                         <div>
                             <h6>Category</h6>
                             {data.Tickets.map(p => (
-                                
-                                <div key={p.Id}>{p.Category}</div>
-                                
+
+                                <div className={classes.categorydiv} key={p.Category.Name}>{p.Category.Name}</div>
+
                             ))}
                         </div>
                         <div>
                             <h6>Price</h6>
                             {data.Tickets.map(p => (
 
-                                <div key={p.Id}>{p.Price}
-                                <input type="checkbox" name={p.Price} checked={p.Price} onChange={() => handleChange()}/>
+                                <div key={p.Category.Name}>
+                                    <input type="radio" name={p.Price} id={p.Price} checked={checked == p.Price} onChange={() => handleChange(p)} />
+                                    <label htmlFor={p.Price}>{p.Price}</label>
                                 </div>
-                                
+
                             ))}
                         </div>
                     </div>
-                    <button className={classes.filledButton} onClick={() => props.addToCart(selectedProduct)}>Add to Cart</button>
+                    <button className={classes.filledButton} onClick={() => props.addToCart(selectedProduct)} disabled={disabled}>Add to Cart</button>
 
                 </div>
             </div>
-            {/* <Cart productchosen={product} onClick={onCloseCartModal} show={cartModal}/> */}
 
 
 

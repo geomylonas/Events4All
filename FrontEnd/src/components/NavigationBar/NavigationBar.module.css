@@ -4,11 +4,11 @@
     position: relative;
     z-index: 100;
     background-image: transparent;
-    transition: transform 300ms ease-in-out 25ms;
+    transition: transform 200ms ease-in-out 25ms;
 }
 
 .LogoImage:hover{
-transform: scale(3);
+transform: scale(1.5);
 cursor: pointer;
 
 
@@ -134,5 +134,6 @@ color: #F6F4F2;
     font-size: 12px;
     top: 25px;
 }
+
 
 

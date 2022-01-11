@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import DeleteModal from './DeleteEventModal';
 import { act } from 'react-dom/test-utils';
+import EventFilter from './components/EventFilter';
 
 
 class FeaturedEvents extends React.Component {
@@ -17,57 +18,60 @@ class FeaturedEvents extends React.Component {
       openModalPurchase: false,
       activeItem: '',
       loading: false,
-      checked: 0,
       page: 0,
-      prevY: 0
+      prevY: 0,
+      eventCategoryId: 0,
+      stoploading: false
     };
   }
 
 
   
 
-  getEvents(page, eventcategory) {
-    console.log(eventcategory);
-      console.log(this.state.checked)
-      this.setState({ loading: true });
-      axios.get(`https://localhost:44359/api/Events/${page}/12/`
-      )
-      .then((res) => {
-        this.setState({ events: [...this.state.events, ...res.data] });
-        this.setState({ loading: false });
+  getEvents(page) {
+    
+      if(this.state.eventCategoryId == 0){
+
+        this.setState({ loading: true });
+        axios.get(`https://localhost:44359/api/Events/${page}/12/`
+        )
+        .then((res) => {
+          this.setState({ events: [...this.state.events, ...res.data] });
+          this.setState({ loading: false });
+          
+        })
+        .catch((err) => {
+          console.log(err);
+          this.setState({ loading: false });
+          this.setState({ stoploading: true });
+          
+        });
+      }
+      else{
         
-      })
-      .catch((err) => {
-        console.log(err);
-        
-      });
+        this.setState({ loading: true });
+        axios.get(`https://localhost:44359/api/Events/${page}/12/${this.state.eventCategoryId}`
+        )
+        .then((res) => {
+          this.setState({ events: [...this.state.events, ...res.data] });
+          this.setState({ loading: false });
+          
+        })
+        .catch((err) => {
+          console.log(err);
+          this.setState({ loading: false });
+          this.setState({ stoploading: true });
+          
+        });
+      }
     
 
   };
 
 
-  getEventCategories(){
-    axios.get(`https://localhost:44359/api/EventCategories`
-    )
-    .then((res) => {
-      this.setState({ eventcategories: [...this.state.eventcategories, ...res.data] });
-      console.log(this.state.eventcategories)
-    })
-    .catch((err) => {
-      console.log(err);
-      
-    });
-  }
-
-
-
-
-
 
   componentDidMount() {
-    this.getEventCategories();
-    this.getEvents(this.state.page, this.state.checked);     
-
+    this.getEvents(this.state.page);     
       var options = {
         root: null,
         rootMargin: "0px",
@@ -80,20 +84,18 @@ class FeaturedEvents extends React.Component {
         this.observer.observe(this.loadingRef);
         console.log(this.state.events.length);
           
-     
   }
 
 
   handleObserver(entities, observer) {
     const y = entities[0].boundingClientRect.y;
-    if (this.state.prevY > y) {
+    if (this.state.prevY > y && !this.state.stoploading) {
       const currentPage = (this.state.events.length/12);
       this.getEvents(currentPage);
       this.setState({ page: currentPage });
       console.log(currentPage);
     }
     this.setState({ prevY: y });
-    console.log(this.state.prevY);
   }
 
   addToCart = (ev) =>{
@@ -113,36 +115,13 @@ class FeaturedEvents extends React.Component {
   }
 
 
-  showEventCategories(){
-    if(!this.state.openList){
-        this.setState({openList: true});
-        console.log("hey true");
-    }
-    else {
-        this.setState({openList: false});
-        console.log("hey");
-    }
-}
 
-componentDidUpdate(prevState, prevProps){
-  if(prevProps.checked !== this.state.checked){
-    console.log(prevProps.checked)
-    console.log(this.state.checked)
-    console.log("HSHEFH")
-
-  }
-
-}
-
-
-
-selectCategory(cat){
-   const {name, value} = cat.target;
-   this.setState({[name]: value});
-   this.setState({checked: name})
-   this.state.checked = name;
-   console.log(this.state.checked)
-   
+eventCategoryFilter(cat){
+  console.log(cat + " hiiiii");
+  this.state.eventCategoryId = cat;
+  this.setState({stoploading: false})
+  console.log(this.state.eventCategoryId + " hfehdf")
+  this.setState({events: [], page: 0})
 }
 
   render() {
@@ -151,52 +130,49 @@ selectCategory(cat){
       margin: "30px"
     };
     const loadingTextCSS = { display: this.state.loading ? "block" : "none" };
+
+ 
     return (
 
-
+      
+      <div>
+        <div className={classes.filter}>
+          <EventFilter  eventcategory={(cat) => this.eventCategoryFilter(cat)} />
+        </div>
       <div className={classes.allEvents}>
-        {/* <div onClick={() => this.showEventCategories}>
-                Click
-            
-                {this.state.eventcategories.map(cat =>(
-                <div key={cat.Id}>
-                <input type="radio" value={cat.Id} name={cat.Id} checked={this.state.checked == cat.Id} onChange={(cat) =>this.selectCategory(cat)}/>
-                <label htmlFor={cat}>{cat.Name}</label>
-                </div>
-                ))}
-            
-            </div> */}
-            
         {this.state.events.map(ev => (
-          
-            <div className={classes.individualSampleEvent} key={ev.Id}>
-              {ev.Id}
-              <Link to={`/events/info/${ev.Id}`}>
-                <img src="https://images.pexels.com/photos/3171837/pexels-photo-3171837.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" className={classes.eventPicture}/>
-              </Link>
-              <div className={classes.sampleEventBody}>
-                <h4>{ev.Title}</h4>
-                <p className={classes.overflow}>{ev.Description}</p>
-                <div>
-                  <Link to={`/events/info/${ev.Id}`}>
-                    <button className={classes.detailsButton}>Details</button>
-                  </Link>
-                  <button className={classes.purchaseButton} onClick={() => this.addToCart(ev)}>Add to Cart</button>
-                </div>
-                  <img className={classes.trashcan} src={require("../../images/trashcan.png")} alt="trashcan" onClick={() => this.onClickButton(ev)} />
+
+          <div className={classes.individualSampleEvent} key={ev.Id}>
+            {ev.Id}
+            <Link to={`/events/info/${ev.Id}`}>
+              <img src="https://images.pexels.com/photos/3171837/pexels-photo-3171837.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" className={classes.eventPicture} />
+            </Link>
+            <div className={classes.sampleEventBody}>
+              <h4>{ev.Title}</h4>
+              <p className={classes.overflow}>{ev.Description}</p>
+              <div>
+                <Link to={`/events/info/${ev.Id}`}>
+                  <button className={classes.detailsButton}>Details</button>
+                </Link>
+                <button className={classes.purchaseButton} onClick={() => this.addToCart(ev)}>Add to Cart</button>
               </div>
+              <img className={classes.trashcan} src={require("../../images/trashcan.png")} alt="trashcan" onClick={() => this.onClickButton(ev)} />
+            </div>
           </div>
 
         ))}
         <DeleteModal eventchosen={this.state.activeItem.Id} show={this.state.openModal} onHide={this.onCloseModal} />
 
 
+       
+         
+        </div>
         <div
           ref={loadingRef => (this.loadingRef = loadingRef)}
           style={loadingCSS}
-          >
-          <span style={loadingTextCSS}>Loading....</span>
-        </div>
+        >
+          <div className={classes.loader} style={loadingTextCSS}></div>
+      </div>
       </div>
 
     );

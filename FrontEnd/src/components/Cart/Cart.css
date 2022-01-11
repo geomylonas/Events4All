@@ -1,0 +1,22 @@
+
+
+
+.cartitem{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.cartitem div{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+}
+
+#cartbuttons{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    justify-content: center;
+}

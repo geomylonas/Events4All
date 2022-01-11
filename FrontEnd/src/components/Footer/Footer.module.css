@@ -1,6 +1,33 @@
 /* white: #F6F4F2, mpez: #C6AD8F, dark: #425664 */
 
 footer{
-    background-color: red;
-    margin: 25px 0;
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 0;
+    gap: 20px;
+    border-top: 1px solid #425664;
+}    
+
+.image {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px
 }
+
+
+footer div {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+footer img{
+    width: 100px;
+}
+
+
+
