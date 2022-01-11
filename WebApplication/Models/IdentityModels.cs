@@ -27,11 +27,11 @@ namespace WebApplication.Models
 
     }
 
-    public class ApplicationDbContext : IdentityDbContext<Person>,IApplicationDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>,IApplicationDbContext
     {
         
         public ApplicationDbContext()
-            : base("EventDbStringV3", throwIfV1Schema: false)
+            : base("EventDbStringV4", throwIfV1Schema: false)
         {
         }
 

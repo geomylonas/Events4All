@@ -252,29 +252,13 @@
     <Compile Include="Interfaces\IPurchaseRepository.cs" />
     <Compile Include="Interfaces\ITicketRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
-    <Compile Include="Migrations\202201042327257_InitialCreate.cs" />
-    <Compile Include="Migrations\202201042327257_InitialCreate.Designer.cs">
-      <DependentUpon>202201042327257_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\202201101606332_InitialCreate.cs" />
+    <Compile Include="Migrations\202201101606332_InitialCreate.Designer.cs">
+      <DependentUpon>202201101606332_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202201050102475_updateDbV1.cs" />
-    <Compile Include="Migrations\202201050102475_updateDbV1.Designer.cs">
-      <DependentUpon>202201050102475_updateDbV1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202201050111222_updateDbV2.cs" />
-    <Compile Include="Migrations\202201050111222_updateDbV2.Designer.cs">
-      <DependentUpon>202201050111222_updateDbV2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202201050131002_updateDbV3.cs" />
-    <Compile Include="Migrations\202201050131002_updateDbV3.Designer.cs">
-      <DependentUpon>202201050131002_updateDbV3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202201050135257_updateDbV4.cs" />
-    <Compile Include="Migrations\202201050135257_updateDbV4.Designer.cs">
-      <DependentUpon>202201050135257_updateDbV4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202201051121599_updateDbV5.cs" />
-    <Compile Include="Migrations\202201051121599_updateDbV5.Designer.cs">
-      <DependentUpon>202201051121599_updateDbV5.cs</DependentUpon>
+    <Compile Include="Migrations\202201102126350_updateDBv1.cs" />
+    <Compile Include="Migrations\202201102126350_updateDBv1.Designer.cs">
+      <DependentUpon>202201102126350_updateDBv1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -393,23 +377,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202201042327257_InitialCreate.resx">
-      <DependentUpon>202201042327257_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201101606332_InitialCreate.resx">
+      <DependentUpon>202201101606332_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202201050102475_updateDbV1.resx">
-      <DependentUpon>202201050102475_updateDbV1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202201050111222_updateDbV2.resx">
-      <DependentUpon>202201050111222_updateDbV2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202201050131002_updateDbV3.resx">
-      <DependentUpon>202201050131002_updateDbV3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202201050135257_updateDbV4.resx">
-      <DependentUpon>202201050135257_updateDbV4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202201051121599_updateDbV5.resx">
-      <DependentUpon>202201051121599_updateDbV5.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201102126350_updateDBv1.resx">
+      <DependentUpon>202201102126350_updateDBv1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

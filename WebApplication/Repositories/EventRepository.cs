@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using WebApplication.Models;
 using WebApplication.Interfaces;
-using DAL.Entities;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using DAL.Entities;
 
 namespace WebApplication.Repositories
 {
@@ -16,20 +16,22 @@ namespace WebApplication.Repositories
         {       
         }
 
-        public IEnumerable<Event> GetByCategory(int pageNumber, int pageSize, int eventCategoryId)
+        public ICollection<Event> GetByCategory(int pageNumber, int pageSize, int eventCategoryId)
         {
            var temp= _context.Set<Event>().Where(e=>e.EventCategory.Id==eventCategoryId);
             return temp.OrderBy(e => e.DateOfEvent).Skip(pageSize * pageNumber).Take(pageSize).ToList();
         }
 
-        public IEnumerable<Event> GetByPage(int pageNumber, int pageSize)
+        public ICollection<Event> GetByPage(int pageNumber, int pageSize)
         {
             return _context.Set<Event>().OrderBy(e => e.DateOfEvent).Skip(pageSize * pageNumber).Take(pageSize).ToList();
         }
 
-        public IEnumerable<Event> GetByOrganizerId(int id)
+        public ICollection<Event> GetByOrganizerId(string id)
         {
-            return _context.Set<Organizer>().Find(id).Events.ToList();
+            var organizer = _context.Set<Organizer>().Find(id);
+            var events = organizer.Events;
+            return events;
         }
 
         public new void Update(Event @event){

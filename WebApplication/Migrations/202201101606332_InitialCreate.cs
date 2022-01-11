@@ -13,11 +13,8 @@ namespace WebApplication.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 50),
-                        Ticket_Id = c.Int(),
                     })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Tickets", t => t.Ticket_Id)
-                .Index(t => t.Ticket_Id);
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.Tickets",
@@ -25,10 +22,13 @@ namespace WebApplication.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Price = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Category_Id = c.Int(),
                         Event_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Categories", t => t.Category_Id)
                 .ForeignKey("dbo.Events", t => t.Event_Id)
+                .Index(t => t.Category_Id)
                 .Index(t => t.Event_Id);
             
             CreateTable(
@@ -42,11 +42,23 @@ namespace WebApplication.Migrations
                         PlaceAddress = c.String(nullable: false, maxLength: 50),
                         DateOfEvent = c.DateTime(nullable: false),
                         MaxTickets = c.Int(nullable: false),
+                        EventCategory_Id = c.Int(),
                         Organizer_Id = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.EventCategories", t => t.EventCategory_Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.Organizer_Id)
+                .Index(t => t.EventCategory_Id)
                 .Index(t => t.Organizer_Id);
+            
+            CreateTable(
+                "dbo.EventCategories",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 50),
+                    })
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.Pictures",
@@ -93,9 +105,6 @@ namespace WebApplication.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
-                        FirstName = c.String(nullable: false, maxLength: 20),
-                        LastName = c.String(nullable: false, maxLength: 20),
-                        Mobile = c.String(maxLength: 20),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
@@ -107,6 +116,9 @@ namespace WebApplication.Migrations
                         LockoutEnabled = c.Boolean(nullable: false),
                         AccessFailedCount = c.Int(nullable: false),
                         UserName = c.String(nullable: false, maxLength: 256),
+                        FirstName = c.String(maxLength: 20),
+                        LastName = c.String(maxLength: 20),
+                        Mobile = c.String(maxLength: 20),
                         DateOfBirth = c.DateTime(),
                         Discriminator = c.String(nullable: false, maxLength: 128),
                     })
@@ -171,11 +183,12 @@ namespace WebApplication.Migrations
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.Events", "Organizer_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.Purchases", "Customer_Id", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Categories", "Ticket_Id", "dbo.Tickets");
             DropForeignKey("dbo.PurchaseDetails", "TicketId", "dbo.Tickets");
             DropForeignKey("dbo.PurchaseDetails", "PurchaseId", "dbo.Purchases");
             DropForeignKey("dbo.Tickets", "Event_Id", "dbo.Events");
             DropForeignKey("dbo.Pictures", "Event_Id", "dbo.Events");
+            DropForeignKey("dbo.Events", "EventCategory_Id", "dbo.EventCategories");
+            DropForeignKey("dbo.Tickets", "Category_Id", "dbo.Categories");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
@@ -187,8 +200,9 @@ namespace WebApplication.Migrations
             DropIndex("dbo.PurchaseDetails", new[] { "PurchaseId" });
             DropIndex("dbo.Pictures", new[] { "Event_Id" });
             DropIndex("dbo.Events", new[] { "Organizer_Id" });
+            DropIndex("dbo.Events", new[] { "EventCategory_Id" });
             DropIndex("dbo.Tickets", new[] { "Event_Id" });
-            DropIndex("dbo.Categories", new[] { "Ticket_Id" });
+            DropIndex("dbo.Tickets", new[] { "Category_Id" });
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
@@ -197,6 +211,7 @@ namespace WebApplication.Migrations
             DropTable("dbo.Purchases");
             DropTable("dbo.PurchaseDetails");
             DropTable("dbo.Pictures");
+            DropTable("dbo.EventCategories");
             DropTable("dbo.Events");
             DropTable("dbo.Tickets");
             DropTable("dbo.Categories");

@@ -24,7 +24,7 @@ namespace WebApplication.Controllers
         private IUnitOfWork UnitOfWork = WindsorConfig.RegisterContainer();
 
         // GET: api/EventCategories
-        public async Task<IEnumerable<EventCategory>> GetEventCategories()
+        public async Task<ICollection<EventCategory>> GetEventCategories()
         {
             return  await UnitOfWork.EventCategories.GetAll();
         }

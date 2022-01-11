@@ -27,7 +27,7 @@ namespace WebApplication.Controllers
         
 
         // GET: api/Categories
-        public async Task<IEnumerable<Category>> GetCategories()
+        public async Task<ICollection<Category>> GetCategories()
         {
             return  await UnitOfWork.Categories.GetAll();
         }

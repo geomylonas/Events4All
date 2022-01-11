@@ -8,10 +8,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using DAL.Entities;
+using Microsoft.AspNet.Identity;
 using WebApplication.App_Start;
 using WebApplication.Interfaces;
 using WebApplication.Models;
@@ -22,10 +24,10 @@ namespace WebApplication.Controllers
     public class EventsController : ApiController
     {
         private IUnitOfWork UnitOfWork = WindsorConfig.RegisterContainer();
-
+       
         // GET: api/Events/0/5
         [Route("api/Events/{pageNumber}/{pageSize}")]
-        public  async Task<IEnumerable<Event>> GetAllByPage(int pageNumber, int pageSize)
+        public  async Task<ICollection<Event>> GetAllByPage(int pageNumber, int pageSize)
         {
             try
             {
@@ -39,7 +41,7 @@ namespace WebApplication.Controllers
 
         // GET: api/Events/0/5/3
         [Route("api/Events/{pageNumber}/{pageSize}/{eventCategoryId}")]
-        public async Task<IEnumerable<Event>> GetAllByPageByCategory(int pageNumber, int pageSize, int eventcategoryId)
+        public async Task<ICollection<Event>> GetAllByPageByCategory(int pageNumber, int pageSize, int eventcategoryId)
         {
             
             
@@ -47,16 +49,20 @@ namespace WebApplication.Controllers
            
         }
 
-        // GET: api/Events/organizer/5
+        // GET: api/Events/organizer
+        [Authorize(Roles = "Organizer")]
+        [Route("api/Events/organizer/")]
         [ResponseType(typeof(Event))]
-        [Route("api/Events/organizer/{Id}")]
-        public async Task<IEnumerable<Event>> GetEventsByOrganizerId(int id)
+        public async Task<ICollection<Event>> GetEventsByOrganizerId()
         {
-             return await Task.FromResult(UnitOfWork.Events.GetByOrganizerId(id));
+
+            var id = AccountController.getUserID();
+            return await Task.FromResult(UnitOfWork.Events.GetByOrganizerId(id));
            
         }
 
         // GET: api/Events/5
+        [Authorize]
         [ResponseType(typeof(Event))]
         public async Task<IHttpActionResult> GetEvent(int id)
         {
@@ -68,8 +74,8 @@ namespace WebApplication.Controllers
 
             return Ok(@event);
         }
-
         // PUT: api/Events/5
+        [Authorize(Roles = "Organizer")]
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutEvent(Event @event)
         {
@@ -101,6 +107,7 @@ namespace WebApplication.Controllers
         }
 
         // POST: api/Events
+        [Authorize(Roles = "Organizer")]
         [ResponseType(typeof(Event))]
         public async Task<IHttpActionResult> PostEvent(Event @event)
         {
@@ -117,6 +124,7 @@ namespace WebApplication.Controllers
         }
 
         // DELETE: api/Events/5
+        [Authorize(Roles = "Organizer")]
         [ResponseType(typeof(Event))]
         public async Task<IHttpActionResult> DeleteEvent(int id)
         {

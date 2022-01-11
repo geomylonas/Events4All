@@ -23,7 +23,7 @@ namespace WebApplication.Controllers
         private IUnitOfWork UnitOfWork = WindsorConfig.RegisterContainer();
 
         // GET: api/Purchases
-        public async Task<IEnumerable<Purchase>> GetPurchases()
+        public async Task<ICollection<Purchase>> GetPurchases()
         {
             return await UnitOfWork.Purchases.GetAll();
         }
