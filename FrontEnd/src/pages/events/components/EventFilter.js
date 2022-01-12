@@ -17,7 +17,6 @@ export default class EventFilter extends Component {
         )
             .then((res) => {
                 this.setState({ eventcategories: [...this.state.eventcategories, ...res.data] });
-                console.log(this.state.eventcategories)
             })
             .catch((err) => {
                 console.log(err);

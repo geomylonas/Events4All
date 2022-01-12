@@ -42,7 +42,6 @@ class FeaturedEvents extends React.Component {
         .then((res) => {
           this.setState({ events: [...this.state.events, ...res.data] });
           this.setState({ loading: false });
-
         })
         .catch((err) => {
           console.log(err);
@@ -86,7 +85,6 @@ class FeaturedEvents extends React.Component {
       options
     );
     this.observer.observe(this.loadingRef);
-    console.log(this.state.events.length);
 
   }
 
@@ -97,7 +95,6 @@ class FeaturedEvents extends React.Component {
       const currentPage = (this.state.events.length / 12);
       this.getEvents(currentPage);
       this.setState({ page: currentPage });
-      console.log(currentPage);
     }
     this.setState({ prevY: y });
   }

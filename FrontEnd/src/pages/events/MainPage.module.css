@@ -229,3 +229,26 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+
+
+  .sampleEventBody select{
+      border-radius: 5px;
+      width: 120px;
+      text-indent: 1px;
+      text-overflow: "";
+      -webkit-appearance: none;
+      padding: 5px;
+      text-align: center;
+      background-color: #F6F4F2;
+      border: 1px solid #F6F4F2 ;
+    }
+    
+    
+    
+    .sampleEventBody select:focus{
+        outline: none;
+  }
+
+
+ 

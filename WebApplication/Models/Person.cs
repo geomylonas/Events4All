@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAL.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -21,5 +22,8 @@ namespace WebApplication.Models
 
         [MaxLength(20)]
         public string Mobile { get; set; }
+
+        public virtual ICollection<Purchase> Purchases { get; set; }
+
     }
 }

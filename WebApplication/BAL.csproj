@@ -261,6 +261,10 @@
     <Compile Include="Migrations\202201102126350_updateDBv1.Designer.cs">
       <DependentUpon>202201102126350_updateDBv1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201121742291_PurchasesToPerson.cs" />
+    <Compile Include="Migrations\202201121742291_PurchasesToPerson.Designer.cs">
+      <DependentUpon>202201121742291_PurchasesToPerson.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -383,6 +387,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201102126350_updateDBv1.resx">
       <DependentUpon>202201102126350_updateDBv1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201121742291_PurchasesToPerson.resx">
+      <DependentUpon>202201121742291_PurchasesToPerson.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

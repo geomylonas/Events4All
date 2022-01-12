@@ -1,10 +1,11 @@
 body{
-  background-image: url("/src/images/cheap_diagonal_fabric.png") ;
+  background-color: #F6F4F2;
   
 }
 
 .customContainer{
   width: 1200px;
+  background-color: whitesmoke;
   margin: 0 auto;
 }
 

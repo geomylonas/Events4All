@@ -14,6 +14,5 @@ namespace WebApplication.Models
         [Required]
         public DateTime DateOfBirth { get; set; }
 
-        public  virtual ICollection<Purchase> Purchases { get; set; }
     }
 }
