@@ -103,7 +103,6 @@ class FeaturedEvents extends React.Component {
   }
 
   addToCart = (ev) => {
-  //  const some = { eventId: data.Id, eventTitle: data.Title, ticketId: ticketId, ticketPrice: checked, ticketCategory: category }
     const selectedProduct = { eventId: ev.Id, eventTitle: ev.Title, ticketId: this.state.ticketId,
      ticketCategory: this.state.ticketCategory, ticketPrice: this.state.ticketPrice }
     console.log(selectedProduct);
