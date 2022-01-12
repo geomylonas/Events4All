@@ -6,8 +6,8 @@ import classes from "./CustomerForm.module.css";
 
 function CustomerForm() {
 
-function RegisterCustomer(){
-    
+function RegisterCustomer(e){
+    e.preventDefault();
 }
 
     return (
@@ -15,7 +15,7 @@ function RegisterCustomer(){
         <Card style={{ width: '500px', height: '500px' }} >
             <div className={classes.customerForm}>
                 <Card.Title className={classes.title}>Become A Customer</Card.Title>
-                <Form>
+                <Form onSubmit={RegisterCustomer}>
                     <Row>
                         <Col>
                             <Form.Floating>
@@ -68,7 +68,7 @@ function RegisterCustomer(){
                         />
                         <label htmlFor="dateOfBirth">Date Of Birth</label>
                     </Form.Floating>
-                    <div onSubmit={RegisterCustomer} className={classes.customerButton}>
+                    <div  className={classes.customerButton}>
                         <button className={classes.filledButton}>Register</button>
                     </div>
                 </Form >

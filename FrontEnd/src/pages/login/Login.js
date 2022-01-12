@@ -2,27 +2,42 @@ import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import axios from "axios";
 import "./Login.css";
+import QueryString from "qs";
 
 
 
 
 
 function LoginModal(props) {
+    var QueryString = require('qs');
     
-    const [email,setEmail]=useState(''); 
-    const [password,setPassword]=useState(''); 
+
 
     function login(e) {
         e.preventDefault();
-        console.log("ccc");
-        setEmail(e.target[0].value);
-        setPassword(e.target[1].value);
-        const loginCredentials= {grant_type:"password", username: email, password: password}
-        axios.post("https://localhost:44359/token",{
-            loginCredentials
-        }).then(response =>{
-            console.log(response);
-        })
+        axios({
+        method: 'post',
+        url: 'https://localhost:44359/token',
+        headers: {
+          'Content-type': 'application/x-www-form-urlencoded'
+        },
+        data: QueryString.stringify({'grant_type':'password', 'username': e.target[0].value, 'password': e.target[1].value})
+        }).then(response => {
+            if (response.data.access_token){
+                {localStorage.setItem("token", JSON.stringify(response.data.access_token));}
+                console.log(JSON.stringify(response.data.access_token));
+                axios.get("https://localhost:44359/api/account/details",{
+                headers: { "Authorization": `Bearer ${JSON.parse(localStorage.getItem('token'))}` }
+            }
+            ).then(res => {
+                console.log(res)
+                {localStorage.setItem("username", JSON.stringify(res.data.FirstName + " " + res.data.LastName));}
+                {localStorage.setItem("userRole", JSON.stringify(res.data.UserRole));}
+            })
+            }
+        return response.data;});
+            
+        
     }
 
 
