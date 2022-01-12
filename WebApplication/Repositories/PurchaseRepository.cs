@@ -5,6 +5,8 @@ using System.Web;
 using WebApplication.Models;
 using WebApplication.Interfaces;
 using DAL.Entities;
+using WebApplication.Controllers;
+using System.Threading.Tasks;
 
 namespace WebApplication.Repositories
 {
@@ -14,5 +16,23 @@ namespace WebApplication.Repositories
         {
 
         }
+
+        public new void Add(Purchase purchase)
+        {
+
+            var user = _context.Set<Person>().Find(AccountController.GetUserID());
+            user.Purchases.Add(purchase);
+            _context.Set<Purchase>().Add(purchase);
+        }
+
+        public Task<ICollection<Purchase>> GetPurchasesByUser()
+        {
+            var user = _context.Set<Person>().Find(AccountController.GetUserID());
+            return Task.FromResult(user.Purchases);
+        }
+
+
+
+
     }
 }

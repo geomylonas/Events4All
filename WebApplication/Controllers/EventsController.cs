@@ -56,7 +56,7 @@ namespace WebApplication.Controllers
         public async Task<ICollection<Event>> GetEventsByOrganizerId()
         {
 
-            var id = AccountController.getUserID();
+            var id = AccountController.GetUserID();
             return await Task.FromResult(UnitOfWork.Events.GetByOrganizerId(id));
            
         }

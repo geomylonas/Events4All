@@ -42,7 +42,7 @@ namespace WebApplication.Controllers
         [HttpGet]
         public AccountDetailsDTO GetProvideAccountDetails()
         {
-            var Id = getUserID();
+            var Id = GetUserID();
             AccountDetailsDTO accountDetails = new AccountDetailsDTO();
             ApplicationDbContext context = new ApplicationDbContext();
             var userRole = UserManager.GetRoles(Id)[0];
@@ -431,7 +431,7 @@ namespace WebApplication.Controllers
             return Ok();
         }
 
-        public static string getUserID()
+        public static string GetUserID()
         {
             return System.Web.HttpContext.Current.User.Identity.GetUserId();
         }

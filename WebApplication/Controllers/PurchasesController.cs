@@ -40,6 +40,15 @@ namespace WebApplication.Controllers
 
             return Ok(purchase);
         }
+        [Authorize]
+        // GET: api/Purchases/ByPerson
+        [Route("api/Purchases/Byperson")]
+        [ResponseType(typeof(Purchase))]
+        public async Task<ICollection<Purchase>> GetPurchaseByPerson()
+        {
+            return await UnitOfWork.Purchases.GetPurchasesByUser();
+      
+        }
 
         // PUT: api/Purchases/5
         [ResponseType(typeof(void))]
@@ -72,7 +81,7 @@ namespace WebApplication.Controllers
 
             return StatusCode(HttpStatusCode.NoContent);
         }
-
+        [Authorize]
         // POST: api/Purchases
         [ResponseType(typeof(Purchase))]
         public async Task<IHttpActionResult> PostPurchase(Purchase purchase)
