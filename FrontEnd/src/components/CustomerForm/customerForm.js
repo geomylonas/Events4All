@@ -5,6 +5,11 @@ import classes from "./CustomerForm.module.css";
 
 
 function CustomerForm() {
+
+function RegisterCustomer(){
+    
+}
+
     return (
         <div className={classes.customerBoxForm}>
         <Card style={{ width: '500px', height: '500px' }} >
@@ -63,7 +68,7 @@ function CustomerForm() {
                         />
                         <label htmlFor="dateOfBirth">Date Of Birth</label>
                     </Form.Floating>
-                    <div  className={classes.customerButton}>
+                    <div onSubmit={RegisterCustomer} className={classes.customerButton}>
                         <button className={classes.filledButton}>Register</button>
                     </div>
                 </Form >

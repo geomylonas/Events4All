@@ -3,6 +3,7 @@ import { Nav, Row, Container, Col, Image, Button, Badge } from "react-bootstrap"
 import { LinkContainer } from 'react-router-bootstrap';
 import classes from './NavigationBar.module.css';
 import Cart from "../Cart/Cart";
+import LoginModal from "../../pages/login/Login";
 
 
 class NavigationBar extends React.Component {
@@ -10,8 +11,13 @@ class NavigationBar extends React.Component {
         super(props);
     
         this.state = {
-         cartModal: false
+         cartModal: false,
+         loginModal: false
         };
+      }
+
+      openLoginModal= () =>{
+          this.setState({loginModal: true});
       }
 
       openCartModal = () =>{
@@ -19,7 +25,7 @@ class NavigationBar extends React.Component {
       }
 
       onCloseCartModal  = () =>{
-          this.setState({cartModal: false});
+          this.setState({cartModal: false, loginModal: false});
       }
 
     render() {
@@ -78,7 +84,7 @@ class NavigationBar extends React.Component {
                 </div>
                 <div>
                     <Nav.Item className={classes.navButtons}>
-                        <button className={classes.outlineButton}>Log in</button>
+                        <button className={classes.outlineButton} onClick={this.openLoginModal}>Log in</button>
                         <LinkContainer to='/register'>
                         <button className={classes.filledButton}>Register</button>
                         </LinkContainer>
@@ -90,7 +96,7 @@ class NavigationBar extends React.Component {
                     </Nav.Item>
                     <Cart show={this.state.cartModal} onHide={this.onCloseCartModal} {...cartAttributes}/>
                 </div>
-
+                    <LoginModal show={this.state.loginModal} onHide={this.onCloseCartModal}/>
                 
 
             </header>
