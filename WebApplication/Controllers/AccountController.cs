@@ -14,6 +14,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
+using WebApplication.DTO;
 using WebApplication.Models;
 using WebApplication.Providers;
 using WebApplication.Results;
@@ -37,6 +38,31 @@ namespace WebApplication.Controllers
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
         }
+        [Route("Details")]
+        [HttpGet]
+        public AccountDetailsDTO GetProvideAccountDetails()
+        {
+            var Id = getUserID();
+            AccountDetailsDTO accountDetails = new AccountDetailsDTO();
+            ApplicationDbContext context = new ApplicationDbContext();
+            var userRole = UserManager.GetRoles(Id)[0];
+
+            if (userRole == "Organizer")
+            {
+                var user= context.Organizers.Find(Id);
+                accountDetails.FirstName = user.FirstName;
+                accountDetails.LastName = user.LastName;
+            }
+            else if(userRole == "Customer")
+            {
+                var user = context.Customers.Find(Id);
+                accountDetails.FirstName = user.FirstName;
+                accountDetails.LastName = user.LastName;
+            }
+            accountDetails.UserRole = userRole;
+            return accountDetails;
+        }
+        
 
         public ApplicationUserManager UserManager
         {
