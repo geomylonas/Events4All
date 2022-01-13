@@ -27,6 +27,7 @@ namespace WebApplication.Controllers
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext context = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -44,7 +45,7 @@ namespace WebApplication.Controllers
         {
             var Id = GetUserID();
             AccountDetailsDTO accountDetails = new AccountDetailsDTO();
-            ApplicationDbContext context = new ApplicationDbContext();
+            
             var userRole = UserManager.GetRoles(Id)[0];
 
             if (userRole == "Organizer")
@@ -63,6 +64,7 @@ namespace WebApplication.Controllers
             return accountDetails;
         }
         
+
 
         public ApplicationUserManager UserManager
         {
@@ -435,6 +437,8 @@ namespace WebApplication.Controllers
         {
             return System.Web.HttpContext.Current.User.Identity.GetUserId();
         }
+
+  
 
         protected override void Dispose(bool disposing)
         {

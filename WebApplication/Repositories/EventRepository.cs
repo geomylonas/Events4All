@@ -27,11 +27,11 @@ namespace WebApplication.Repositories
             return _context.Set<Event>().OrderBy(e => e.DateOfEvent).Skip(pageSize * pageNumber).Take(pageSize).ToList();
         }
 
-        public ICollection<Event> GetByOrganizerId(string id)
+        public ICollection<Event> GetByOrganizerId(string id, int pageNumber, int pageSize )
         {
             var organizer = _context.Set<Organizer>().Find(id);
             var events = organizer.Events;
-            return events;
+            return events.OrderBy(e => e.DateOfEvent).Skip(pageSize * pageNumber).Take(pageSize).ToList();
         }
 
         public new void Update(Event @event){

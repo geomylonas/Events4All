@@ -51,13 +51,13 @@ namespace WebApplication.Controllers
 
         // GET: api/Events/organizer
         [Authorize(Roles = "Organizer")]
-        [Route("api/Events/organizer/")]
+        [Route("api/Events/organizer/{pageNumber}/{pageSize}")]
         [ResponseType(typeof(Event))]
-        public async Task<ICollection<Event>> GetEventsByOrganizerId()
+        public async Task<ICollection<Event>> GetEventsByOrganizerId(int pageNumber,int pageSize)
         {
 
             var id = AccountController.GetUserID();
-            return await Task.FromResult(UnitOfWork.Events.GetByOrganizerId(id));
+            return await Task.FromResult(UnitOfWork.Events.GetByOrganizerId(id,pageNumber,pageSize));
            
         }
 
