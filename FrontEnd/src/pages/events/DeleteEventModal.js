@@ -9,10 +9,14 @@ import axios from "axios";
 
 function DeleteModal(props) {
     
-    // const [showModal, setShow] = useState(true);
     
     function deleteEvent() {
-        axios.delete(`https://localhost:44359/api/Events/${props.eventchosen}`);
+        axios.delete(`https://localhost:44359/api/Events/${props.eventchosen}`, {
+            headers: { "Authorization": `Bearer ${JSON.parse(localStorage.getItem('token'))}` }
+        }
+        ).then(res => {
+            console.log(res);
+        });
         props.onHide();
         
     }

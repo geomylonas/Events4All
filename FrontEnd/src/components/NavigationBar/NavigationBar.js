@@ -18,6 +18,10 @@ class NavigationBar extends React.Component {
         };
     }
 
+    loginrefresh = () =>{
+        this.setState({ loginModal: false});
+    }
+
     openLogoutModal = () => {
         this.setState({ logoutModal: true })
     }
@@ -45,13 +49,15 @@ class NavigationBar extends React.Component {
 
 
         let CreateEventLink;
-        if (localStorage.getItem("userRole") == JSON.stringify("Organizer"))
+        if (localStorage.getItem("userRole") == JSON.stringify("Organizer")){
             CreateEventLink =
-                <Nav.Item>
-                    <LinkContainer to='/myeventsorganizer'>
-                        <Nav.Link>My Events</Nav.Link>
-                    </LinkContainer>
-                </Nav.Item>
+            <Nav.Item>
+                <LinkContainer to='/myeventsorganizer'>
+                    <Nav.Link>My Events</Nav.Link>
+                </LinkContainer>
+            </Nav.Item>
+        }
+           
         else if (localStorage.getItem("userRole") == JSON.stringify("Customer")) {
             CreateEventLink =
                 <Nav.Item>
@@ -73,6 +79,47 @@ class NavigationBar extends React.Component {
         if ( localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart")).length > 0) {
             badge = <div className={classes.badge}>{JSON.parse(localStorage.getItem("cart")).length}</div>
         }
+
+        let logButtons;
+        if((localStorage.getItem("userRole") != JSON.stringify("Organizer")) && (localStorage.getItem("userRole") != JSON.stringify("Customer"))) {
+            logButtons=
+            <div className="cart">
+            <LinkContainer to='/register'>
+                <img src={require("../../images/cart2.png")} className={classes.CartImage} />
+            </LinkContainer>
+        </div>
+        }
+        else if((localStorage.getItem("userRole") == JSON.stringify("Organizer")) || (localStorage.getItem("userRole") == JSON.stringify("Customer"))) {
+            logButtons=
+        <div className="cart">
+            <img src={require("../../images/cart2.png")} className={classes.CartImage} onClick={this.openCartModal} />
+            { badge}
+
+        </div>
+    }
+        
+
+        let registerbuttons;
+        if(!localStorage.getItem("token")) {
+            registerbuttons=
+        <LinkContainer to='/register'>
+            <button className={classes.filledButton}>Register</button>
+        </LinkContainer>
+        }
+
+    
+        let logInOut;
+      if(!localStorage.getItem("token"))   {
+        logInOut=
+        <button className={classes.outlineButton} onClick={this.openLoginModal} >Log in</button>
+    }
+    
+       if(localStorage.getItem("token"))  {
+        logInOut=
+        <button className={classes.outlineButton} onClick={this.openLogoutModal}>Log out</button>
+    }
+
+
 
         return (
             <header>
@@ -113,46 +160,18 @@ class NavigationBar extends React.Component {
                 </div>
                 <div>
                     <Nav.Item className={classes.navButtons}>
-                        {
-                            !localStorage.getItem("token") &&
-                            <button className={classes.outlineButton} onClick={this.openLoginModal}>Log in</button>
-                        }
-                        {
-                            localStorage.getItem("token") &&
-                            <button className={classes.outlineButton} onClick={this.openLogoutModal}>Log out</button>
-                        }
+                       
+                        {logInOut}
 
-                        {!localStorage.getItem("token") &&
-                            <LinkContainer to='/register'>
-                                <button className={classes.filledButton}>Register</button>
-                            </LinkContainer>
-                        }
+                       {registerbuttons}
 
-                        {localStorage.getItem("userRole") == JSON.stringify("Customer") &&
-                            <LinkContainer to='/register'>
-                                <button className={classes.filledButton} disabled>Upgrade</button>
-                            </LinkContainer>
-                        }
-
-                        {((localStorage.getItem("userRole") != JSON.stringify("Organizer")) && (localStorage.getItem("userRole") != JSON.stringify("Customer"))) &&
-                            <div className="cart">
-                                <LinkContainer to='/register'>
-                                    <img src={require("../../images/cart2.png")} className={classes.CartImage} />
-                                </LinkContainer>
-                            </div>
-                        }
-                        {((localStorage.getItem("userRole") == JSON.stringify("Organizer")) || (localStorage.getItem("userRole") == JSON.stringify("Customer"))) &&
-                            <div className="cart">
-                                <img src={require("../../images/cart2.png")} className={classes.CartImage} onClick={this.openCartModal} />
-                                { badge}
-
-                            </div>
-                        }
+                       {logButtons}
+                        
 
                     </Nav.Item>
                     <Cart show={this.state.cartModal} onHide={this.onCloseCartModal} {...cartAttributes} />
                 </div>
-                <LoginModal show={this.state.loginModal} onHide={this.onCloseCartModal} />
+                <LoginModal show={this.state.loginModal} loginrefresh={this.loginrefresh} onHide={this.onCloseCartModal} />
                 <LogoutModal show={this.state.logoutModal} onHide={this.onCloseCartModal} />
 
             </header>

@@ -23,8 +23,13 @@ class App extends Component {
     super(props);
     this.state={
       cartItems: JSON.parse(localStorage.getItem("cart")),
+      userRole: ''
     }
   }
+
+
+
+
   addToCart = (p) => {
     const cartItems = this.state.cartItems.slice();
     let alreadyInCart;
@@ -101,7 +106,6 @@ class App extends Component {
 
     return (
       <div className="customContainer">
-
         <NavigationBar {...attributes}/>
         <Routes>
           <Route path="/" element={<Homepage />} />

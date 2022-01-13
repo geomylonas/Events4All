@@ -170,7 +170,17 @@ class FeaturedEvents extends React.Component {
                   <Link to={`/events/info/${ev.Id}`}>
                     <button className={classes.detailsButton}>Details</button>
                   </Link>
-                  <button className={classes.purchaseButton} onClick={() => this.addToCart(ev)} disabled={!this.state.ticketDisabled.includes(ev.Id)}>Add to Cart</button>
+                  {
+                    localStorage.getItem("token") &&
+                    <button className={classes.purchaseButton} onClick={() => this.addToCart(ev)} disabled={!this.state.ticketDisabled.includes(ev.Id)}>Add to Cart</button>
+                  }
+
+                  {
+                    !localStorage.getItem("token") &&
+                    <Link to={`/register`}>
+                      <button className={classes.purchaseButton} disabled={!this.state.ticketDisabled.includes(ev.Id)}>Add to Cart</button>
+                  </Link>
+                  }
                 </div>
               
                 

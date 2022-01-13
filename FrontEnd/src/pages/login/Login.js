@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Modal, Form } from "react-bootstrap";
 import axios from "axios";
 import "./Login.css";
 import QueryString from "qs";
@@ -32,13 +32,18 @@ function LoginModal(props) {
             ).then(res => {
                 {localStorage.setItem("username", JSON.stringify(res.data.FirstName + " " + res.data.LastName));}
                 {localStorage.setItem("userRole", JSON.stringify(res.data.UserRole));}
+                {localStorage.setItem("cart", JSON.stringify([]));}
+                
+                
+            }).then(res=>{
+                window.location.reload(true);
             })
             }
-            props.onHide();
-        return response.data})
-        .catch(error=>{
-            console.log(error);
-        })
+            props.loginrefresh();
+            })
+            .catch(error=>{
+                console.log(error);
+            })
             
         
     }
