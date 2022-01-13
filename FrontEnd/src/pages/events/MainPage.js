@@ -118,11 +118,9 @@ class FeaturedEvents extends React.Component {
 
 
   eventCategoryFilter(cat) {
-    console.log(cat + " hiiiii");
     this.state.eventCategoryId = cat;
-    this.setState({ stoploading: false })
-    console.log(this.state.eventCategoryId + " hfehdf")
     this.setState({ events: [], page: 0 })
+    this.setState({ stoploading: false })
   }
 
 
@@ -153,7 +151,7 @@ class FeaturedEvents extends React.Component {
           {this.state.events.map(ev => (
 
             <div className={classes.individualSampleEvent} key={ev.Id}>
-              {ev.Id}
+              
               <Link to={`/events/info/${ev.Id}`}>
                 <img src="https://images.pexels.com/photos/3171837/pexels-photo-3171837.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" className={classes.eventPicture} />
               </Link>

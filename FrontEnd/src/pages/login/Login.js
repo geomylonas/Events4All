@@ -25,7 +25,6 @@ function LoginModal(props) {
         }).then(response => {
             if (response.data.access_token){
                 {localStorage.setItem("token", JSON.stringify(response.data.access_token));}
-                console.log(JSON.stringify(response.data.access_token));
                 axios.get("https://localhost:44359/api/account/details",{
                 headers: { "Authorization": `Bearer ${JSON.parse(localStorage.getItem('token'))}` }
             }

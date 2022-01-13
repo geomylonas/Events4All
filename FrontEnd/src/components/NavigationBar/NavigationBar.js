@@ -61,7 +61,7 @@ class NavigationBar extends React.Component {
         else if (localStorage.getItem("userRole") == JSON.stringify("Customer")) {
             CreateEventLink =
                 <Nav.Item>
-                    <LinkContainer to='/createnewevent'>
+                    <LinkContainer to='/mytickets'>
                         <Nav.Link>My Events</Nav.Link>
                     </LinkContainer>
                 </Nav.Item>
@@ -119,6 +119,11 @@ class NavigationBar extends React.Component {
         <button className={classes.outlineButton} onClick={this.openLogoutModal}>Log out</button>
     }
 
+    let welcomeMessage;
+    if(localStorage.getItem('token')){
+        welcomeMessage = <span id={classes.welcomeMessage}>Welcome {JSON.parse(localStorage.getItem("username"))}</span>
+    }
+
 
 
         return (
@@ -161,6 +166,8 @@ class NavigationBar extends React.Component {
                 <div>
                     <Nav.Item className={classes.navButtons}>
                        
+                        {welcomeMessage}
+
                         {logInOut}
 
                        {registerbuttons}

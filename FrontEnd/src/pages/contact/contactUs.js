@@ -26,7 +26,7 @@ function ContactUs() {
         </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
           <Form.Label>Description</Form.Label>
-          <Form.Control as="textarea" rows={6} />
+          <Form.Control style={{maxHeight: "150px" }} as="textarea" rows={6} />
             
         </Form.Group>
       </Form>

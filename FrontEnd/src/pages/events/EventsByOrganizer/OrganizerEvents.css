@@ -1,20 +1,12 @@
 /* white: #F6F4F2, mpez: #C6AD8F, dark: #425664 */
 
-.newEventForm{
-    position: relative;
-    margin: 50px auto;
-    width: 40%;
-    background-color: #C6AD8F;
-    border-radius: 5px;
-    padding: 40px 40px;
-    box-shadow: 5px 5px 10px 2px #425664;
+#createbutton{
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
 }
 
-.newEventForm button{
-    position: absolute;
-    right: 40px;
-    background-color: #425664;
-    border-color: #425664 ;
+#createbutton button{
     display: inline-block;
     font-weight: 400;
     line-height: 1.5;
@@ -34,12 +26,26 @@
     border-color .15s ease-in-out,
     box-shadow .15s ease-in-out;
     background-color: #425664;
-    color: #C6AD8F;
+    color: #F6F4F2;
     border: 1px solid #425664; 
 }
 
-.newEventForm button:hover{
-    color: #425664;
+
+#createbutton button:hover{
+    color: #F6F4F2;
     background-color:#C6AD8F;
-    border: 1px solid #425664;    
+    border: 1px solid #C6AD8F;    
+}
+
+.trashcan{
+    width: 20px;
+    position: absolute;
+    top:15px;
+    right: 15px;
+    transition: transform 300ms ease-in-out 25ms;
+}
+
+.trashcan:hover{
+    transform: scale(2);
+    cursor: pointer;
 }

@@ -68,7 +68,7 @@ class CreateNewEvent extends React.Component {
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                         <Form.Label>Description</Form.Label>
-                        <Form.Control as="textarea" name="Description" rows={3} placeholder="Description" value={Description} onChange={this.changeHandler} />
+                        <Form.Control style={{maxHeight: "150px" }} as="textarea" name="Description" rows={3} placeholder="Description" value={Description} onChange={this.changeHandler} />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                         <Form.Label>Place Name</Form.Label>
@@ -98,7 +98,7 @@ class CreateNewEvent extends React.Component {
                     </Form.Group>
                     
 
-                    <Button variant="success" type="submit">Create</Button>
+                    <button type="submit">Create</button>
                 </Form >
             </div>
 
