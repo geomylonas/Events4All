@@ -1,8 +1,11 @@
 import classes from "./Footer.module.css"
 import { Image } from "react-bootstrap";
-export default function FooterDiv(){
-    return(
 
+export default function FooterDiv(){
+    
+    
+    return(
+        
         <footer>
             <div>
                 <p>Event Manager

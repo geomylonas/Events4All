@@ -7,20 +7,23 @@ import "./Cart.css"
 
 export default function Cart(props) {
     let cartText;
-    if (props.chosenproducts.length == 0) {
-        cartText = <h5> Your cart is Empty</h5>
-    }
-    else if (props.chosenproducts.length == 1) {
-        cartText = <h5>You have {props.chosenproducts.length} product in your Cart</h5>
-    }
-    else {
-        cartText = <h5>You have {props.chosenproducts.length} products in your Cart</h5>
+    if(props.chosenproducts){
+
+        if (props.chosenproducts.length==0) {
+            cartText = <h5> Your cart is Empty</h5>
+        }
+        else if (props.chosenproducts.length == 1) {
+            cartText = <h5>You have {JSON.parse(localStorage.getItem("cart")).length} product in your Cart</h5>
+        }
+        else {
+            cartText = <h5>You have {props.chosenproducts.length} products in your Cart</h5>
+        }
     }
     
     
     
     let totalPriceText;
-    if(props.chosenproducts.reduce((c, p) => c + (p.count*p.ticketPrice), 0)){
+    if(props.chosenproducts && (props.chosenproducts.reduce((c, p) => c + (p.count*p.ticketPrice), 0))){
         totalPriceText=<p>Total Price: {props.chosenproducts.reduce((c, p) => c + (p.count*p.ticketPrice), 0)} &euro;</p>
     }
    
@@ -37,10 +40,10 @@ export default function Cart(props) {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body id="modalbody">
-                    {cartText}
-                    {
+                    {cartText} 
+                    { props.chosenproducts &&
                         props.chosenproducts.map(p => (
-                                
+                            
                             <div  className="cartitem" key={p.eventId + p.ticketCategory}>
                                             
                                 <div className="quantity">
@@ -72,7 +75,7 @@ export default function Cart(props) {
                         ))
                     }
                     <div id="totalPrice">
-                        {totalPriceText} 
+                        {  totalPriceText} 
                     </div>
                     
 

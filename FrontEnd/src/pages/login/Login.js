@@ -30,12 +30,15 @@ function LoginModal(props) {
                 headers: { "Authorization": `Bearer ${JSON.parse(localStorage.getItem('token'))}` }
             }
             ).then(res => {
-                console.log(res)
                 {localStorage.setItem("username", JSON.stringify(res.data.FirstName + " " + res.data.LastName));}
                 {localStorage.setItem("userRole", JSON.stringify(res.data.UserRole));}
             })
             }
-        return response.data;});
+            props.onHide();
+        return response.data})
+        .catch(error=>{
+            console.log(error);
+        })
             
         
     }

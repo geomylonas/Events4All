@@ -1,13 +1,13 @@
 import React from 'react';
-import classes from "./MainPage.module.css";
+import classes from "../MainPage.module.css";
 import { Link } from "react-router-dom";
 import axios from 'axios';
-import DeleteModal from './DeleteEventModal';
+import DeleteModal from '../DeleteEventModal';
 import { act } from 'react-dom/test-utils';
-import EventFilter from './components/EventFilter';
+import EventFilter from '../components/EventFilter';
 
 
-class FeaturedEvents extends React.Component {
+class OrganizerEvents extends React.Component {
   constructor(props) {
     super(props);
 
@@ -102,6 +102,7 @@ class FeaturedEvents extends React.Component {
   addToCart = (ev) => {
     const selectedProduct = { eventId: ev.Id, eventTitle: ev.Title, ticketId: this.state.ticketId,
      ticketCategory: this.state.ticketCategory, ticketPrice: this.state.ticketPrice }
+    console.log(selectedProduct);
     this.props.addToCart(selectedProduct);
   }
 
@@ -118,10 +119,8 @@ class FeaturedEvents extends React.Component {
 
 
   eventCategoryFilter(cat) {
-    console.log(cat + " hiiiii");
     this.state.eventCategoryId = cat;
     this.setState({ stoploading: false })
-    console.log(this.state.eventCategoryId + " hfehdf")
     this.setState({ events: [], page: 0 })
   }
 
@@ -173,12 +172,12 @@ class FeaturedEvents extends React.Component {
                   <button className={classes.purchaseButton} onClick={() => this.addToCart(ev)} disabled={!this.state.ticketDisabled.includes(ev.Id)}>Add to Cart</button>
                 </div>
               
-                
+                <img className={classes.trashcan} src={require("../../../images/trashcan.png")} alt="trashcan" onClick={() => this.onClickButton(ev)} />
               </div>
             </div>
 
           ))}
-          
+          <DeleteModal eventchosen={this.state.activeItem.Id} show={this.state.openModal} onHide={this.onCloseModal} />
 
 
 
@@ -195,7 +194,7 @@ class FeaturedEvents extends React.Component {
     );
   }
 };
-export default FeaturedEvents;
+export default OrganizerEvents;
 
 
 

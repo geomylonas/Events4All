@@ -14,13 +14,15 @@ import FooterDiv from './components/Footer/Footer';
 import UpButton from './components/UpButton/UpButton';
 import Cart from './components/Cart/Cart';
 import RegisterPage from './pages/register/Register';
+import OrganizerEvents from './pages/events/EventsByOrganizer/OrganizerEvents';
+import ReactDatePicker from 'react-datepicker';
 
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state={
-      cartItems: [],
+      cartItems: JSON.parse(localStorage.getItem("cart")),
     }
   }
   addToCart = (p) => {
@@ -41,32 +43,51 @@ class App extends Component {
       cartItems.push({...p, count: 1});
     } 
     this.setState({cartItems})
+    localStorage.setItem("cart", JSON.stringify(cartItems));
   }
 
   addQuantity = (p) => {
-    var num = ++p.count
-      this.setState({num})  
+    ++p.count;
+    console.log(p.count);
+    let cartStorage = JSON.parse(localStorage.getItem("cart"));
+    cartStorage.map(pr => {
+      console.log(pr)
+      if(p.eventId==pr.eventId && p.ticketCategory == pr.ticketCategory){
+        pr.count=p.count
+      }
+    });
+    localStorage.setItem("cart", JSON.stringify(cartStorage));
+    this.setState({cartItems: JSON.parse(localStorage.getItem("cart"))});
+    
       
   }
 
   subtractQuantity = (p) => {
     if(p.count>1){
-      var num = --p.count
-      this.setState({num})  
+      --p.count;
+      console.log(p.count);
+      let cartStorage = JSON.parse(localStorage.getItem("cart"));
+      cartStorage.map(pr => {
+        console.log(pr +"ff");
+        if(p.eventId==pr.eventId && p.ticketCategory == pr.ticketCategory){
+          pr.count=p.count
+        }
+      });
+      localStorage.setItem("cart", JSON.stringify(cartStorage));
+      this.setState({cartItems: JSON.parse(localStorage.getItem("cart"))});
     }
     
   }
 
   removeProduct = (p) =>{
-    console.log(p);
-    console.log("fffffff");
     this.state.cartItems.splice(this.state.cartItems.indexOf(p),1);
     this.setState({cartItems: this.state.cartItems})
+    localStorage.setItem("cart", JSON.stringify(this.state.cartItems));
   }
 
   emptyCart = () =>{
-    this.setState({cartItems: []})
-    console.log("hohoho")
+    this.setState({cartItems: []});
+    localStorage.removeItem("cart")
   }
   
   render() {
@@ -77,7 +98,6 @@ class App extends Component {
       subtractquantity: this.subtractQuantity,
       removeproduct: this.removeProduct
     }
-
 
     return (
       <div className="customContainer">
@@ -90,9 +110,11 @@ class App extends Component {
           <Route path="/createnewevent" element={<CreateNewEvent />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/myeventsorganizer" element={<OrganizerEvents />} />
         </Routes>
         <UpButton />
         <FooterDiv />
+
       </div>
     );
   }

@@ -1,34 +1,8 @@
 /* white: #F6F4F2, mpez: #C6AD8F, dark: #425664 */
-
-.customerBoxForm{
-    position: relative;
-    text-align: center;
-    margin: 200px auto;
-    border-radius: 5px;
-    box-shadow: 5px 5px 10px 2px #425664;
-}
-
-
-.customerForm{
-    margin: auto;
-    
-}
-
-
-.title{
-    padding-bottom: 30px;
-    text-align: start;
-}
-
-.customerButton{
-    display: flex;
-    align-items: start;
-}
-
-.filledButton{
+.logoutbutton{
     display: inline-block;
     font-weight: 400;
-    line-height: 1.5;
+    line-height: 2;
     text-align: center;
     text-decoration: none;
     vertical-align: middle;
@@ -44,16 +18,26 @@
     background-color .15s ease-in-out,
     border-color .15s ease-in-out,
     box-shadow .15s ease-in-out;
-    background-color: #F6F4F2;
     color: #F6F4F2;
-    border: 1px solid #C6AD8F; 
-    
+    width: 100%;
+    background-color: #425664;
 }
 
 
-.filledButton:hover{
-    color: #425664;
+.logoutbutton:hover{
+    color: #F6F4F2;
     background-color:#C6AD8F;
-    border: 1px solid #425664;    
+    border: 1px solid #C6AD8F;    
 }
 
+
+#logoutmodal{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+#logoutmodalbody{
+    width: 400px;
+}

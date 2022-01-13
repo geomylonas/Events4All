@@ -4,34 +4,38 @@ import { LinkContainer } from 'react-router-bootstrap';
 import classes from './NavigationBar.module.css';
 import Cart from "../Cart/Cart";
 import LoginModal from "../../pages/login/Login";
+import LogoutModal from "../../pages/logout/Logout";
 
 
 class NavigationBar extends React.Component {
     constructor(props) {
         super(props);
-    
+
         this.state = {
-         cartModal: false,
-         loginModal: false
+            cartModal: false,
+            loginModal: false,
+            logoutModal: false
         };
-      }
+    }
 
-      
+    openLogoutModal = () => {
+        this.setState({ logoutModal: true })
+    }
 
-      openLoginModal= () =>{
-          this.setState({loginModal: true});
-      }
+    openLoginModal = () => {
+        this.setState({ loginModal: true });
+    }
 
-      openCartModal = () =>{
-          this.setState({cartModal: true});
-      }
+    openCartModal = () => {
+        this.setState({ cartModal: true });
+    }
 
-      onCloseCartModal  = () =>{
-          this.setState({cartModal: false, loginModal: false});
-      }
+    onCloseCartModal = () => {
+        this.setState({ cartModal: false, loginModal: false, logoutModal: false });
+    }
 
     render() {
-        const cartAttributes ={
+        const cartAttributes = {
             chosenproducts: this.props.chosenproducts,
             emptyitems: this.props.emptycart,
             addquantity: this.props.addquantity,
@@ -39,37 +43,35 @@ class NavigationBar extends React.Component {
             removeproduct: this.props.removeproduct
         }
 
-        
+
         let CreateEventLink;
-        if(localStorage.getItem("userRole")==JSON.stringify("Organizer"))
-        CreateEventLink=
-        <Nav.Item>
-        <LinkContainer to='/createnewevent'>
-            <Nav.Link>My Events</Nav.Link>
-        </LinkContainer>
-        </Nav.Item>
-        else if(localStorage.getItem("userRole")==JSON.stringify("Customer"))
-        {
-        CreateEventLink=
-        <Nav.Item>
-        <LinkContainer to='/createnewevent'>
-            <Nav.Link>My Events</Nav.Link>
-        </LinkContainer>
-        </Nav.Item>
+        if (localStorage.getItem("userRole") == JSON.stringify("Organizer"))
+            CreateEventLink =
+                <Nav.Item>
+                    <LinkContainer to='/myeventsorganizer'>
+                        <Nav.Link>My Events</Nav.Link>
+                    </LinkContainer>
+                </Nav.Item>
+        else if (localStorage.getItem("userRole") == JSON.stringify("Customer")) {
+            CreateEventLink =
+                <Nav.Item>
+                    <LinkContainer to='/createnewevent'>
+                        <Nav.Link>My Events</Nav.Link>
+                    </LinkContainer>
+                </Nav.Item>
         }
-        else{
-        CreateEventLink=
-        <Nav.Item>
-            <LinkContainer to='/register'>
-                <Nav.Link>My Events</Nav.Link>
-            </LinkContainer>
-        </Nav.Item>
+        else {
+            CreateEventLink =
+                <Nav.Item>
+                    <LinkContainer to='/register'>
+                        <Nav.Link>My Events</Nav.Link>
+                    </LinkContainer>
+                </Nav.Item>
         }
 
         let badge;
-        if(this.props.chosenproducts.length > 0)
-        {
-            badge = <div className={classes.badge}>{this.props.chosenproducts.length}</div>
+        if ( localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart")).length > 0) {
+            badge = <div className={classes.badge}>{JSON.parse(localStorage.getItem("cart")).length}</div>
         }
 
         return (
@@ -105,38 +107,53 @@ class NavigationBar extends React.Component {
                             <Nav.Link>Contact us</Nav.Link>
                         </LinkContainer>
                     </Nav.Item>
-                   
-                       {CreateEventLink}
-                    
+
+                    {CreateEventLink}
+
                 </div>
                 <div>
                     <Nav.Item className={classes.navButtons}>
-                        <button className={classes.outlineButton} onClick={this.openLoginModal}>Log in</button>
-                        <LinkContainer to='/register'>
-                        <button className={classes.filledButton}>Register</button>
-                        </LinkContainer>
-                        { ((localStorage.getItem("userRole")!=JSON.stringify("Organizer")) && (localStorage.getItem("userRole")!=JSON.stringify("Customer"))) &&
-                            <div className="cart">
-                            <LinkContainer to='/register'>
-                            <img src={require("../../images/cart2.png")} className={classes.CartImage}/>
-                            </LinkContainer>
-                            
-                            
-                        </div>
+                        {
+                            !localStorage.getItem("token") &&
+                            <button className={classes.outlineButton} onClick={this.openLoginModal}>Log in</button>
                         }
-                        {   ((localStorage.getItem("userRole")==JSON.stringify("Organizer")) || (localStorage.getItem("userRole")==JSON.stringify("Customer"))) &&
+                        {
+                            localStorage.getItem("token") &&
+                            <button className={classes.outlineButton} onClick={this.openLogoutModal}>Log out</button>
+                        }
+
+                        {!localStorage.getItem("token") &&
+                            <LinkContainer to='/register'>
+                                <button className={classes.filledButton}>Register</button>
+                            </LinkContainer>
+                        }
+
+                        {localStorage.getItem("userRole") == JSON.stringify("Customer") &&
+                            <LinkContainer to='/register'>
+                                <button className={classes.filledButton} disabled>Upgrade</button>
+                            </LinkContainer>
+                        }
+
+                        {((localStorage.getItem("userRole") != JSON.stringify("Organizer")) && (localStorage.getItem("userRole") != JSON.stringify("Customer"))) &&
                             <div className="cart">
-                            <img src={require("../../images/cart2.png")} className={classes.CartImage} onClick={this.openCartModal}/>
-                            {badge}
-                            
+                                <LinkContainer to='/register'>
+                                    <img src={require("../../images/cart2.png")} className={classes.CartImage} />
+                                </LinkContainer>
                             </div>
                         }
-                        
+                        {((localStorage.getItem("userRole") == JSON.stringify("Organizer")) || (localStorage.getItem("userRole") == JSON.stringify("Customer"))) &&
+                            <div className="cart">
+                                <img src={require("../../images/cart2.png")} className={classes.CartImage} onClick={this.openCartModal} />
+                                { badge}
+
+                            </div>
+                        }
+
                     </Nav.Item>
-                    <Cart show={this.state.cartModal} onHide={this.onCloseCartModal} {...cartAttributes}/>
+                    <Cart show={this.state.cartModal} onHide={this.onCloseCartModal} {...cartAttributes} />
                 </div>
-                    <LoginModal show={this.state.loginModal} onHide={this.onCloseCartModal}/>
-                
+                <LoginModal show={this.state.loginModal} onHide={this.onCloseCartModal} />
+                <LogoutModal show={this.state.logoutModal} onHide={this.onCloseCartModal} />
 
             </header>
 
