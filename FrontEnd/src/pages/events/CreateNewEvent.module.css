@@ -1,14 +1,44 @@
 /* white: #F6F4F2, mpez: #C6AD8F, dark: #425664 */
 
 .newEventForm{
+    display: flex;
+    flex-direction: column;
     position: relative;
     margin: 50px auto;
-    width: 40%;
-    background-color: #C6AD8F;
-    border-radius: 5px;
-    padding: 40px 40px;
-    box-shadow: 5px 5px 10px 2px #425664;
+    align-items: center;
+    gap: 20px;
 }
+
+
+.newEventForm form{
+    display: flex;
+    gap: 100px;
+}
+
+.categorytickets{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.categorytickets div{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#categorydiv{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.eventinfo{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 
 .newEventForm button{
     position: absolute;
