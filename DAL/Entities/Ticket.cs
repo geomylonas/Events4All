@@ -18,7 +18,7 @@ namespace DAL.Entities
 
         [RegularExpression(@"^\d+(\.\d{1,2})?$")]
         [Range(0, 99999.99)]
-        public decimal Price { get; set; }
+        public double Price { get; set; }
 
         [JsonIgnore]
         public virtual Event Event { get; set; }

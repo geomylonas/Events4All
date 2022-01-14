@@ -50,6 +50,22 @@ namespace WebApplication.Controllers
       
         }
 
+        [HttpPost]
+        [Route("api/Purchase/Check/{purchase}")]
+        public async Task<IHttpActionResult> Check(Purchase purchase)
+        {
+            var result=await Task.FromResult(UnitOfWork.Purchases.CheckPurchase(purchase));
+            if (result == "OK")
+            {
+                return Ok();
+            }
+            else
+            {
+                return Content(HttpStatusCode.BadRequest, result);
+            }
+
+        }
+
         // PUT: api/Purchases/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutPurchase(Purchase purchase)

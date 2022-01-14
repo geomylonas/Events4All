@@ -21,13 +21,65 @@ namespace WebApplication.Repositories
         {
 
             var user = _context.Set<Person>().Find(AccountController.GetUserID());
-            user.Purchases.Add(purchase);
-            _context.Set<Purchase>().Add(purchase);
+          
             foreach(var purchaseDetails in purchase.PurchaseDetails)
+            {
+                var ticket = _context.Set<Ticket>().Find(purchaseDetails.TicketId);
+                if(ticket.Event.AvailableTickets- purchaseDetails.Quantity < 0)
+                {
+                    throw new Exception("Not enough available tickets for event: "+ticket.Event);
+                    return;
+                }
+            }
+            foreach (var purchaseDetails in purchase.PurchaseDetails)
             {
                 var ticket = _context.Set<Ticket>().Find(purchaseDetails.TicketId);
                 ticket.Event.AvailableTickets -= purchaseDetails.Quantity;
             }
+
+            user.Purchases.Add(purchase);
+            _context.Set<Purchase>().Add(purchase);
+            
+        }
+
+        public string CheckPurchase(Purchase purchase)
+        {
+            double totalPrice=0;
+
+            foreach (var purchaseDetails in purchase.PurchaseDetails)
+            {
+                var ticket = _context.Set<Ticket>().Find(purchaseDetails.TicketId);
+                if (ticket.Event.AvailableTickets - purchaseDetails.Quantity < 0)
+                {
+                    throw new Exception("Not enough available tickets for event: " + ticket.Event);
+                    return "Not enough available tickets for event: " + ticket.Event;
+                }
+            }
+
+            foreach (var purchaseDetails in purchase.PurchaseDetails)
+            {
+                var ticket = _context.Set<Ticket>().Find(purchaseDetails.TicketId);
+                totalPrice += (ticket.Price * purchaseDetails.Quantity);
+            }
+
+            if (totalPrice != purchase.Amount)
+            {
+                return "Something went wrong with the purchase";
+            }
+            else
+            {
+                return "OK";
+            }
+
+
+
+
+
+
+
+
+
+
         }
 
         public Task<ICollection<Purchase>> GetPurchasesByUser()

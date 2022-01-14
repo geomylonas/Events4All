@@ -13,7 +13,7 @@ namespace DAL.Entities
 
         [RegularExpression(@"^\d+(\.\d{1,2})?$")]
         [Range(0, 99999.99)]
-        public decimal TotalPrice { get; set; }
+        public double TotalPrice { get; set; }
         public int Quantity { get; set; }
         [Key, Column(Order = 0)]
         public int PurchaseId { get; set; }

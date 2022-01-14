@@ -15,7 +15,7 @@ namespace DAL.Entities
         public int Id { get; set; }
         [RegularExpression(@"^\d+(\.\d{1,2})?$")]
         [Range(0, 99999.99)]
-        public decimal Amount { get; set; }
+        public double Amount { get; set; }
         
         public DateTime DateOfPurchase { get; set; }
         public virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; }

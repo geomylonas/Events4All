@@ -12,5 +12,7 @@ namespace WebApplication.Interfaces
     public interface IPurchaseRepository : IGenericRepository<Purchase>
     {
         Task<ICollection<Purchase>> GetPurchasesByUser();
+
+        string CheckPurchase(Purchase purchase);
     }
 }
