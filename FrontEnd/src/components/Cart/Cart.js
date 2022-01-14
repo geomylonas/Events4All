@@ -4,6 +4,7 @@ import EventInfo from "../../pages/events/EventInfo";
 import { propTypes } from 'react';
 import { render } from "@testing-library/react";
 import "./Cart.css"
+import { Link } from "react-router-dom";
 
 export default function Cart(props) {
     let cartText;
@@ -20,7 +21,10 @@ export default function Cart(props) {
         }
     }
     
-    
+    function ProceedToPayment(total){
+        props.proceedtopayment(total);
+        props.onHide();
+    }
     
     let totalPriceText;
     if(props.chosenproducts && (props.chosenproducts.reduce((c, p) => c + (p.count*p.ticketPrice), 0))){
@@ -84,8 +88,15 @@ export default function Cart(props) {
 
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="success" onClick={() => console.log(props.chosenproducts)}>Proceed to Payment</Button>
-                    <Button variant="danger" onClick={props.emptyitems}>Empty Items</Button>
+                    {
+                        props.chosenproducts.length !=0 &&
+                        <>
+                        <Link to="/payment">
+                        <Button variant="success" onClick={() => ProceedToPayment(props.chosenproducts.reduce((c, p) => c + (p.count*p.ticketPrice), 0))}>Proceed to Payment</Button>
+                        </Link>
+                        <Button variant="danger" onClick={props.emptyitems}>Empty Items</Button>
+                        </>
+                    }
                 </Modal.Footer>
             </Modal>
         </>

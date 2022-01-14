@@ -44,7 +44,8 @@ class NavigationBar extends React.Component {
             emptyitems: this.props.emptycart,
             addquantity: this.props.addquantity,
             subtractquantity: this.props.subtractquantity,
-            removeproduct: this.props.removeproduct
+            removeproduct: this.props.removeproduct,
+            proceedtopayment: this.props.proceedtopayment
         }
 
 

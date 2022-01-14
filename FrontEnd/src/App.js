@@ -17,17 +17,18 @@ import RegisterPage from './pages/register/Register';
 import OrganizerEvents from './pages/events/EventsByOrganizer/OrganizerEvents';
 import ReactDatePicker from 'react-datepicker';
 import OrganizerEventInfo from './pages/events/EventsByOrganizer/EventInfoOrganizer';
-import ReactDOM from "react-dom";
 import React from 'react';
+import Payment from './components/Paypal/Payment';
+import { stringify } from 'qs';
 
-const PayPalButton = paypal.Buttons.driver("react", { React, ReactDOM });
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state={
       cartItems: JSON.parse(localStorage.getItem("cart")),
-      userRole: ''
+      userRole: '',
+      totalAmount: 0
     }
   }
 
@@ -96,8 +97,18 @@ class App extends Component {
 
   emptyCart = () =>{
     this.setState({cartItems: []});
-    localStorage.removeItem("cart")
+    localStorage.removeItem("cart");
+    localStorage.setItem("cart", JSON.stringify([]));
   }
+
+
+  proceedToPayment = (total) =>{
+    this.setState({totalAmount: total});
+    console.log(this.state.totalAmount);
+  }
+
+
+
   
   render() {
     const attributes = {
@@ -105,7 +116,8 @@ class App extends Component {
       emptycart: this.emptyCart,
       addquantity: this.addQuantity,
       subtractquantity: this.subtractQuantity,
-      removeproduct: this.removeProduct
+      removeproduct: this.removeProduct,
+      proceedtopayment: this.proceedToPayment
     }
 
     return (
@@ -120,13 +132,11 @@ class App extends Component {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/myeventsorganizer" element={<OrganizerEvents />} />
           <Route path="/myeventsorganizer/info/:id" element={<OrganizerEventInfo />} />
+          <Route path="/payment" element={<Payment paypalamount = {this.state.totalAmount}/>} />
         </Routes>
         <UpButton />
         <FooterDiv />
-        <PayPalButton
-        createOrder={(data, actions) => this.createOrder(data, actions)}
-        onApprove={(data, actions) => this.onApprove(data, actions)}
-      />
+      
       </div>
     );
   }
