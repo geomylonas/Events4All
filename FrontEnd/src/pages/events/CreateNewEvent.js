@@ -80,13 +80,18 @@ changeHandlerCategory= e => {
     submitHandler = e => {
         e.preventDefault();
         
-        var Ticket1 = {Category: {Category: {Id:1}, Price: parseInt(e.target[8].value)}};
+        var Ticket1 = {Category:  {Id: 1, Name: "Normal"}, Price: parseInt(e.target[8].value)};
         var Ticket2 = {Category: this.state.Category, Price: parseInt(e.target[10].value)};
         
-        if(this.state.checkboxToggle)
-        this.setState({Tickets: [...this.state.Tickets, Ticket1]})
-        else
-        this.setState({Tickets: [...this.state.Tickets, Ticket1, Ticket2]})
+        if(this.state.checkboxToggle){
+
+            this.state.Tickets = [...this.state.Tickets, Ticket1]
+        }
+        else{
+
+            this.state.Tickets = [...this.state.Tickets, Ticket1, Ticket2]
+        }
+            
     
             var event ={
                 Title: e.target[0].value,
@@ -100,24 +105,23 @@ changeHandlerCategory= e => {
                 Tickets: this.state.Tickets   
             }
 
-
-            var QueryString = require('qs');
-
-            axios({
-                url: 'https://localhost:44359/api/Events',
-                method: 'POST',
-                data: {
-                    headers: { 'Authorization': `Bearer ${JSON.parse(localStorage.getItem('token'))}`
-                  } 
-                },
-              })
-            .then(response => {
-                console.log(response)
-            })
-            .catch(error => {
-                console.log(error)
+    
+    console.log(event)
+        const headers = {
+                'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('token'))}`
+            }
+        
+           axios.post("https://localhost:44359/api/events", event, {
+                   headers: headers
+               })
+                .then(response => {
+                        console.log(response)
+                    })
+                    .catch(error => {
+                            console.log(error)
+                    
+                        })
                 
-            })
     }
 
 

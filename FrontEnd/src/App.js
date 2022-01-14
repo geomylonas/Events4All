@@ -3,7 +3,7 @@ import './App.css';
 import NavigationBar from './components/NavigationBar/NavigationBar';
 import { Routes, Route } from 'react-router-dom';
 import Homepage from './pages/homepage/homepage';
-import { Component, React, useLayoutEffect, useState } from 'react';
+import { Component } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import EventsComponent from './pages/events/MainPage';
 import EventInfo from './pages/events/EventInfo';
@@ -17,7 +17,10 @@ import RegisterPage from './pages/register/Register';
 import OrganizerEvents from './pages/events/EventsByOrganizer/OrganizerEvents';
 import ReactDatePicker from 'react-datepicker';
 import OrganizerEventInfo from './pages/events/EventsByOrganizer/EventInfoOrganizer';
+import ReactDOM from "react-dom";
+import React from 'react';
 
+const PayPalButton = paypal.Buttons.driver("react", { React, ReactDOM });
 
 class App extends Component {
   constructor(props){
@@ -120,7 +123,10 @@ class App extends Component {
         </Routes>
         <UpButton />
         <FooterDiv />
-
+        <PayPalButton
+        createOrder={(data, actions) => this.createOrder(data, actions)}
+        onApprove={(data, actions) => this.onApprove(data, actions)}
+      />
       </div>
     );
   }
