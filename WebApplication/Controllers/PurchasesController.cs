@@ -51,7 +51,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpPost]
-        [Route("api/Purchase/Check/{purchase}")]
+        [Route("api/Purchases/Check/")]
         public async Task<IHttpActionResult> Check(Purchase purchase)
         {
             var result=await Task.FromResult(UnitOfWork.Purchases.CheckPurchase(purchase));
