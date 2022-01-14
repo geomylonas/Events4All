@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Modal, Form } from "react-bootstrap";
 import axios from "axios";
 import "./Login.css";
 import QueryString from "qs";
@@ -25,21 +25,24 @@ function LoginModal(props) {
         }).then(response => {
             if (response.data.access_token){
                 {localStorage.setItem("token", JSON.stringify(response.data.access_token));}
-                console.log(JSON.stringify(response.data.access_token));
                 axios.get("https://localhost:44359/api/account/details",{
                 headers: { "Authorization": `Bearer ${JSON.parse(localStorage.getItem('token'))}` }
             }
             ).then(res => {
                 {localStorage.setItem("username", JSON.stringify(res.data.FirstName + " " + res.data.LastName));}
                 {localStorage.setItem("userRole", JSON.stringify(res.data.UserRole));}
-            }).then(res=>window.location.reload(true))
+                {localStorage.setItem("cart", JSON.stringify([]));}
+                
+                
+            }).then(res=>{
+                window.location.reload(true);
+            })
             }
-            props.onHide();
-            
-        return response.data})
-        .catch(error=>{
-            console.log(error);
-        })
+            props.loginrefresh();
+            })
+            .catch(error=>{
+                console.log(error);
+            })
             
         
     }

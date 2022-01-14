@@ -3,45 +3,42 @@ import classes from "../MainPage.module.css";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import DeleteModal from '../DeleteEventModal';
-import { act } from 'react-dom/test-utils';
-import EventFilter from '../components/EventFilter';
-
+import "./OrganizerEvents.css";
+import { Overlay, Tooltip } from "react-bootstrap";
 
 class OrganizerEvents extends React.Component {
   constructor(props) {
     super(props);
-
+    this.myRef = React.createRef(null);
     this.state = {
       events: [],
-      eventcategories: [],
       openModal: false,
       openModalPurchase: false,
       activeItem: '',
       loading: false,
       page: 0,
       prevY: 0,
-      eventCategoryId: 0,
-      stoploading: false,
-      ticketDisabled: [],
-      ticketId: 0,
-      ticketCategory: '',
-      ticketPrice: 0
+      stoploading: false, 
+      tooltip: false
+      
     };
   }
 
-
-
+  
 
   getEvents(page) {
 
-    if (this.state.eventCategoryId == 0) {
+    
 
       this.setState({ loading: true });
-      axios.get(`https://localhost:44359/api/Events/${page}/12/`
+      axios.get(`https://localhost:44359/api/Events/organizer/${page}/12/`, {
+        headers: { "Authorization": `Bearer ${JSON.parse(localStorage.getItem('token'))}` }
+    }
       )
         .then((res) => {
           this.setState({ events: [...this.state.events, ...res.data] });
           this.setState({ loading: false });
+          console.log(this.state.events);
         })
         .catch((err) => {
           console.log(err);
@@ -49,24 +46,7 @@ class OrganizerEvents extends React.Component {
           this.setState({ stoploading: true });
 
         });
-    }
-    else {
-
-      this.setState({ loading: true });
-      axios.get(`https://localhost:44359/api/Events/${page}/12/${this.state.eventCategoryId}`
-      )
-        .then((res) => {
-          this.setState({ events: [...this.state.events, ...res.data] });
-          this.setState({ loading: false });
-
-        })
-        .catch((err) => {
-          console.log(err);
-          this.setState({ loading: false });
-          this.setState({ stoploading: true });
-
-        });
-    }
+    
 
 
   };
@@ -99,12 +79,7 @@ class OrganizerEvents extends React.Component {
     this.setState({ prevY: y });
   }
 
-  addToCart = (ev) => {
-    const selectedProduct = { eventId: ev.Id, eventTitle: ev.Title, ticketId: this.state.ticketId,
-     ticketCategory: this.state.ticketCategory, ticketPrice: this.state.ticketPrice }
-    console.log(selectedProduct);
-    this.props.addToCart(selectedProduct);
-  }
+ 
 
 
   onClickButton = (ev) => {
@@ -113,25 +88,17 @@ class OrganizerEvents extends React.Component {
 
   }
   onCloseModal = () => {
-    this.setState({ openModal: false, openModalPurchase: false })
+    this.setState({ openModal: false})
   }
 
-
-
-  eventCategoryFilter(cat) {
-    this.state.eventCategoryId = cat;
-    this.setState({ stoploading: false })
-    this.setState({ events: [], page: 0 })
+  Success = () => {
+    this.setState({tooltip: true, openModal: false});
   }
 
+  
 
-  selectPrice = (id) => e =>{
-    let catprice = JSON.parse(e.target.value);
-    console.log(catprice);
-    console.log(id);
-    this.setState({ticketDisabled: [...this.state.ticketDisabled, id]});
-    this.setState({ticketId: catprice.Id, ticketPrice: catprice.Price, ticketCategory: catprice.Category.Name})
-  }
+
+ 
 
   render() {
     const loadingCSS = {
@@ -139,45 +106,60 @@ class OrganizerEvents extends React.Component {
       margin: "30px"
     };
     const loadingTextCSS = { display: this.state.loading ? "block" : "none" };
+   
+  
 
+   
 
     return (
 
 
-      <div>
-        <div className={classes.filter}>
-          <EventFilter eventcategory={(cat) => this.eventCategoryFilter(cat)} />
+      <div >
+        <div id="createbutton">
+          <Link to="/createnewevent">
+            <button ref={this.state.myRef}>Create New Event</button>
+          </Link>
         </div>
+        
         <div className={classes.allEvents}>
           {this.state.events.map(ev => (
 
             <div className={classes.individualSampleEvent} key={ev.Id}>
-              {ev.Id}
-              <Link to={`/events/info/${ev.Id}`}>
+
+                { 
+                  ev.Tickets.map((tic, index) => ( tic.PurchaseDetails.length == 0 && index < 1) &&
+                   <img key={tic.Id} className="trashcan" src={require("../../../images/trashcan.png")} alt="trashcan" onClick={() => this.onClickButton(ev)} /> ) 
+                }
+              <Link to={`/myeventsorganizer/info/${ev.Id}`}>
                 <img src="https://images.pexels.com/photos/3171837/pexels-photo-3171837.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" className={classes.eventPicture} />
               </Link>
               <div className={classes.sampleEventBody}>
                 <h4>{ev.Title}</h4>
                 <p className={classes.overflow}>{ev.Description}</p>
-                <select onChange={this.selectPrice(ev.Id)}>
-                  <option defaultValue hidden>Select Ticket</option>
-                {ev.Tickets.map(cat=>(
-                  <option key={cat.Category.Name} value={JSON.stringify(cat)}>{cat.Category.Name} {cat.Price}&euro;</option>
-                ))}
-                  </select>
+                
                 <div>
-                  <Link to={`/events/info/${ev.Id}`}>
+                  <Link to={`/myeventsorganizer/info/${ev.Id}`}>
                     <button className={classes.detailsButton}>Details</button>
                   </Link>
-                  <button className={classes.purchaseButton} onClick={() => this.addToCart(ev)} disabled={!this.state.ticketDisabled.includes(ev.Id)}>Add to Cart</button>
+                  
                 </div>
-              
-                <img className={classes.trashcan} src={require("../../../images/trashcan.png")} alt="trashcan" onClick={() => this.onClickButton(ev)} />
+                
+                  
+                
               </div>
             </div>
 
           ))}
-          <DeleteModal eventchosen={this.state.activeItem.Id} show={this.state.openModal} onHide={this.onCloseModal} />
+
+              <Overlay target={this.state.myRef} show={this.state.tooltip} placement="right">
+                    {(props) => (
+                        <Tooltip id="overlay-example" {...props}>
+                            Successful Deleted
+                        </Tooltip>
+                    )}
+                </Overlay>
+
+          <DeleteModal eventchosen={this.state.activeItem.Id} show={this.state.openModal} onHide={this.onCloseModal} success={this.Success}/>
 
 
 

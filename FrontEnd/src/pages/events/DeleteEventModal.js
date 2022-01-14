@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Modal, Button } from "react-bootstrap";
 import axios from "axios";
 
@@ -6,14 +6,22 @@ import axios from "axios";
 
 
 
-
 function DeleteModal(props) {
-    
-    // const [showModal, setShow] = useState(true);
+   
     
     function deleteEvent() {
-        axios.delete(`https://localhost:44359/api/Events/${props.eventchosen}`);
-        props.onHide();
+        axios.delete(`https://localhost:44359/api/Events/${props.eventchosen}`, {
+            headers: { "Authorization": `Bearer ${JSON.parse(localStorage.getItem('token'))}` }
+        }
+        ).then(res => {
+           alert("Deleted Successfully");
+            
+        }).then(r=>{
+            window.location.reload();
+        }).catch(er =>{
+            
+        });
+        
         
     }
     
@@ -31,12 +39,12 @@ function DeleteModal(props) {
             </Modal.Header>
             <Modal.Body>
                 <h4>Are you sure you want to Delete this Item?</h4>
-                {props.eventchosen}
-
+                
 
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={() => {  deleteEvent()}}>Delete</Button>
+            
+                <Button onClick={() => { deleteEvent()}}>Delete</Button>
                 <Button onClick={props.onHide} variant="secondary">Cancel</Button>
             </Modal.Footer>
         </Modal>

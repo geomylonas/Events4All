@@ -3,6 +3,7 @@ import { Image, Carousel, Card, Button } from "react-bootstrap";
 import CustomerForm from "../../components/CustomerForm/customerForm";
 import classes from "./homepage.module.css";
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 
 
 function Homepage() {
@@ -110,7 +111,9 @@ function Homepage() {
                         <h4>Title</h4>
                         <h5>Description</h5>
                         <div>
-                            <button className={classes.outlineButton}>Details</button>
+                            <Link to="/register">
+                                <button className={classes.outlineButton}>Details</button>
+                            </Link>
                             <button className={classes.filledButton}>Quick Purchase</button>
                         </div>
                     </div>

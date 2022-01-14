@@ -16,6 +16,7 @@ import Cart from './components/Cart/Cart';
 import RegisterPage from './pages/register/Register';
 import OrganizerEvents from './pages/events/EventsByOrganizer/OrganizerEvents';
 import ReactDatePicker from 'react-datepicker';
+import OrganizerEventInfo from './pages/events/EventsByOrganizer/EventInfoOrganizer';
 
 
 class App extends Component {
@@ -23,8 +24,13 @@ class App extends Component {
     super(props);
     this.state={
       cartItems: JSON.parse(localStorage.getItem("cart")),
+      userRole: ''
     }
   }
+
+
+
+
   addToCart = (p) => {
     const cartItems = this.state.cartItems.slice();
     let alreadyInCart;
@@ -101,7 +107,6 @@ class App extends Component {
 
     return (
       <div className="customContainer">
-
         <NavigationBar {...attributes}/>
         <Routes>
           <Route path="/" element={<Homepage />} />
@@ -111,6 +116,7 @@ class App extends Component {
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/myeventsorganizer" element={<OrganizerEvents />} />
+          <Route path="/myeventsorganizer/info/:id" element={<OrganizerEventInfo />} />
         </Routes>
         <UpButton />
         <FooterDiv />
