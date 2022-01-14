@@ -34,7 +34,7 @@ namespace DAL.Entities
         public DateTime DateOfEvent { get; set; }
 
         
-        public int MaxTickets { get; set; }
+        public int AvailableTickets { get; set; }
 
        
         public virtual ICollection<Ticket> Tickets { get; set; }

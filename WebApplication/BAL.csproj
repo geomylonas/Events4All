@@ -256,17 +256,9 @@
     <Compile Include="Interfaces\IPurchaseRepository.cs" />
     <Compile Include="Interfaces\ITicketRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
-    <Compile Include="Migrations\202201101606332_InitialCreate.cs" />
-    <Compile Include="Migrations\202201101606332_InitialCreate.Designer.cs">
-      <DependentUpon>202201101606332_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202201102126350_updateDBv1.cs" />
-    <Compile Include="Migrations\202201102126350_updateDBv1.Designer.cs">
-      <DependentUpon>202201102126350_updateDBv1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202201121742291_PurchasesToPerson.cs" />
-    <Compile Include="Migrations\202201121742291_PurchasesToPerson.Designer.cs">
-      <DependentUpon>202201121742291_PurchasesToPerson.cs</DependentUpon>
+    <Compile Include="Migrations\202201140855172_InitialCreate.cs" />
+    <Compile Include="Migrations\202201140855172_InitialCreate.Designer.cs">
+      <DependentUpon>202201140855172_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -385,14 +377,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202201101606332_InitialCreate.resx">
-      <DependentUpon>202201101606332_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202201102126350_updateDBv1.resx">
-      <DependentUpon>202201102126350_updateDBv1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202201121742291_PurchasesToPerson.resx">
-      <DependentUpon>202201121742291_PurchasesToPerson.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201140855172_InitialCreate.resx">
+      <DependentUpon>202201140855172_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

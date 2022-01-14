@@ -32,9 +32,10 @@ function LoginModal(props) {
             ).then(res => {
                 {localStorage.setItem("username", JSON.stringify(res.data.FirstName + " " + res.data.LastName));}
                 {localStorage.setItem("userRole", JSON.stringify(res.data.UserRole));}
-            })
+            }).then(res=>window.location.reload(true))
             }
             props.onHide();
+            
         return response.data})
         .catch(error=>{
             console.log(error);

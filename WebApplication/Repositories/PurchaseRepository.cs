@@ -23,6 +23,11 @@ namespace WebApplication.Repositories
             var user = _context.Set<Person>().Find(AccountController.GetUserID());
             user.Purchases.Add(purchase);
             _context.Set<Purchase>().Add(purchase);
+            foreach(var purchaseDetails in purchase.PurchaseDetails)
+            {
+                var ticket = _context.Set<Ticket>().Find(purchaseDetails.TicketId);
+                ticket.Event.AvailableTickets -= purchaseDetails.Quantity;
+            }
         }
 
         public Task<ICollection<Purchase>> GetPurchasesByUser()

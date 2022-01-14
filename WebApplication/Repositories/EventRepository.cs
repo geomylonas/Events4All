@@ -70,7 +70,12 @@ namespace WebApplication.Repositories
             }
             foreach (var ticket in _context.Set<Ticket>().Where(p => p.Event.Id == @event.Id).ToList())
             {
+                foreach(var purchaseDetail in _context.Set<PurchaseDetail>().Where(pd=>pd.TicketId==ticket.Id))
+                {
+                    _context.Set<PurchaseDetail>().Remove(purchaseDetail);
+                }
                 _context.Set<Ticket>().Remove(ticket);
+
             }
 
             _context.Set<Event>().Remove(@event);

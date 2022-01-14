@@ -19,7 +19,7 @@ class CreateNewEvent extends React.Component {
             PlaceName: '',
             PlaceAddress: '',
             DateOfEvent: '',
-            MaxTickets: ''
+            AvailableTickets: ''
         };
 
 
@@ -52,7 +52,7 @@ class CreateNewEvent extends React.Component {
 
 
     render() {
-        const { Title, Description, PlaceName, PlaceAddress, DateOfEvent, MaxTickets } = this.state;
+        const { Title, Description, PlaceName, PlaceAddress, DateOfEvent, AvailableTickets } = this.state;
         return (
 
             <div className={classes.newEventForm}>
@@ -84,7 +84,7 @@ class CreateNewEvent extends React.Component {
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                         <Form.Label>Max Number Of Tickets</Form.Label>
-                        <Form.Control type="text" name="MaxTickets" placeholder="MaxTickets" value={MaxTickets} onChange={this.changeHandler} />
+                        <Form.Control type="text" name="AvailableTickets" placeholder="AvailableTickets" value={AvailableTickets} onChange={this.changeHandler} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
