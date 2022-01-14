@@ -2,20 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import classes from '../EventInfo.module.css';
-import { Card } from "react-bootstrap";
+import { Card, Tooltip } from "react-bootstrap";
 import "./EventInfoOrganizer.css";
-
+import DeleteModal from '../DeleteEventModal';
 
 function OrganizerEventInfo(props) {
     const { id } = useParams();
     const [data, setData] = useState([]);
-    const [cartModal, setCartModal] = useState(false);
-    const [checked, setChecked] = useState(0);
-    const [category, setCategory] = useState('')
-    const [ticketId, setTicketId] = useState(0)
-    const [disabled, setDisabled] = useState(true);
-
-
+    const [deleteModal, setDeletemodal] = useState(false);
 
     useEffect(() => {
         fetchEvent();
@@ -36,29 +30,18 @@ function OrganizerEventInfo(props) {
     };
 
 
+    function deleteEvent(){
+        setDeletemodal(true);
+        
+    } 
+    function closeModal(){
+        setDeletemodal(false);
+        
+    } 
 
-    function openCartModal() {
-        setCartModal(true);
-    }
-
-    function onCloseCartModal() {
-        setCartModal(false);
-    }
-
-    function handleChange(p) {
-        const price = p.Price;
-        const pr = p;
-        const ticketId = p.Id
-        const chosenCategory = p.Category.Name;
-        setChecked(price);
-        setCategory(chosenCategory);
-        console.log(pr)
-        setDisabled(false);
-    }
-
+  
 
     if (data.length == 0) return null;
-    const selectedProduct = { eventId: data.Id, eventTitle: data.Title, ticketId: ticketId, ticketPrice: checked, ticketCategory: category }
     return (
         <div className={classes.eventSection} key={data.Id}>
 
@@ -86,17 +69,27 @@ function OrganizerEventInfo(props) {
                             ))}
                         </div>
                     </div>
-                    {/* <button className={classes.filledButton} onClick={() => props.addToCart(selectedProduct)} disabled={disabled}>Add to Cart</button> */}
 
                 </div>
+                
             </div>
 
 
 
-
+            <div id="delEdit">
+            { 
+                  data.Tickets.map((tic, index) => ( tic.PurchaseDetails.length == 0 && index < 1) &&
+                  <button key={tic.Id} onClick={deleteEvent} disabled={false}>Delete</button>)
+            }
+            {
+                 data.Tickets.map((tic) => ( tic.PurchaseDetails.length > 0) &&
+                 <button key={tic.Id} disabled={true}>Delete</button>)
+            }
+                    <button>Edit</button>
+            </div>
 
             <div className={classes.col2}>
-
+                
 
                 <h4>Event happening</h4>
                 <Card body className={classes.eventBox}>{data.PlaceName}</Card>
@@ -109,6 +102,8 @@ function OrganizerEventInfo(props) {
                     {data.DateOfEvent}
                 </Card>
             </div>
+          <DeleteModal eventchosen={data.Id} show={deleteModal} onHide={closeModal}/>
+            
 
 
 

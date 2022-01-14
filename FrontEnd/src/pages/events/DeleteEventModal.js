@@ -1,13 +1,13 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 import { Modal, Button } from "react-bootstrap";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 
 
 
 
 function DeleteModal(props) {
-   
+    const navigate = useNavigate();
     
     function deleteEvent() {
         axios.delete(`https://localhost:44359/api/Events/${props.eventchosen}`, {
@@ -17,6 +17,7 @@ function DeleteModal(props) {
            alert("Deleted Successfully");
             
         }).then(r=>{
+            navigate('/myeventsorganizer');
             window.location.reload();
         }).catch(er =>{
             

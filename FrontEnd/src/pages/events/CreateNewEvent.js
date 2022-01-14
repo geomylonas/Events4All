@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React from 'react';
 import classes from './CreateNewEvent.module.css';
-import { FloatingLabel, Form, Button, Dropdown } from "react-bootstrap";
 import axios from 'axios';
-
+import QueryString from 'qs';
 
 
 
@@ -13,36 +11,112 @@ class CreateNewEvent extends React.Component {
         super(props)
 
         this.state = {
-            Picture: '',
-            Title: '',
-            Description: '',
-            PlaceName: '',
-            PlaceAddress: '',
-            DateOfEvent: '',
-            AvailableTickets: ''
+            eventcategories: [],
+            ticketcategories: [],
+            EventCategory: 0,
+            Tickets:[],
+            Price: 0,
+            TicketCategory:'',
+            checkboxToggle: true       
         };
-
-
-
     };
 
+    getEventCategories() {
+        axios.get(`https://localhost:44359/api/EventCategories`
+        )
+            .then((res) => {
+                this.setState({ eventcategories: [...this.state.eventcategories, ...res.data] });
+            })
+            .catch((err) => {
+                console.log(err);
+
+            });
+    }
 
 
 
+    getTicketCategories() {
+        axios.get(`https://localhost:44359/api/categories`
+        )
+            .then((res) => {
+                this.setState({ ticketcategories: [...this.state.ticketcategories, ...res.data] });
+            })
+            .catch((err) => {
+                console.log(err);
+
+            });
+    }
+
+
+    componentDidMount() {
+        this.getEventCategories();
+        this.getTicketCategories();
+    }
 
     changeHandler = e => {
-        this.setState({ [e.target.name]: e.target.value })
+        this.setState({ EventCategory: JSON.parse(e.target.value )})
     }
+
+    changeHandlerTicket = e => {
+    var Ticket = { Category: {Id:1}, Price: parseInt(e.target.value) }
+    // this.setState({Tickets: [...this.state.Tickets, JSON.stringify(Ticket)]})
+    console.log(this.state.Tickets);
+
+}
+
+
+changeHandlerCategory= e => {
+    const cat = JSON.parse(e.target.value);
+    this.setState({Category: cat});
+    if(this.state.checkboxToggle){
+        this.setState({checkboxToggle: false});   
+    }
+    else{
+        this.setState({checkboxToggle: true});
+    }
+}
+
 
     submitHandler = e => {
         e.preventDefault();
-        console.log(this.state);
-        axios.post("https://localhost:44359/api/Events", this.state)
+        
+        var Ticket1 = {Category: {Category: {Id:1}, Price: parseInt(e.target[8].value)}};
+        var Ticket2 = {Category: this.state.Category, Price: parseInt(e.target[10].value)};
+        
+        if(this.state.checkboxToggle)
+        this.setState({Tickets: [...this.state.Tickets, Ticket1]})
+        else
+        this.setState({Tickets: [...this.state.Tickets, Ticket1, Ticket2]})
+    
+            var event ={
+                Title: e.target[0].value,
+                Picture: e.target[1].value,
+                PlaceName: e.target[2].value,
+                PlaceAddress: e.target[3].value,
+                Description: e.target[4].value,
+                DateOfEvent: e.target[5].value,
+                AvailableTickets: parseInt(e.target[6].value),
+                EventCategory: this.state.EventCategory,
+                Tickets: this.state.Tickets   
+            }
+
+
+            var QueryString = require('qs');
+
+            axios({
+                url: 'https://localhost:44359/api/Events',
+                method: 'POST',
+                data: {
+                    headers: { 'Authorization': `Bearer ${JSON.parse(localStorage.getItem('token'))}`
+                  } 
+                },
+              })
             .then(response => {
                 console.log(response)
             })
             .catch(error => {
                 console.log(error)
+                
             })
     }
 
@@ -52,54 +126,67 @@ class CreateNewEvent extends React.Component {
 
 
     render() {
-        const { Title, Description, PlaceName, PlaceAddress, DateOfEvent, AvailableTickets } = this.state;
+      
         return (
+
 
             <div className={classes.newEventForm}>
                 <h1>Event Creation</h1>
-                <Form onSubmit={this.submitHandler}>
-                    {/* <Form.Group controlId="formFileMultiple" className="mb-3">
-                        <Form.Label>Pictures</Form.Label>
-                        <Form.Control type="file" multiple value={Picture} />
-                    </Form.Group> */}
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Title</Form.Label>
-                        <Form.Control type="text" name="Title" placeholder="Title" value={Title} onChange={this.changeHandler} />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Description</Form.Label>
-                        <Form.Control style={{maxHeight: "150px" }} as="textarea" name="Description" rows={3} placeholder="Description" value={Description} onChange={this.changeHandler} />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Place Name</Form.Label>
-                        <Form.Control type="text" name="PlaceName" placeholder="PlaceName" value={PlaceName} onChange={this.changeHandler} />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Address</Form.Label>
-                        <Form.Control type="text" name="PlaceAddress" placeholder="PlaceAddress" value={PlaceAddress} onChange={this.changeHandler} />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Date Of Event</Form.Label>
-                        <Form.Control type="text" name="DateOfEvent" placeholder="DateOfEvent" value={DateOfEvent} onChange={this.changeHandler} />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Max Number Of Tickets</Form.Label>
-                        <Form.Control type="text" name="AvailableTickets" placeholder="AvailableTickets" value={AvailableTickets} onChange={this.changeHandler} />
-                    </Form.Group>
+                <form onSubmit={this.submitHandler}>
+                    <div className={classes.eventinfo}>
 
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Choose Ticket Categories</Form.Label>
-                        <Form.Control type="text" placeholder="Title" onChange={this.changeHandler} />
-                    </Form.Group>
+                        <h4>Event Title</h4>
+                        <input type="text" name="Title" placeholder="Title"></input>
+                        <h4>Insert Your Pictures</h4>
+                        <input type="file" multiple></input>
+                        <h4>Event happening</h4>
+                        <input type="text" name="PlaceName" placeholder="Building, Property etc"></input>
+                        <h4>Address</h4>
+                        <input type="text" name="PlaceAddress" placeholder="PlaceAddress"></input>
+                        <h4>Description</h4>
+                        <textarea id="txtid" style={{ maxHeight: "150px" }} name="Description" rows="4" cols="50" maxLength="500"></textarea>
+                        <h4>Date Of Event</h4>
+                        <input type="datetime-local" name="DateOfEvent" placeholder="Date Of Event"></input>
+                        <h4>Available Tickets</h4>
+                        <input type="number" name="AvailableTickets" placeholder="Available Tickets"></input>
 
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Price</Form.Label>
-                        <Form.Control type="text" placeholder="Title" onChange={this.changeHandler} />
-                    </Form.Group>
-                    
 
-                    <button type="submit">Create</button>
-                </Form >
+                    </div>
+
+                        <div className={classes.categorytickets}>
+                            <h4>Choose Your Event Category</h4>
+                            <div>
+                                <select onChange={this.changeHandler}>
+                                    <option hidden>Choose A Category</option>
+                                    {this.state.eventcategories.map((evc) => (
+
+                                        <option key={evc.Id} value={JSON.stringify(evc)}>{evc.Name}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <h4>Choose your Ticket Categories</h4>
+                            <div>
+                                        Normal
+                                       <input type="text" placeholder='Price' disabled={this.checkboxToggle} name="Price"></input>
+                                {this.state.ticketcategories.map((t,index) => (
+
+                                     index > 0 &&
+                                        <div id={classes.categorydiv} key={t.Id}>{t.Name}
+
+                                       
+                                        
+                                        <input type="checkbox" value={JSON.stringify(t)} name="Category" onClick={this.changeHandlerCategory}></input>
+                                       
+                                        <input type="text" placeholder='Price' disabled={this.state.checkboxToggle} name="Price"></input>
+                                        </div>
+                                        
+                                    
+                                ))}
+                            </div>
+
+                        </div>
+                <button type="submit">Create</button>
+                </form>
             </div>
 
 

@@ -1,3 +1,4 @@
+/* white: #F6F4F2, mpez: #C6AD8F, dark: #425664 */
 
 
 
@@ -30,7 +31,7 @@
 
 .orgticketBox{
     min-height: 370px;
-    justify-content: space-around;
+    justify-content: space-evenly;
     flex-direction: column;
     display: flex;
     padding: 20px 20px;
@@ -48,4 +49,46 @@
 .orgticketBox h4{
 color: #425664;
 font-weight: bold;
+}
+
+
+#delEdit{
+    position: absolute;
+    right: 120px;
+    display: flex;
+    gap: 20px;
+}
+
+#delEdit button{
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    background-color: #425664;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    transition: color .15s ease-in-out,
+    background-color .15s ease-in-out,
+    border-color .15s ease-in-out,
+    box-shadow .15s ease-in-out;
+    color: #F6F4F2;
+    border-color: #425664;
+}
+
+
+#delEdit button:hover:enabled{
+    background-color:#C6AD8F;
+    color: #F6F4F2;
+    border: 1px solid #C6AD8F; 
+}
+
+#delEdit button:disabled{
+    opacity: 50%;
 }
