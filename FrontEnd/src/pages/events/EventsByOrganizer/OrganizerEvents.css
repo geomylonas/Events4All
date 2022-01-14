@@ -40,7 +40,7 @@
 .trashcan{
     width: 20px;
     position: absolute;
-    top:15px;
+    top: 15px;
     right: 15px;
     transition: transform 300ms ease-in-out 25ms;
 }

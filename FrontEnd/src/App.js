@@ -16,6 +16,7 @@ import Cart from './components/Cart/Cart';
 import RegisterPage from './pages/register/Register';
 import OrganizerEvents from './pages/events/EventsByOrganizer/OrganizerEvents';
 import ReactDatePicker from 'react-datepicker';
+import OrganizerEventInfo from './pages/events/EventsByOrganizer/EventInfoOrganizer';
 
 
 class App extends Component {
@@ -115,6 +116,7 @@ class App extends Component {
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/myeventsorganizer" element={<OrganizerEvents />} />
+          <Route path="/myeventsorganizer/info/:id" element={<OrganizerEventInfo />} />
         </Routes>
         <UpButton />
         <FooterDiv />

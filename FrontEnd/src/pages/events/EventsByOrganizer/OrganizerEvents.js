@@ -130,7 +130,7 @@ class OrganizerEvents extends React.Component {
                   ev.Tickets.map((tic, index) => ( tic.PurchaseDetails.length == 0 && index < 1) &&
                    <img key={tic.Id} className="trashcan" src={require("../../../images/trashcan.png")} alt="trashcan" onClick={() => this.onClickButton(ev)} /> ) 
                 }
-              <Link to={`/events/info/${ev.Id}`}>
+              <Link to={`/myeventsorganizer/info/${ev.Id}`}>
                 <img src="https://images.pexels.com/photos/3171837/pexels-photo-3171837.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" className={classes.eventPicture} />
               </Link>
               <div className={classes.sampleEventBody}>
@@ -138,7 +138,7 @@ class OrganizerEvents extends React.Component {
                 <p className={classes.overflow}>{ev.Description}</p>
                 
                 <div>
-                  <Link to={`/events/info/${ev.Id}`}>
+                  <Link to={`/myeventsorganizer/info/${ev.Id}`}>
                     <button className={classes.detailsButton}>Details</button>
                   </Link>
                   
