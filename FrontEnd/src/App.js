@@ -20,6 +20,7 @@ import OrganizerEventInfo from './pages/events/EventsByOrganizer/EventInfoOrgani
 import React from 'react';
 import Payment from './components/Paypal/Payment';
 import { stringify } from 'qs';
+import EditEvent from './pages/events/EventsByOrganizer/EditEvent';
 
 
 class App extends Component {
@@ -127,12 +128,23 @@ class App extends Component {
           <Route path="/" element={<Homepage />} />
           <Route path="/events/mainpage" element={<FeaturedEvents addToCart={this.addToCart} />} />
           <Route path="/events/info/:id" element={<EventInfo addToCart={this.addToCart}/>} />
+          { localStorage.getItem("userRole") == JSON.stringify("Organizer") &&
           <Route path="/createnewevent" element={<CreateNewEvent />} />
+          }
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/register" element={<RegisterPage />} />
+          { localStorage.getItem("userRole") == JSON.stringify("Organizer") &&
           <Route path="/myeventsorganizer" element={<OrganizerEvents />} />
+          }
+           { localStorage.getItem("userRole") == JSON.stringify("Organizer") &&
           <Route path="/myeventsorganizer/info/:id" element={<OrganizerEventInfo />} />
+          }
+          { localStorage.getItem("userRole") == JSON.stringify("Organizer") &&
+          <Route path="/editevent/info/:id" element={<EditEvent />} />
+          }
+         { localStorage.getItem("token") &&
           <Route path="/payment" element={<Payment paypalamount = {this.state.totalAmount}/>} />
+        }
         </Routes>
         <UpButton />
         <FooterDiv />

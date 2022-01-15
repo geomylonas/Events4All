@@ -79,7 +79,8 @@ changeHandlerCategory= e => {
 
     submitHandler = e => {
         e.preventDefault();
-        
+        var Pictures = []
+
         var Ticket1 = {Category:  {Id: 1, Name: "Normal"}, Price: parseInt(e.target[8].value)};
         var Ticket2 = {Category: this.state.Category, Price: parseInt(e.target[10].value)};
         
@@ -95,7 +96,7 @@ changeHandlerCategory= e => {
     
             var event ={
                 Title: e.target[0].value,
-                Picture: e.target[1].value,
+                Pictures: e.target[1].files,
                 PlaceName: e.target[2].value,
                 PlaceAddress: e.target[3].value,
                 Description: e.target[4].value,
@@ -116,6 +117,9 @@ changeHandlerCategory= e => {
                })
                 .then(response => {
                         console.log(response)
+                    }).then(response=>{
+                        alert("Created Successfully")
+                        window.location.reload(true)
                     })
                     .catch(error => {
                             console.log(error)

@@ -89,7 +89,7 @@ export default function Cart(props) {
                 </Modal.Body>
                 <Modal.Footer>
                     {
-                        props.chosenproducts.length !=0 &&
+                        (props.chosenproducts && props.chosenproducts.length !=0) &&
                         <>
                         <Link to="/payment">
                         <Button variant="success" onClick={() => ProceedToPayment(props.chosenproducts.reduce((c, p) => c + (p.count*p.ticketPrice), 0))}>Proceed to Payment</Button>

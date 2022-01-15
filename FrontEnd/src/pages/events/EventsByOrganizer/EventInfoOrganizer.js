@@ -5,6 +5,7 @@ import classes from '../EventInfo.module.css';
 import { Card, Tooltip } from "react-bootstrap";
 import "./EventInfoOrganizer.css";
 import DeleteModal from '../DeleteEventModal';
+import { Link } from 'react-router-dom';
 
 function OrganizerEventInfo(props) {
     const { id } = useParams();
@@ -24,6 +25,7 @@ function OrganizerEventInfo(props) {
                 )
                 .then((res) => {
                     setData(res.data);
+                    
                 })
                 .catch((err) => console.log(err));
         }
@@ -39,10 +41,11 @@ function OrganizerEventInfo(props) {
         
     } 
 
-  
+    
 
     if (data.length == 0) return null;
     return (
+        
         <div className={classes.eventSection} key={data.Id}>
 
 
@@ -84,8 +87,10 @@ function OrganizerEventInfo(props) {
             {
                  data.Tickets.map((tic) => ( tic.PurchaseDetails.length > 0) &&
                  <button key={tic.Id} disabled={true}>Delete</button>)
-            }
+            }   
+                <Link to={`/editevent/info/${data.Id}`}>
                     <button>Edit</button>
+                </Link>
             </div>
 
             <div className={classes.col2}>

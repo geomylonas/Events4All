@@ -108,11 +108,9 @@ class OrganizerEvents extends React.Component {
     const loadingTextCSS = { display: this.state.loading ? "block" : "none" };
    
   
-
    
 
     return (
-
 
       <div >
         <div id="createbutton">
