@@ -73,6 +73,7 @@ export default function EditEvent() {
         var Ticket1 = { Category: { Id: 1, Name: "Normal" }, Price: parseInt(e.target[8].value) };
 
         var Ticket2 = null;
+
         if (e.target[10]) {
             Ticket2 = { Category: { Id: 2, Name: "VIP" }, Price: parseInt(e.target[10].value) };
         }
@@ -93,9 +94,17 @@ export default function EditEvent() {
         else {
             eventcategory = newCategory
         }
+
+        var Pictures=[];
+        if(e.target[1].value){
+            Pictures=[...Pictures,{Url : "HI"}]
+        }
+
+
         var event = {
             Title: e.target[0].value,
-            Pictures: e.target[1].files,
+            Id: data.Id,
+            Pictures: Pictures,
             PlaceName: e.target[2].value,
             PlaceAddress: e.target[3].value,
             Description: e.target[4].value,
@@ -106,6 +115,23 @@ export default function EditEvent() {
         }
 
         console.log(event);
+        const headers = {
+            'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('token'))}`
+        }
+    
+       axios.put("https://localhost:44359/api/events", event, {
+               headers: headers
+           })
+            .then(response => {
+                    console.log(response)
+                }).then(response=>{
+                    alert("Updated Successfully")
+                    window.location.reload(true)
+                })
+                .catch(error => {
+                        console.log(error)
+                
+                    })
     }
 
     const changeHandler = e => {

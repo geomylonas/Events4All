@@ -96,7 +96,7 @@ changeHandlerCategory= e => {
     
             var event ={
                 Title: e.target[0].value,
-                Pictures: e.target[1].files,
+                
                 PlaceName: e.target[2].value,
                 PlaceAddress: e.target[3].value,
                 Description: e.target[4].value,
