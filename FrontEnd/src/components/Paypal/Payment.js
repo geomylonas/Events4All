@@ -12,7 +12,7 @@ export default function Payment(props) {
       purchase_units: [
         {
           amount: {
-            value: `${props.paypalamount}`,
+            value: `0.01`,
           },
         },
       ],
