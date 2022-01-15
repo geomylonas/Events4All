@@ -21,6 +21,7 @@ import React from 'react';
 import Payment from './components/Paypal/Payment';
 import { stringify } from 'qs';
 import EditEvent from './pages/events/EventsByOrganizer/EditEvent';
+import SuccessPayment from './components/Paypal/SuccessPayment';
 
 
 class App extends Component {
@@ -29,7 +30,7 @@ class App extends Component {
     this.state={
       cartItems: JSON.parse(localStorage.getItem("cart")),
       userRole: '',
-      totalAmount: 0
+      product: []
     }
   }
 
@@ -103,9 +104,9 @@ class App extends Component {
   }
 
 
-  proceedToPayment = (total) =>{
-    this.setState({totalAmount: total});
-    console.log(this.state.totalAmount);
+  proceedToPayment = (p) =>{
+    this.setState({product: p});
+    console.log(this.state.product);
   }
 
 
@@ -143,7 +144,10 @@ class App extends Component {
           <Route path="/editevent/info/:id" element={<EditEvent />} />
           }
          { localStorage.getItem("token") &&
-          <Route path="/payment" element={<Payment paypalamount = {this.state.totalAmount}/>} />
+          <Route path="/payment" element={<Payment product = {this.state.product}/>} />
+        }
+         { localStorage.getItem("token") &&
+          <Route path="/successpayment" element={<SuccessPayment/>} />
         }
         </Routes>
         <UpButton />

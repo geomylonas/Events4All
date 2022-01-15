@@ -21,8 +21,8 @@ export default function Cart(props) {
         }
     }
     
-    function ProceedToPayment(total){
-        props.proceedtopayment(total);
+    function ProceedToPayment(product){
+        props.proceedtopayment(product);
         props.onHide();
     }
     
@@ -92,7 +92,7 @@ export default function Cart(props) {
                         (props.chosenproducts && props.chosenproducts.length !=0) &&
                         <>
                         <Link to="/payment">
-                        <Button variant="success" onClick={() => ProceedToPayment(props.chosenproducts.reduce((c, p) => c + (p.count*p.ticketPrice), 0))}>Proceed to Payment</Button>
+                        <Button variant="success" onClick={() => ProceedToPayment(props.chosenproducts)}>Proceed to Payment</Button>
                         </Link>
                         <Button variant="danger" onClick={props.emptyitems}>Empty Items</Button>
                         </>
