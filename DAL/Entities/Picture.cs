@@ -18,5 +18,11 @@ namespace DAL.Entities
         public string Url { get; set; }
         [JsonIgnore]
         public virtual Event Event { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Picture picture &&
+                   Id == picture.Id;
+        }
     }
 }

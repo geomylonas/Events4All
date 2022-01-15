@@ -28,5 +28,6 @@ namespace DAL.Entities
         public  Ticket() { }
 
 
+
     }
 }

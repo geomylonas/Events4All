@@ -40,6 +40,7 @@ namespace WebApplication.Repositories
                 _context.Set<T>().Attach(entity);
             }
             _context.Set<T>().Remove(entity);
+            
         }
 
         public void Update(T entity)

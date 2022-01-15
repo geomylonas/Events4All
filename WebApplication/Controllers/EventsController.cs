@@ -84,7 +84,7 @@ namespace WebApplication.Controllers
                 return BadRequest(ModelState);
             }
 
-            var Id = GetUserID();
+           
             
             UnitOfWork.Events.Update(@event);
 
@@ -107,10 +107,7 @@ namespace WebApplication.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        private object GetUserID()
-        {
-            throw new NotImplementedException();
-        }
+       
 
         // POST: api/Events
         [Authorize(Roles = "Organizer")]

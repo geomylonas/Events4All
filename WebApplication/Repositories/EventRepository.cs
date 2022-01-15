@@ -7,18 +7,19 @@ using WebApplication.Interfaces;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using DAL.Entities;
+using WebApplication.Controllers;
 
 namespace WebApplication.Repositories
 {
     public class EventRepository : GenericRepository<Event>, IEventRepository
     {
         public EventRepository(IApplicationDbContext context) : base(context)
-        {       
+        {
         }
 
         public ICollection<Event> GetByCategory(int pageNumber, int pageSize, int eventCategoryId)
         {
-           var temp= _context.Set<Event>().Where(e=>e.EventCategory.Id==eventCategoryId);
+            var temp = _context.Set<Event>().Where(e => e.EventCategory.Id == eventCategoryId);
             return temp.OrderBy(e => e.DateOfEvent).Skip(pageSize * pageNumber).Take(pageSize).ToList();
         }
 
@@ -27,63 +28,120 @@ namespace WebApplication.Repositories
             return _context.Set<Event>().OrderBy(e => e.DateOfEvent).Skip(pageSize * pageNumber).Take(pageSize).ToList();
         }
 
-        public ICollection<Event> GetByOrganizerId(string id, int pageNumber, int pageSize )
+        public ICollection<Event> GetByOrganizerId(string id, int pageNumber, int pageSize)
         {
             var organizer = _context.Set<Organizer>().Find(id);
             var events = organizer.Events;
             return events.OrderBy(e => e.DateOfEvent).Skip(pageSize * pageNumber).Take(pageSize).ToList();
         }
 
-        public new void Update(Event @event){
-            _context.Entry(@event).State= EntityState.Modified;
-            _context.Entry(@event.EventCategory).State = EntityState.Modified;
-            
-            foreach (var picture in _context.Set<Picture>().Where(p => p.Event.Id == @event.Id).ToList())
+        public new void Update(Event @event)
+        {
+            var user = _context.Set<Organizer>().Find(AccountController.GetUserID());
+            var oldEvent = _context.Set<Event>().Find(@event.Id);
+            if (user.Events.Contains(_context.Set<Event>().Find(@event.Id)))
             {
-                _context.Set<Picture>().Remove(picture);
+                if (CheckIfTickesAreSold(@event))
+                {
+                    throw new Exception("Event has already sold tickets and cannot be Updated");
+                    return;
+                }
+
+                //var newPictures=@event.Pictures.Where(p => !oldEvent.Pictures.Contains(p)).Select(x => x);
+                //var deletedPictures = oldEvent.Pictures.Where(p => !@event.Pictures.Contains(p)).Select(x => x);
+
+                //foreach (var picture in deletedPictures)
+                //{
+                //    oldEvent.Pictures.Remove(picture);
+                //    _context.Set<Picture>().Remove(picture);       
+                //}
+                //foreach (var picture in newPictures)
+                //{
+                //    oldEvent.Pictures.Add(picture);
+                //}
+
+                
+              
+                _context.Set<Picture>().RemoveRange(oldEvent.Pictures);
+              
+                oldEvent.Pictures.Clear();
+
+                foreach(var picture in @event.Pictures)
+                {
+                    oldEvent.Pictures.Add(picture);
+                }
+                
+
+                
+
+                oldEvent.Tickets.ToList().Find(t => t.Category.Name == "Normal").Price = @event.Tickets.ToList().Find(t => t.Category.Name == "Normal").Price;
+                if(@event.Tickets.Count>1)
+                {
+                    if (oldEvent.Tickets.Count > 1)
+                    {
+                        oldEvent.Tickets.ToList().Find(t => t.Category.Name == "VIP").Price = @event.Tickets.ToList().Find(t => t.Category.Name == "VIP").Price;
+                    }
+                    else
+                    {
+                        oldEvent.Tickets.Add(@event.Tickets.ToList().Find(t => t.Category.Name == "VIP"));
+                    }
+                }
+                else if(oldEvent.Tickets.Count > 1)
+                {
+                    //oldEvent.Tickets.Remove(oldEvent.Tickets.ToList().Find(t => t.Category.Name == "VIP"));
+                    _context.Set<Ticket>().Remove(oldEvent.Tickets.ToList().Find(t => t.Category.Name == "VIP"));
+                }
+
+                oldEvent.PlaceAddress = @event.PlaceAddress;
+                oldEvent.PlaceName = @event.PlaceName;
+                oldEvent.Title = @event.Title;
+                oldEvent.AvailableTickets = @event.AvailableTickets;
+                oldEvent.DateOfEvent = @event.DateOfEvent;
+                oldEvent.Description = @event.Description;
+                oldEvent.EventCategory = _context.Set<EventCategory>().Find(@event.EventCategory.Id);
             }
-            foreach (var picture in @event.Pictures)
+            else
             {
-
-                _context.Set<Picture>().Add(picture);
-            }
-
-            foreach (var ticket in _context.Set<Ticket>().Where(p => p.Event.Id == @event.Id).ToList())
-            {
-                _context.Set<Ticket>().Remove(ticket);
-            }
-
-            foreach (var ticket in @event.Tickets)
-            {
-
-                _context.Set<Ticket>().Add(ticket);
-               
+                throw new Exception("The user doesnt own the event");
             }
         }
 
         public new void Delete(Event @event)
         {
-            foreach (var picture in _context.Set<Picture>().Where(p => p.Event.Id == @event.Id).ToList())
+            var user = _context.Set<Organizer>().Find(AccountController.GetUserID());
+            if (user.Events.Contains(_context.Set<Event>().Find(@event.Id)))
             {
-                ;
-                _context.Set<Picture>().Remove(picture);
-            }
-            foreach (var ticket in _context.Set<Ticket>().Where(p => p.Event.Id == @event.Id).ToList())
-            {
-                foreach(var purchaseDetail in _context.Set<PurchaseDetail>().Where(pd=>pd.TicketId==ticket.Id))
+                if (CheckIfTickesAreSold(@event))
                 {
-                    _context.Set<PurchaseDetail>().Remove(purchaseDetail);
+                    throw new Exception("Event has already sold tickets and cannot be deleted");
+                    return;
                 }
-                _context.Set<Ticket>().Remove(ticket);
+                foreach (var picture in _context.Set<Picture>().Where(p => p.Event.Id == @event.Id).ToList())
+                {
+                  
+                    _context.Set<Picture>().Remove(picture);
+                }
+                foreach (var ticket in _context.Set<Ticket>().Where(p => p.Event.Id == @event.Id).ToList())
+                {
+                    foreach (var purchaseDetail in _context.Set<PurchaseDetail>().Where(pd => pd.TicketId == ticket.Id))
+                    {
+                        _context.Set<PurchaseDetail>().Remove(purchaseDetail);
+                    }
+                    _context.Set<Ticket>().Remove(ticket);
 
+                }
+
+                _context.Set<Event>().Remove(@event);
             }
-
-            _context.Set<Event>().Remove(@event);
+            else
+            {
+                throw new Exception("The user doesnt own the event");
+            }
         }
 
         public new void Add(Event @event)
         {
-            var eventCategory=_context.Set<EventCategory>().Find(@event.EventCategory.Id);
+            var eventCategory = _context.Set<EventCategory>().Find(@event.EventCategory.Id);
             @event.EventCategory = eventCategory;
 
             foreach (var ticket in @event.Tickets)
@@ -93,8 +151,23 @@ namespace WebApplication.Repositories
                 ticket.Category = ticketCategory;
 
             }
+
+            var user = _context.Set<Organizer>().Find(AccountController.GetUserID());
+            user.Events.Add(@event);
             _context.Set<Event>().Add(@event);
         }
 
+
+        public bool CheckIfTickesAreSold(Event @event)
+        {
+            foreach (var ticket in @event.Tickets)
+            {
+                if (_context.Set<PurchaseDetail>().Where(pd => pd.TicketId == ticket.Id).Count()>0)
+                {
+                    return true;
+                }
+            }
+                return false;       
+        }
     }
 }
