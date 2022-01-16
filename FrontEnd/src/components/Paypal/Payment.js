@@ -17,20 +17,51 @@ export default function Payment(props) {
   const navigate=useNavigate()
 
   const handleApprove = (orderId) =>{
+    let PurchaseDetails=[]
+    let PurchaseDetail={}
+    product.map(pr=>{
+      PurchaseDetail={
+        TotalPrice: pr.count*pr.ticketPrice,
+        Quantity: pr.count,
+        TicketId: pr.ticketId,
+      }
+      PurchaseDetails=[...PurchaseDetails,PurchaseDetail]
+    })
+   let Purchase={
+    PurchaseDetails: PurchaseDetails,
+    DateOfPurchase: new Date().toJSON().slice(0,10),
+    Amount: product.reduce((c, p) => c + (p.count*p.ticketPrice), 0)
+   }
+
+   console.log(product)
+    const headers = {
+      'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('token'))}`
+  }
+    axios.post("https://localhost:44359/api/purchases/",Purchase,{
+      headers: headers
+     }).then(res=>{
+       console.log(res);
+       setPaidFor(true);
+     }).catch(error=>{
+       console.log(error);
+       alert("The transaction cannot be completed")
+       navigate("/")
+     })
     console.log(orderId);
-    setPaidFor(true)
+    
     console.log("done");
 
   }
-
+  console.log(product)
 
   const createOrder = (data, actions) => {
     return actions.order.create({
       purchase_units: [
         {
+         
           amount: {
-            value: `${product.reduce((c, p) => c + (p.count*p.ticketPrice), 0)}`,
-          },
+            value: `${product.reduce((c, p) => c + (p.count*p.ticketPrice), 0)}`
+          }, 
         },
       ],
     });
@@ -44,7 +75,7 @@ export default function Payment(props) {
   }
   
   if(error){
-    alert(error)
+    alert(error);
   }
 
   const onApprove = async (data, actions) => {
@@ -62,7 +93,6 @@ export default function Payment(props) {
       onApprove={(data, actions) => onApprove(data, actions)}
       onCancel={()=>
       alert("payment Canceled")}
-      onError={(error)=>{setError(error); console.log("errorrrr", error)}}
       />
       </div>
   );

@@ -7,6 +7,7 @@ using WebApplication.Interfaces;
 using DAL.Entities;
 using WebApplication.Controllers;
 using System.Threading.Tasks;
+using System.Web.Http;
 
 namespace WebApplication.Repositories
 {
@@ -42,7 +43,7 @@ namespace WebApplication.Repositories
             _context.Set<Purchase>().Add(purchase);
             
         }
-
+        [Authorize]
         public string CheckPurchase(Purchase purchase)
         {
             double totalPrice=0;

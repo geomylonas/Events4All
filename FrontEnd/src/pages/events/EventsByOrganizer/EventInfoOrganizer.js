@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import classes from '../EventInfo.module.css';
-import { Card, Tooltip } from "react-bootstrap";
+import { Card, ProgressBar } from "react-bootstrap";
 import "./EventInfoOrganizer.css";
 import DeleteModal from '../DeleteEventModal';
 import { Link } from 'react-router-dom';
@@ -106,6 +106,8 @@ function OrganizerEventInfo(props) {
                 <Card body className={classes.eventBox}>
                     {data.DateOfEvent}
                 </Card>
+                <h4>AvailableTickets</h4>
+                <ProgressBar style={{height: "30px", fontSize: "16px"}} now={data.AvailableTickets} label={`${data.AvailableTickets}`} />
             </div>
           <DeleteModal eventchosen={data.Id} show={deleteModal} onHide={closeModal}/>
             

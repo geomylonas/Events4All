@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Form } from "react-bootstrap";
+import { Modal, Form, Popover, OverlayTrigger } from "react-bootstrap";
 import axios from "axios";
 import "./Login.css";
 import QueryString from "qs";
-
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -11,10 +11,12 @@ import QueryString from "qs";
 function LoginModal(props) {
     var QueryString = require('qs');
     
-
+    const [fail,setFail] = useState(false);
+    const navigate = useNavigate();
 
     function login(e) {
         e.preventDefault();
+        setFail(false);
         axios({
         method: 'post',
         url: 'https://localhost:44359/token',
@@ -35,6 +37,7 @@ function LoginModal(props) {
                 
                 
             }).then(res=>{
+                navigate("/");
                 window.location.reload(true);
             })
             }
@@ -42,10 +45,24 @@ function LoginModal(props) {
             })
             .catch(error=>{
                 console.log(error);
+                setFail(true);
+
             })
             
         
     }
+
+
+    const popover = (
+        
+        <Popover id="popover-basic">
+          <Popover.Header as="h3">Login Failed</Popover.Header>
+          <Popover.Body>
+                Invalid Email or Password. Please try again            
+          </Popover.Body>
+        </Popover>
+        
+      );
 
 
 
@@ -68,7 +85,7 @@ function LoginModal(props) {
                             id="floatingLoginEmail"
                             type="email"
                             placeholder="Email" 
-                            />
+                            onFocus={()=>setFail(false)}/>
                         <label htmlFor="floatingLoginEmail" >Email</label>
                     </Form.Floating>
 
@@ -76,14 +93,16 @@ function LoginModal(props) {
                         <Form.Control
                             id="floatingLoginPassword"
                             type="password"
-                            placeholder="Password" />
+                            placeholder="Password"
+                            onFocus={()=>setFail(false)} />
                         <label htmlFor="floatingLoginPassword">Password</label>
                     </Form.Floating>
 
-
                 </Modal.Body>
                 <Modal.Footer>
-                    <input type="submit" value="Login" className="loginbutton" />
+                <OverlayTrigger show={fail} trigger="click" placement="bottom" overlay={popover}>
+                    <button type="submit" value="Login" className="loginbutton" >Log In</button>
+                </OverlayTrigger>
                 </Modal.Footer>
             </Form>
         </Modal>

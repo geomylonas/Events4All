@@ -49,3 +49,7 @@
     transform: scale(2);
     cursor: pointer;
 }
+
+.availableTickets{
+    display: flex;
+}
