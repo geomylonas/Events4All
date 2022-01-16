@@ -71,6 +71,7 @@
     <Compile Include="Entities\PurchaseDetail.cs" />
     <Compile Include="Entities\Ticket.cs" />
     <Compile Include="Entities\Event4AllDAL.cs" />
+    <Compile Include="Entities\TicketCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -21,7 +21,7 @@ namespace WebApplication.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Price = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Price = c.Double(nullable: false),
                         Category_Id = c.Int(),
                         Event_Id = c.Int(),
                     })
@@ -78,7 +78,7 @@ namespace WebApplication.Migrations
                     {
                         PurchaseId = c.Int(nullable: false),
                         TicketId = c.Int(nullable: false),
-                        TotalPrice = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        TotalPrice = c.Double(nullable: false),
                         Quantity = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => new { t.PurchaseId, t.TicketId })
@@ -92,7 +92,7 @@ namespace WebApplication.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Amount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Amount = c.Double(nullable: false),
                         DateOfPurchase = c.DateTime(nullable: false),
                         Person_Id = c.String(maxLength: 128),
                     })
@@ -177,11 +177,11 @@ namespace WebApplication.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.Purchases", "Person_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.Purchases", "Person_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.Events", "Organizer_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.PurchaseDetails", "TicketId", "dbo.Tickets");
             DropForeignKey("dbo.PurchaseDetails", "PurchaseId", "dbo.Purchases");

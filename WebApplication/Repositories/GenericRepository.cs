@@ -12,7 +12,6 @@ namespace WebApplication.Repositories
     public abstract class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         protected readonly IApplicationDbContext _context;
-
         protected GenericRepository(IApplicationDbContext context)
         {
             _context = context;

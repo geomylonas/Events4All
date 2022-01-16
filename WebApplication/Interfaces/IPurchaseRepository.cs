@@ -14,5 +14,7 @@ namespace WebApplication.Interfaces
         Task<ICollection<Purchase>> GetPurchasesByUser();
 
         string CheckPurchase(Purchase purchase);
+
+        void Add(Purchase purchase, Random rnd);
     }
 }

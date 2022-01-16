@@ -17,7 +17,7 @@ namespace WebApplication.Repositories
 
         }
 
-        public new void Add(Purchase purchase)
+        public  void Add(Purchase purchase, Random rnd)
         {
 
             var user = _context.Set<Person>().Find(AccountController.GetUserID());
@@ -35,6 +35,7 @@ namespace WebApplication.Repositories
             {
                 var ticket = _context.Set<Ticket>().Find(purchaseDetails.TicketId);
                 ticket.Event.AvailableTickets -= purchaseDetails.Quantity;
+                purchaseDetails.TicketCodes = TicketCodeGenerator(purchaseDetails, rnd);
             }
 
             user.Purchases.Add(purchase);
@@ -71,11 +72,7 @@ namespace WebApplication.Repositories
                 return "OK";
             }
 
-
-
-
-
-
+       
 
 
 
@@ -89,7 +86,24 @@ namespace WebApplication.Repositories
         }
 
 
-
+        private ICollection<string> TicketCodeGenerator(PurchaseDetail purchaseDetails, Random rnd)
+        {
+            ICollection<string> ticketCodes = new List<string>();
+            TicketCode ticketCode;
+            var ticket = _context.Set<Ticket>().Find(purchaseDetails.TicketId);
+            string eventID = ticket.Event.Id.ToString();
+            string ticketID = ticket.Id.ToString();
+           
+            for (var i=0;i<purchaseDetails.Quantity;i++)
+            {
+                string randomID = rnd.Next(1, 9999).ToString();
+                ticketCode = new TicketCode { Code = eventID + ticketID + randomID, PurchaseDetail = purchaseDetails };
+                ticketCodes.Add(ticketCode.Code);
+                _context.Set<TicketCode>().Add(ticketCode);
+            }
+            
+            return ticketCodes;
+        }
 
     }
 }

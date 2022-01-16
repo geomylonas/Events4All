@@ -240,9 +240,11 @@
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
+    <Compile Include="Controllers\PurchaseDTOController.cs" />
     <Compile Include="Controllers\PurchasesController.cs" />
     <Compile Include="Controllers\TicketsController.cs" />
     <Compile Include="DTO\AccountDetailsDTO.cs" />
+    <Compile Include="DTO\PurchaseDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -253,16 +255,21 @@
     <Compile Include="Interfaces\IEventRepository.cs" />
     <Compile Include="Interfaces\IPictureRepository.cs" />
     <Compile Include="Interfaces\IPurchaseDetailRepository.cs" />
+    <Compile Include="Interfaces\IPurchaseDTORepository.cs" />
     <Compile Include="Interfaces\IPurchaseRepository.cs" />
     <Compile Include="Interfaces\ITicketRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
-    <Compile Include="Migrations\202201140855172_InitialCreate.cs" />
-    <Compile Include="Migrations\202201140855172_InitialCreate.Designer.cs">
-      <DependentUpon>202201140855172_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\202201161433227_InitialCreate.cs" />
+    <Compile Include="Migrations\202201161433227_InitialCreate.Designer.cs">
+      <DependentUpon>202201161433227_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202201141048484_updateDatabaseV1.cs" />
-    <Compile Include="Migrations\202201141048484_updateDatabaseV1.Designer.cs">
-      <DependentUpon>202201141048484_updateDatabaseV1.cs</DependentUpon>
+    <Compile Include="Migrations\202201161612495_updateDatabaseV1.cs" />
+    <Compile Include="Migrations\202201161612495_updateDatabaseV1.Designer.cs">
+      <DependentUpon>202201161612495_updateDatabaseV1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201161658548_updateDatabaseV2.cs" />
+    <Compile Include="Migrations\202201161658548_updateDatabaseV2.Designer.cs">
+      <DependentUpon>202201161658548_updateDatabaseV2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -279,6 +286,7 @@
     <Compile Include="Repositories\GenericRepository.cs" />
     <Compile Include="Repositories\PictureRepository.cs" />
     <Compile Include="Repositories\PurchaseDetailRepository.cs" />
+    <Compile Include="Repositories\PurchaseDTORepository.cs" />
     <Compile Include="Repositories\PurchaseRepository.cs" />
     <Compile Include="Repositories\TicketRepository.cs" />
     <Compile Include="Repositories\UnitOfWork.cs" />
@@ -343,6 +351,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\PurchaseDTO\" />
     <Folder Include="Views\ViewEventDTO\" />
   </ItemGroup>
   <ItemGroup>
@@ -381,11 +390,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202201140855172_InitialCreate.resx">
-      <DependentUpon>202201140855172_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201161433227_InitialCreate.resx">
+      <DependentUpon>202201161433227_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202201141048484_updateDatabaseV1.resx">
-      <DependentUpon>202201141048484_updateDatabaseV1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201161612495_updateDatabaseV1.resx">
+      <DependentUpon>202201161612495_updateDatabaseV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201161658548_updateDatabaseV2.resx">
+      <DependentUpon>202201161658548_updateDatabaseV2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

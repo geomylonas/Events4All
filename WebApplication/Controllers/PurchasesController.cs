@@ -22,6 +22,8 @@ namespace WebApplication.Controllers
     {
         private IUnitOfWork UnitOfWork = WindsorConfig.RegisterContainer();
 
+        Random rnd = new Random();
+
         // GET: api/Purchases
         public async Task<ICollection<Purchase>> GetPurchases()
         {
@@ -107,7 +109,7 @@ namespace WebApplication.Controllers
                 return BadRequest(ModelState);
             }
 
-            UnitOfWork.Purchases.Add(purchase);
+            UnitOfWork.Purchases.Add(purchase,rnd);
             await UnitOfWork.Complete();
 
             return CreatedAtRoute("DefaultApi", new { id = purchase.Id }, purchase);

@@ -14,7 +14,7 @@ namespace DAL
         // If you wish to target a different database and/or database provider, modify the 'Event4AllDAL' 
         // connection string in the application configuration file.
         public Event4AllDAL()
-            : base("name=EventDbStringV4")
+            : base("name=Events4AllModelConString")
         {
         }
 
@@ -29,6 +29,8 @@ namespace DAL
         public virtual DbSet<Picture> Pictures { get; set; }
         public virtual DbSet<PurchaseDetail> PurchaseDetails { get; set; }
         public virtual DbSet<EventCategory> EventCategories { get; set; }
+
+        public virtual DbSet<TicketCode> TicketCodes { get; set; }
 
 
 

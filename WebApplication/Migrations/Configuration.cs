@@ -172,6 +172,9 @@ namespace WebApplication.Migrations
             context.PurchaseDetails.AddOrUpdate(new PurchaseDetail { PurchaseId = 3, TicketId = 31, Quantity = 1, TotalPrice = 2000 });
             context.PurchaseDetails.AddOrUpdate(new PurchaseDetail { PurchaseId = 3, TicketId = 32, Quantity = 1, TotalPrice = 2000 });
             context.PurchaseDetails.AddOrUpdate(new PurchaseDetail { PurchaseId = 3, TicketId = 28, Quantity = 1, TotalPrice = 10 });
+
+
+
         }
     }
 }

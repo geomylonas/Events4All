@@ -21,5 +21,9 @@ namespace DAL.Entities
         [Key, Column(Order = 1)]
         public int TicketId { get; set; }
         public Ticket Ticket { get; set; }
+
+        public virtual ICollection<string> TicketCodes { get; set; }
+
+        
     }
 }
