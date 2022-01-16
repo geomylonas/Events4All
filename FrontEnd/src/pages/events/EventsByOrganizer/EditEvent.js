@@ -203,6 +203,9 @@ export default function EditEvent() {
                                 <div className="Categories" key={p.Category.Name}>
                                     {p.Category.Name}
                                     <input key={p.Category.Name} defaultValue={p.Price} name={p.Price} />
+                                    {p.Category.Name != "VIP"
+                                    &&
+                                    <input key={"vIp"} type="checkbox"/>}
                                 </div>
 
                             ))}

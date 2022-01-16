@@ -154,10 +154,7 @@ namespace WebApplication.Repositories
             }
            
 
-            foreach (var picture in @event.Pictures)
-            {
-               
-            }
+        
 
             var user = _context.Set<Organizer>().Find(AccountController.GetUserID());
             user.Events.Add(@event);

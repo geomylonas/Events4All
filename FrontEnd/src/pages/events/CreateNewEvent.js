@@ -17,7 +17,8 @@ class CreateNewEvent extends React.Component {
             Tickets: [],
             Price: 0,
             TicketCategory: '',
-            checkboxToggle: true
+            checkboxToggle: true,
+            Pictures:[]
         };
     };
 
@@ -74,8 +75,35 @@ class CreateNewEvent extends React.Component {
     }
     submitHandler = e => {
         e.preventDefault();
-        if (e.target.value > new Date().toJSON().slice(0, 16)) {
-            var Pictures = [e.target.file]
+        
+    if (e.target[5].value > new Date().toJSON().slice(0, 16)) {
+        var files = e.target[1].files;
+        let filesArr=[]
+        const url = "https://localhost:44359/api/pictures/upload";
+        
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data',
+            },
+        };
+        let Picture;
+        Array.from(files).forEach(file=>{
+        Picture = {Url: file.name}
+        filesArr=[...filesArr, Picture];
+        const formData = new FormData();
+        formData.append('body', file);
+        axios.post(url, formData, config)
+        .then(response => {
+            console.log(response);
+        }).then(response => {
+            alert("Uploaded Successfully")
+        })
+        .catch(error => {
+            console.log(error)
+            alert("Something Went Wrong");
+            window.location.reload(true);
+        })
+    });
 
             var Ticket1 = { Category: { Id: 1, Name: "Normal" }, Price: parseInt(e.target[8].value) };
             var Ticket2 = { Category: this.state.Category, Price: parseInt(e.target[10].value) };
@@ -92,7 +120,7 @@ class CreateNewEvent extends React.Component {
 
             var event = {
                 Title: e.target[0].value,
-                Pictures: [],
+                Pictures: this.state.Pictures,
                 PlaceName: e.target[2].value,
                 PlaceAddress: e.target[3].value,
                 Description: e.target[4].value,
@@ -103,7 +131,8 @@ class CreateNewEvent extends React.Component {
             }
 
 
-            console.log(event)
+            console.log(event);
+            console.log(this.state.Pictures);
             const headers = {
                 'Authorization': `Bearer ${JSON.parse(localStorage.getItem('token'))}`
             }
@@ -115,7 +144,7 @@ class CreateNewEvent extends React.Component {
                     console.log(response)
                 }).then(response => {
                     alert("Created Successfully")
-                    window.location.reload(true)
+                    window.location.reload(true);
                 })
                 .catch(error => {
                     console.log(error)
@@ -132,6 +161,19 @@ class CreateNewEvent extends React.Component {
             alert("Invalid Date");
             e.target.value = new Date().toJSON().slice(0, 16);
         }
+    }
+
+
+    setFile = e => {
+        var files = e.target.files;
+        let filesArr=[]
+        console.log(files);
+        let Picture;
+        Array.from(files).forEach(file=>{
+        Picture = {Url: file.name}
+        filesArr=[...filesArr, Picture];
+        });
+        this.setState({Pictures: filesArr});
     }
 
 
@@ -188,30 +230,7 @@ class CreateNewEvent extends React.Component {
             </Popover>
         );
 
-        function setFile(e) {
-            var file = e.target.files[0];
-            console.log(file);
-            const url = "https://localhost:44359/api/pictures/upload";
-            const formData = new FormData();
-            formData.append('body', file);
-            const config = {
-                headers: {
-                    'content-type': 'multipart/form-data',
-                },
-            };
-            console.log(url, formData, config)
-            axios.post(url, formData, config)
-                .then(response => {
-                    console.log(response)
-                }).then(response => {
-                    alert("Uploaded Successfully")
-                    window.location.reload(true)
-                })
-                .catch(error => {
-                    console.log(error)
-
-                })
-        }
+        
 
         return (
 
@@ -226,7 +245,7 @@ class CreateNewEvent extends React.Component {
                             <input type="text" name="Title" placeholder="Title" maxLength="30"></input>
                         </OverlayTrigger>
                         <h4>Insert Your Pictures</h4>
-                        <input type="file" onChange={setFile} multiple></input>
+                        <input type="file" onChange={this.setFile} multiple></input>
                         <h4>Event happening</h4>
                         <OverlayTrigger trigger="focus" placement="left" overlay={popoverEventHappening}>
                             <input type="text" name="PlaceName" maxLength="30" placeholder="Building, Property etc"></input>

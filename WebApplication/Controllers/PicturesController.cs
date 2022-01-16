@@ -115,13 +115,13 @@ namespace WebApplication.Controllers
                     File.Delete(originalFileName);
                 }
                 File.Move(uploadingFileName, originalFileName);
-                Picture picture = new Picture();
-                picture.Url = filename;
-                UnitOfWork.Pictures.Add(picture);
-                await  UnitOfWork.Complete();
-                
+                //Picture picture = new Picture();
+                //picture.Url = filename;
+                //UnitOfWork.Pictures.Add(picture);
+                //await  UnitOfWork.Complete();
 
-            
+
+
                 return Ok("Uploaded Successfuly");
                 
             }
