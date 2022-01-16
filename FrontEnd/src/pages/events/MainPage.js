@@ -2,8 +2,6 @@ import React from 'react';
 import classes from "./MainPage.module.css";
 import { Link } from "react-router-dom";
 import axios from 'axios';
-import DeleteModal from './DeleteEventModal';
-import { act } from 'react-dom/test-utils';
 import EventFilter from './components/EventFilter';
 
 
@@ -58,7 +56,7 @@ class FeaturedEvents extends React.Component {
         .then((res) => {
           this.setState({ events: [...this.state.events, ...res.data] });
           this.setState({ loading: false });
-
+          
         })
         .catch((err) => {
           console.log(err);
@@ -101,7 +99,7 @@ class FeaturedEvents extends React.Component {
 
   addToCart = (ev) => {
     const selectedProduct = { eventId: ev.Id, eventTitle: ev.Title, ticketId: this.state.ticketId,
-     ticketCategory: this.state.ticketCategory, ticketPrice: this.state.ticketPrice }
+     ticketCategory: this.state.ticketCategory, ticketPrice: this.state.ticketPrice, availableTickets: ev.AvailableTickets }
     this.props.addToCart(selectedProduct);
   }
 
@@ -158,6 +156,8 @@ class FeaturedEvents extends React.Component {
               <div className={classes.sampleEventBody}>
                 <h4>{ev.Title}</h4>
                 <p className={classes.overflow}>{ev.Description}</p>
+                <p>AvailableTickets</p>
+                {ev.AvailableTickets}
                 <select onChange={this.selectPrice(ev.Id)}>
                   <option defaultValue hidden>Select Ticket</option>
                 {ev.Tickets.map(cat=>(

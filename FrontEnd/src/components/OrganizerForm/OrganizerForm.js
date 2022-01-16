@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import { Form, Col, Row, Card } from "react-bootstrap";
+import { Form, Col, Row, Card, Popover, OverlayTrigger } from "react-bootstrap";
 import "./OrganizerForm.css";
 
 
@@ -25,6 +25,52 @@ function OrganizerForm() {
 
         });
     }
+    const popoverName = (
+        
+        <Popover id="popover-basic">
+          <Popover.Header as="h3">Name</Popover.Header>
+          <Popover.Body>
+               Only Letters Allowed         
+          </Popover.Body>
+        </Popover>
+      );
+    
+    const popoverPassword = (
+            
+        <Popover id="popover-basic">
+          <Popover.Header as="h3">Password</Popover.Header>
+          <Popover.Body>
+                Password must contain at least 6 characters<br/>
+                Must contain 1 number<br/>
+                Must contain 1 Capital<br/>
+                Must contain 1 Symbol          
+          </Popover.Body>
+        </Popover>
+      );
+      const popoverConfirmPassword = (
+            
+        <Popover id="popover-basic">
+          <Popover.Header as="h3">Confirm Password</Popover.Header>
+          <Popover.Body>
+               The two Passwords must be identical  
+          </Popover.Body>
+        </Popover>
+      );
+
+    const popoverEmail = (
+        
+        <Popover id="popover-basic">
+          <Popover.Header as="h3">Email</Popover.Header>
+          <Popover.Body>
+               Please Input a valid Email  
+          </Popover.Body>
+        </Popover>
+      );
+    
+    
+
+
+
     return (
         <div className="organizerBoxForm">
         <Card style={{ width: '500px', height: '500px' }} >
@@ -33,6 +79,7 @@ function OrganizerForm() {
                 <Form onSubmit={registerOrganizer}>
                     <Row>
                         <Col>
+                        <OverlayTrigger trigger="focus" placement="left" overlay={popoverName}>
                             <Form.Floating>
                                 <Form.Control
                                     id="floatingFirstNameOrg"
@@ -40,8 +87,10 @@ function OrganizerForm() {
                                     placeholder="First name" />
                                 <label htmlFor="floatingFirstNameOrg">First Name</label>
                             </Form.Floating>
+                            </OverlayTrigger>
                         </Col>
                         <Col>
+                        <OverlayTrigger trigger="focus" placement="right" overlay={popoverName}>
                             <Form.Floating>
                                 <Form.Control
                                     id="floatingLastNameOrg"
@@ -49,8 +98,10 @@ function OrganizerForm() {
                                     placeholder="Last name" />
                                 <label htmlFor="floatingLastNameOrg">Last name</label>
                             </Form.Floating>
+                            </OverlayTrigger>
                         </Col>
                     </Row>
+                    <OverlayTrigger trigger="focus" placement="right" overlay={popoverEmail}>
                     <Form.Floating style={{ margin: "15px 0" }}>
                         <Form.Control
                             id="floatingInputOrg"
@@ -59,6 +110,8 @@ function OrganizerForm() {
                         />
                         <label htmlFor="floatingInputOrg">Email address</label>
                     </Form.Floating>
+                    </OverlayTrigger>
+                    <OverlayTrigger trigger="focus" placement="right" overlay={popoverPassword}>
                     <Form.Floating style={{ margin: "15px 0" }}>
                         <Form.Control
                             id="floatingPasswordOrg"
@@ -67,6 +120,8 @@ function OrganizerForm() {
                         />
                         <label htmlFor="floatingPasswordOrg">Password</label>
                     </Form.Floating>
+                    </OverlayTrigger>
+                    <OverlayTrigger trigger="focus" placement="right" overlay={popoverConfirmPassword}>
                     <Form.Floating style={{ margin: "15px 0" }}>
                         <Form.Control
                             id="confirmPasswordOrg"
@@ -75,6 +130,7 @@ function OrganizerForm() {
                         />
                         <label htmlFor="confirmPasswordOrg">Confirm Password</label>
                     </Form.Floating>
+                    </OverlayTrigger>
                     <div  className="organizerButton">
                         <button className="organizerfilledButton">Register</button>
                     </div>

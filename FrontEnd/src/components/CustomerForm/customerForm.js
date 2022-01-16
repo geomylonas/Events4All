@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { Form, Col, Row, Card, Button } from "react-bootstrap";
+import { Form, Col, Row, Card, Button, Popover, OverlayTrigger } from "react-bootstrap";
 import classes from "./CustomerForm.module.css";
 import axios from "axios";
 import ReactDatePicker from "react-datepicker";
@@ -46,6 +46,50 @@ function RegisterCustomer(e){
       
 }
 
+const popoverName = (
+        
+    <Popover id="popover-basic">
+      <Popover.Header as="h3">Name</Popover.Header>
+      <Popover.Body>
+           Only Letters Allowed         
+      </Popover.Body>
+    </Popover>
+  );
+
+const popoverPassword = (
+        
+    <Popover id="popover-basic">
+      <Popover.Header as="h3">Password</Popover.Header>
+      <Popover.Body>
+            Password must contain at least 6 characters<br/>
+            Must contain 1 number<br/>
+            Must contain 1 Capital<br/>
+            Must contain 1 Symbol          
+      </Popover.Body>
+    </Popover>
+  );
+  const popoverConfirmPassword = (
+        
+    <Popover id="popover-basic">
+      <Popover.Header as="h3">Confirm Password</Popover.Header>
+      <Popover.Body>
+           The two Passwords must be identical  
+      </Popover.Body>
+    </Popover>
+  );
+
+  const popoverEmail = (
+        
+    <Popover id="popover-basic">
+      <Popover.Header as="h3">Email</Popover.Header>
+      <Popover.Body>
+           Please Input a valid Email  
+      </Popover.Body>
+    </Popover>
+  );
+
+
+
     return (
         <div className={classes.customerBoxForm}>
         <Card style={{ width: '500px', height: '500px' }} >
@@ -54,15 +98,19 @@ function RegisterCustomer(e){
                 <Form onSubmit={RegisterCustomer}>
                     <Row>
                         <Col>
+                        <OverlayTrigger trigger="focus" placement="left" overlay={popoverName}>
                             <Form.Floating>
                                 <Form.Control
                                     id="floatingFirstNameCustom"
                                     type="text"
-                                    placeholder="First name" />
+                                    placeholder="First name" 
+                                    />
                                 <label htmlFor="floatingFirstNameCustom">First Name</label>
                             </Form.Floating>
+                            </OverlayTrigger>
                         </Col>
                         <Col>
+                        <OverlayTrigger trigger="focus" placement="right" overlay={popoverName}>
                             <Form.Floating>
                                 <Form.Control
                                     id="floatingLastNameCustom"
@@ -70,8 +118,10 @@ function RegisterCustomer(e){
                                     placeholder="Last name" />
                                 <label htmlFor="floatingFirstNameCustom">Last name</label>
                             </Form.Floating>
+                            </OverlayTrigger>
                         </Col>
                     </Row>
+                    <OverlayTrigger trigger="focus" placement="left" overlay={popoverEmail}>
                     <Form.Floating style={{ margin: "15px 0" }}>
                         <Form.Control
                             id="floatingInputCustom"
@@ -80,6 +130,8 @@ function RegisterCustomer(e){
                             />
                         <label htmlFor="floatingInputCustom">Email address</label>
                     </Form.Floating>
+                    </OverlayTrigger>
+                    <OverlayTrigger trigger="focus" placement="left" overlay={popoverPassword}>
                     <Form.Floating style={{ margin: "15px 0" }}>
                         <Form.Control
                             id="floatingPasswordCustom"
@@ -88,6 +140,8 @@ function RegisterCustomer(e){
                            />
                         <label htmlFor="floatingPasswordCustom">Password</label>
                     </Form.Floating>
+                    </OverlayTrigger>
+                    <OverlayTrigger trigger="focus" placement="left" overlay={popoverConfirmPassword}>
                     <Form.Floating style={{ margin: "15px 0" }}>
                         <Form.Control
                             id="confirmPasswordCustom"
@@ -96,6 +150,7 @@ function RegisterCustomer(e){
                         />
                         <label htmlFor="confirmPasswordCustom">Confirm Password</label>
                     </Form.Floating>
+                    </OverlayTrigger>
                     <Form.Floating style={{ margin: "15px 0" }}>
                          <Form.Control
                             id="dateOfBirth"

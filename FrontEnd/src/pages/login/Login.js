@@ -85,7 +85,7 @@ function LoginModal(props) {
                             id="floatingLoginEmail"
                             type="email"
                             placeholder="Email" 
-                            onChange={()=>setFail(false)}/>
+                            onFocus={()=>setFail(false)}/>
                         <label htmlFor="floatingLoginEmail" >Email</label>
                     </Form.Floating>
 
@@ -94,7 +94,7 @@ function LoginModal(props) {
                             id="floatingLoginPassword"
                             type="password"
                             placeholder="Password"
-                            onChange={()=>setFail(false)} />
+                            onFocus={()=>setFail(false)} />
                         <label htmlFor="floatingLoginPassword">Password</label>
                     </Form.Floating>
 

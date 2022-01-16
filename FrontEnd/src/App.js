@@ -48,11 +48,13 @@ class App extends Component {
         if(p.availableTickets > item.count){
           item.count++
         }
+        else{
+          alert("There are no more Available Tickets!");
+        }
         alreadyInCart=true;
       }
     });
     if(p.ticketPrice == 0){
-      console.log(p.ticketPrice)
       alreadyInCart=true;
     }
     if(!alreadyInCart){
@@ -65,18 +67,20 @@ class App extends Component {
   addQuantity = (p) => {
     if(p.availableTickets > p.count){
       ++p.count;
+      console.log(p.count);
+      let cartStorage = JSON.parse(localStorage.getItem("cart"));
+      cartStorage.map(pr => {
+        console.log(pr)
+        if(p.eventId==pr.eventId && p.ticketCategory == pr.ticketCategory){
+          pr.count=p.count
+        }
+      });
+      localStorage.setItem("cart", JSON.stringify(cartStorage));
+      this.setState({cartItems: JSON.parse(localStorage.getItem("cart"))});
     }
-    console.log(p.count);
-    let cartStorage = JSON.parse(localStorage.getItem("cart"));
-    cartStorage.map(pr => {
-      console.log(pr)
-      if(p.eventId==pr.eventId && p.ticketCategory == pr.ticketCategory){
-        pr.count=p.count
-      }
-    });
-    localStorage.setItem("cart", JSON.stringify(cartStorage));
-    this.setState({cartItems: JSON.parse(localStorage.getItem("cart"))});
-    
+    else{
+      alert("There are no more Available Tickets!");
+    }
       
   }
 
