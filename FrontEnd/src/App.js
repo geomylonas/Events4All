@@ -24,6 +24,8 @@ import EditEvent from './pages/events/EventsByOrganizer/EditEvent';
 import SuccessPayment from './components/Paypal/SuccessPayment';
 import axios from 'axios';
 import { Redirect } from 'react-router';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
 
 
 class App extends Component {
@@ -132,7 +134,7 @@ class App extends Component {
     DateOfPurchase: new Date().toJSON().slice(0,10),
     Amount: p.reduce((c, p) => c + (p.count*p.ticketPrice), 0)
    }
-   console.log(Purchase)
+   console.log(Purchase);
    const headers = {
     'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('token'))}`
 }

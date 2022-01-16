@@ -134,7 +134,10 @@ class OrganizerEvents extends React.Component {
               <div className={classes.sampleEventBody}>
                 <h4>{ev.Title}</h4>
                 <p className={classes.overflow}>{ev.Description}</p>
-                
+                <div className={classes.availableTickets}>
+                  <p>AvailableTickets:</p>
+                  {ev.AvailableTickets}
+                </div>
                 <div>
                   <Link to={`/myeventsorganizer/info/${ev.Id}`}>
                     <button className={classes.detailsButton}>Details</button>
@@ -142,21 +145,14 @@ class OrganizerEvents extends React.Component {
                   
                 </div>
                 
-                  
+                
                 
               </div>
             </div>
 
           ))}
 
-              <Overlay target={this.state.myRef} show={this.state.tooltip} placement="right">
-                    {(props) => (
-                        <Tooltip id="overlay-example" {...props}>
-                            Successful Deleted
-                        </Tooltip>
-                    )}
-                </Overlay>
-
+              
           <DeleteModal eventchosen={this.state.activeItem.Id} show={this.state.openModal} onHide={this.onCloseModal} success={this.Success}/>
 
 

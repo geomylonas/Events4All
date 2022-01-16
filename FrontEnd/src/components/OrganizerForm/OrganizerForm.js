@@ -4,7 +4,6 @@ import { Form, Col, Row, Card, Popover, OverlayTrigger } from "react-bootstrap";
 import "./OrganizerForm.css";
 
 
-
 function OrganizerForm() {
     function registerOrganizer(e){
         e.preventDefault();

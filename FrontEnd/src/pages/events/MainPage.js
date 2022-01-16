@@ -156,8 +156,10 @@ class FeaturedEvents extends React.Component {
               <div className={classes.sampleEventBody}>
                 <h4>{ev.Title}</h4>
                 <p className={classes.overflow}>{ev.Description}</p>
-                <p>AvailableTickets</p>
-                {ev.AvailableTickets}
+                <div className={classes.availableTickets}>
+                  <p>AvailableTickets:</p>
+                  {ev.AvailableTickets}
+                </div>
                 <select onChange={this.selectPrice(ev.Id)}>
                   <option defaultValue hidden>Select Ticket</option>
                 {ev.Tickets.map(cat=>(

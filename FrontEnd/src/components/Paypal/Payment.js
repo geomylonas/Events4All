@@ -58,9 +58,10 @@ export default function Payment(props) {
     return actions.order.create({
       purchase_units: [
         {
+         
           amount: {
-            value: `${product.reduce((c, p) => c + (p.count*p.ticketPrice), 0)}`,
-          },
+            value: `${product.reduce((c, p) => c + (p.count*p.ticketPrice), 0)}`
+          }, 
         },
       ],
     });
@@ -92,7 +93,6 @@ export default function Payment(props) {
       onApprove={(data, actions) => onApprove(data, actions)}
       onCancel={()=>
       alert("payment Canceled")}
-      
       />
       </div>
   );

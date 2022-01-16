@@ -119,7 +119,7 @@ function EventInfo(props) {
                     {data.DateOfEvent}
                 </Card>
                 <h4>AvailableTickets</h4>
-                <ProgressBar now={data.AvailableTickets} label={`${data.AvailableTickets}`} />
+                <ProgressBar style={{height: "30px", fontSize: "16px"}} now={data.AvailableTickets} label={`${data.AvailableTickets}`} />
             </div>
 
 

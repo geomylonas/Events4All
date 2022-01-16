@@ -1,11 +1,14 @@
 import React, {useState} from "react";
-import { Form, Col, Row, Card, Button, Popover, OverlayTrigger } from "react-bootstrap";
+import { Form, Col, Row, Card, Button, Popover, OverlayTrigger, InputGroup } from "react-bootstrap";
 import classes from "./CustomerForm.module.css";
 import axios from "axios";
 import ReactDatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import  "./CustomerForm.module.css";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye  } from '@fortawesome/free-solid-svg-icons';
+import { library } from "@fortawesome/fontawesome-svg-core";
 
 
 function CustomerForm() {
@@ -87,7 +90,7 @@ const popoverPassword = (
       </Popover.Body>
     </Popover>
   );
-
+  library.add(faEye );
 
 
     return (
@@ -132,14 +135,16 @@ const popoverPassword = (
                     </Form.Floating>
                     </OverlayTrigger>
                     <OverlayTrigger trigger="focus" placement="left" overlay={popoverPassword}>
+                  
                     <Form.Floating style={{ margin: "15px 0" }}>
                         <Form.Control
                             id="floatingPasswordCustom"
                             type="password"
                             placeholder="Password"
-                           />
+                           /> 
                         <label htmlFor="floatingPasswordCustom">Password</label>
                     </Form.Floating>
+                    
                     </OverlayTrigger>
                     <OverlayTrigger trigger="focus" placement="left" overlay={popoverConfirmPassword}>
                     <Form.Floating style={{ margin: "15px 0" }}>
