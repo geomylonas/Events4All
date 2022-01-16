@@ -1,57 +1,63 @@
 /* white: #F6F4F2, mpez: #C6AD8F, dark: #425664 */
 
-.newEventForm{
-    display: flex;
-    flex-direction: column;
+.forma {
     position: relative;
+    width: 60%;
+    display: flex;
     margin: 50px auto;
-    align-items: center;
-    gap: 20px;
-}
-
-
-.newEventForm form{
-    position: relative;
-    display: flex;
-    gap: 100px;
     padding: 50px;
     background-color: #C6AD8F;
     border-radius: 10px;
+    border: none;
+    gap: 25px;
     box-shadow: 5px 5px 10px 2px #425664;
 }
 
-.categorytickets{
+.Event,
+.Ticket  {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+
+.Prices {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.categorytickets div{
+.Categories,
+.Headers {
     display: flex;
-    flex-direction: column;
     gap: 10px;
-}
-
-#categorydiv{
-    display: flex;
     align-items: center;
-    flex-direction: row;
 }
 
-.eventinfo{
-    display: flex;
-    flex-direction: column;
+.Categories{
+    justify-content: space-between;
     gap: 10px;
+    
+}
+.Headers{
+    text-align: center;
+    justify-content: space-evenly;
+}
+.Categories input {
+    text-align: center;
+    width: 120px;
 }
 
- input, textarea, select {
-    border-radius: 5px;
-    border: none;
-    padding: 5px;
+.Categories p {
+    flex: 1;
 }
 
+.Categories select {
+    width: 100%;
+}
 
-.newEventForm button{
+.forma button {
     position: absolute;
     right: 50px;
     bottom: 50px;
@@ -80,7 +86,7 @@
     border: 1px solid #425664; 
 }
 
-.newEventForm button:hover{
+.forma button:hover{
     color: #425664;
     background-color:#C6AD8F;
     border: 1px solid #425664;    

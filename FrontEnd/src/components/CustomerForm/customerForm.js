@@ -12,20 +12,20 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 
 
 function CustomerForm() {
-    const [forms,setForms] = useState({});
-    const [errors,setErrors] = useState({});
     const navigate = useNavigate();
+    const [fName, setFName] = useState(false);
+    const [lName, setLName] = useState(false);
+    const [letterMsg, setLetterMsg] = useState(null);
+    const [numberMsg, setNumberMsg] = useState(null);
+    const [symbolMsg, setSymbolMsg] = useState(null);
+    
 
-
-  
       
 
 
 function RegisterCustomer(e){
     e.preventDefault();
-    
-  
-
+    if(e.target[3].value == e.target[4].value){
 
         let registerCustCredentials = {
             FirstName: e.target[0].value,
@@ -36,18 +36,65 @@ function RegisterCustomer(e){
             DateOfBirth: e.target[5].value
         }
         axios.post("https://localhost:44359/api/account/register/customer",( registerCustCredentials)
-    
+        
         ).then(res =>{
             console.log(res);
             alert("You have been successfully registered!");
             navigate("/");
         }).catch(err =>{
             console.log(err);
-            
-
+            alert("Something went wrong! Try again");
         });
-      
+    }
+    else{
+        alert("Passwords must be identical");
+    }
 }
+
+
+function checkFName(e){
+    let check = /^[A-Za-z]+$/;
+    if(!e.target.value.match(check) )setFName(true);   
+    else setFName(false);   
+
+    
+}
+function checkLName(e){
+    let check = /^[A-Za-z]+$/;
+    if(!e.target.value.match(check) )setLName(true);   
+    else setLName(false);   
+
+    
+}
+function checkPassword(e){
+    
+   
+    
+    let letterCheck = /[A-Za-z]/;
+    let numCheck = /[0-9]/;
+    let symbolCheck = /[$-/:-?{-~!"^_`\[\]]/;
+    if(e.target.value.match(letterCheck)){
+        setLetterMsg(null);
+    }
+    else{
+        setLetterMsg("Your Password must contain at least 1 letter");
+    }
+    if(e.target.value.match(numCheck)){
+        setNumberMsg(null);
+    }
+    else{
+        setNumberMsg("Your Password must contain at least 1 number");
+    }
+    if(e.target.value.match(symbolCheck)){
+        setSymbolMsg(null);
+    }
+    else{
+        setSymbolMsg("Your Password must contain at least 1 symbol");
+    }
+    
+}
+
+
 
 const popoverName = (
         
@@ -95,7 +142,7 @@ const popoverPassword = (
 
     return (
         <div className={classes.customerBoxForm}>
-        <Card style={{ width: '500px', height: '500px' }} >
+        <Card style={{ width: '500px' }} >
             <div className={classes.customerForm}>
                 <Card.Title className={classes.title}>Become A Customer</Card.Title>
                 <Form onSubmit={RegisterCustomer}>
@@ -106,8 +153,9 @@ const popoverPassword = (
                                 <Form.Control
                                     id="floatingFirstNameCustom"
                                     type="text"
-                                    placeholder="First name" 
-                                    />
+                                    placeholder="First name"
+                                    maxLength="20" 
+                                    onChange={checkFName}/>
                                 <label htmlFor="floatingFirstNameCustom">First Name</label>
                             </Form.Floating>
                             </OverlayTrigger>
@@ -118,22 +166,29 @@ const popoverPassword = (
                                 <Form.Control
                                     id="floatingLastNameCustom"
                                     type="text"
-                                    placeholder="Last name" />
+                                    placeholder="Last name"
+                                    maxLength="20" 
+                                    onChange={checkLName}/>
                                 <label htmlFor="floatingFirstNameCustom">Last name</label>
                             </Form.Floating>
-                            </OverlayTrigger>
+                            </OverlayTrigger>                            
                         </Col>
                     </Row>
+                    { (fName || lName) &&
+                        <p>Name must contain only letters</p>
+                    }
                     <OverlayTrigger trigger="focus" placement="left" overlay={popoverEmail}>
                     <Form.Floating style={{ margin: "15px 0" }}>
                         <Form.Control
                             id="floatingInputCustom"
                             type="email"
                             placeholder="name@example.com"
-                            />
+                            maxLength="256"
+                           />
                         <label htmlFor="floatingInputCustom">Email address</label>
                     </Form.Floating>
                     </OverlayTrigger>
+                    
                     <OverlayTrigger trigger="focus" placement="left" overlay={popoverPassword}>
                   
                     <Form.Floating style={{ margin: "15px 0" }}>
@@ -141,11 +196,11 @@ const popoverPassword = (
                             id="floatingPasswordCustom"
                             type="password"
                             placeholder="Password"
-                           /> 
+                            onChange={checkPassword}/> 
                         <label htmlFor="floatingPasswordCustom">Password</label>
                     </Form.Floating>
-                    
                     </OverlayTrigger>
+                    <p>{letterMsg} {numberMsg} {symbolMsg}</p>
                     <OverlayTrigger trigger="focus" placement="left" overlay={popoverConfirmPassword}>
                     <Form.Floating style={{ margin: "15px 0" }}>
                         <Form.Control

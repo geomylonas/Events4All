@@ -8,12 +8,14 @@
     box-shadow: 5px 5px 10px 2px #425664;
 }
 
-
 .customerForm{
+    padding: 30px;
     margin: auto;
-    
 }
 
+.customerForm form p {
+    color: red;
+}
 
 .title{
     padding-bottom: 30px;
@@ -49,7 +51,6 @@
     border: 1px solid #C6AD8F; 
     
 }
-
 
 .filledButton:hover{
     color: #425664;

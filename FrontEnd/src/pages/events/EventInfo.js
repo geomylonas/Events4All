@@ -92,10 +92,10 @@ function EventInfo(props) {
                             ))}
                         </div>
                     </div>
-                    {
-                        localStorage.getItem('token') ?
+                    {   (data.DateOfEvent > new Date().toJSON().slice(0,10)) ?
+                        (localStorage.getItem('token') ?
                         <button className={classes.filledButton} onClick={() => props.addToCart(selectedProduct)} disabled={disabled}>Add to Cart</button>
-                        : <Link to="/register"><button className={classes.filledButton}>Add To Cart</button></Link>
+                        : <Link to="/register"><button className={classes.filledButton}>Add To Cart</button></Link>) : <p>Event Finished</p>
                     }
 
                 </div>

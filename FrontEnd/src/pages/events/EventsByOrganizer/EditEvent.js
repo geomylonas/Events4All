@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import axios from "axios";
+import "./EditEvent.css";
 
 
 
@@ -95,9 +96,9 @@ export default function EditEvent() {
             eventcategory = newCategory
         }
 
-        var Pictures=[];
-        if(e.target[1].value){
-            Pictures=[...Pictures,{Url : "HI"}]
+        var Pictures = [];
+        if (e.target[1].value) {
+            Pictures = [...Pictures, { Url: "HI" }]
         }
 
 
@@ -116,22 +117,22 @@ export default function EditEvent() {
 
         console.log(event);
         const headers = {
-            'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('token'))}`
+            'Authorization': `Bearer ${JSON.parse(localStorage.getItem('token'))}`
         }
-    
-       axios.put("https://localhost:44359/api/events", event, {
-               headers: headers
-           })
+
+        axios.put("https://localhost:44359/api/events", event, {
+            headers: headers
+        })
             .then(response => {
-                    console.log(response)
-                }).then(response=>{
-                    alert("Updated Successfully")
-                    window.location.reload(true)
-                })
-                .catch(error => {
-                        console.log(error)
-                
-                    })
+                console.log(response)
+            }).then(response => {
+                alert("Updated Successfully")
+                window.location.reload(true)
+            })
+            .catch(error => {
+                console.log(error)
+
+            })
     }
 
     const changeHandler = e => {
@@ -139,7 +140,7 @@ export default function EditEvent() {
 
     }
 
-  
+
 
 
 
@@ -149,10 +150,8 @@ export default function EditEvent() {
         <div key={data.Id}>
 
             <form onSubmit={submitHandler}>
-                <div>
-
-
-                    <div>
+                <div className="forma" >
+                    <div className="Event">
                         <h4>Event Title</h4>
                         <input type="text" name="Title" defaultValue={data.Title} placeholder="Title" />
                         {/* <img src="https://images.pexels.com/photos/3171837/pexels-photo-3171837.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"/> */}
@@ -172,7 +171,7 @@ export default function EditEvent() {
                         <input defaultValue={data.PlaceAddress} />
                         <h4>Description</h4>
 
-                        <input defaultValue={data.Description} />
+                        <textarea style={{ maxHeight: "100px" }} defaultValue={data.Description} />
                         <h4>Date Of Event</h4>
 
                         <input defaultValue={data.DateOfEvent} type="datetime-local" />
@@ -182,43 +181,37 @@ export default function EditEvent() {
                     </div>
 
 
-                    <div>
-
+                    <div className="Ticket">
                         <h4>Change Category</h4>
-                        <div>
-                            <select onChange={changeHandler}>
-                                <option hidden>{data.EventCategory.Name}</option>
-                                {eventCategories.map((evc) => (
 
-                                    <option key={evc.Id} value={JSON.stringify(evc)}>{evc.Name}</option>
-                                ))}
-                            </select>
-                        </div>
+                        <select onChange={changeHandler}>
+                            <option hidden>{data.EventCategory.Name}</option>
+                            {eventCategories.map((evc) => (
+
+                                <option key={evc.Id} value={JSON.stringify(evc)}>{evc.Name}</option>
+                            ))}
+                        </select>
+
                         <h4>Tickets</h4>
-                        <div>
-                            <div>
+                        <div className="Prices">
+                            <div className="Headers">
                                 <h6>Category</h6>
-                                {data.Tickets.map(p => (
-
-                                    <div key={p.Category.Name}>{p.Category.Name}</div>
-
-                                ))}
-                            </div>
-                            <div>
                                 <h6>Price</h6>
-                                {data.Tickets.map(p => (
-
-                                    <input key={p.Category.Name} defaultValue={p.Price} name={p.Price} />
-
-                                ))}
                             </div>
-                        </div>
+                            {data.Tickets.map(p => (
 
+                                <div className="Categories" key={p.Category.Name}>
+                                    {p.Category.Name}
+                                    <input key={p.Category.Name} defaultValue={p.Price} name={p.Price} />
+                                </div>
+
+                            ))}
+                        </div>
                     </div>
 
+                    <button>Update</button>
                 </div>
                 <div>
-                    <button>Update</button>
                 </div>
 
 
