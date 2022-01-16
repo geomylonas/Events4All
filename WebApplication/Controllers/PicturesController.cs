@@ -88,7 +88,8 @@ namespace WebApplication.Controllers
         }
 
 
-
+        [HttpPost]
+        [Route("api/pictures/upload")]
         public async Task<IHttpActionResult> Uploadfile()
         {
             try

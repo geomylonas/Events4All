@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './CreateNewEvent.module.css';
 import axios from 'axios';
 import QueryString from 'qs';
-
+import { Popover, OverlayTrigger } from "react-bootstrap";
 
 
 
@@ -14,10 +14,10 @@ class CreateNewEvent extends React.Component {
             eventcategories: [],
             ticketcategories: [],
             EventCategory: 0,
-            Tickets:[],
+            Tickets: [],
             Price: 0,
-            TicketCategory:'',
-            checkboxToggle: true       
+            TicketCategory: '',
+            checkboxToggle: true
         };
     };
 
@@ -33,8 +33,6 @@ class CreateNewEvent extends React.Component {
             });
     }
 
-
-
     getTicketCategories() {
         axios.get(`https://localhost:44359/api/categories`
         )
@@ -47,94 +45,174 @@ class CreateNewEvent extends React.Component {
             });
     }
 
-
     componentDidMount() {
         this.getEventCategories();
         this.getTicketCategories();
     }
 
     changeHandler = e => {
-        this.setState({ EventCategory: JSON.parse(e.target.value )})
+        this.setState({ EventCategory: JSON.parse(e.target.value) })
     }
 
     changeHandlerTicket = e => {
-    var Ticket = { Category: {Id:1}, Price: parseInt(e.target.value) }
-    // this.setState({Tickets: [...this.state.Tickets, JSON.stringify(Ticket)]})
-    console.log(this.state.Tickets);
+        var Ticket = { Category: { Id: 1 }, Price: parseInt(e.target.value) }
+        // this.setState({Tickets: [...this.state.Tickets, JSON.stringify(Ticket)]})
+        console.log(this.state.Tickets);
 
-}
-
-
-changeHandlerCategory= e => {
-    const cat = JSON.parse(e.target.value);
-    this.setState({Category: cat});
-    if(this.state.checkboxToggle){
-        this.setState({checkboxToggle: false});   
     }
-    else{
-        this.setState({checkboxToggle: true});
+
+
+    changeHandlerCategory = e => {
+        const cat = JSON.parse(e.target.value);
+        this.setState({ Category: cat });
+        if (this.state.checkboxToggle) {
+            this.setState({ checkboxToggle: false });
+        }
+        else {
+            this.setState({ checkboxToggle: true });
+        }
     }
-}
-
-
     submitHandler = e => {
         e.preventDefault();
-        var Pictures = [e.target.file]
+        if (e.target.value > new Date().toJSON().slice(0, 16)) {
+            var Pictures = [e.target.file]
 
-        var Ticket1 = {Category:  {Id: 1, Name: "Normal"}, Price: parseInt(e.target[8].value)};
-        var Ticket2 = {Category: this.state.Category, Price: parseInt(e.target[10].value)};
-        
-        if(this.state.checkboxToggle){
+            var Ticket1 = { Category: { Id: 1, Name: "Normal" }, Price: parseInt(e.target[8].value) };
+            var Ticket2 = { Category: this.state.Category, Price: parseInt(e.target[10].value) };
 
-            this.state.Tickets = [...this.state.Tickets, Ticket1]
-        }
-        else{
+            if (this.state.checkboxToggle) {
 
-            this.state.Tickets = [...this.state.Tickets, Ticket1, Ticket2]
-        }
-            
-    
-            var event ={
+                this.state.Tickets = [...this.state.Tickets, Ticket1]
+            }
+            else {
+
+                this.state.Tickets = [...this.state.Tickets, Ticket1, Ticket2]
+            }
+
+
+            var event = {
                 Title: e.target[0].value,
-                Pictures: Pictures,
+                Pictures: [],
                 PlaceName: e.target[2].value,
                 PlaceAddress: e.target[3].value,
                 Description: e.target[4].value,
                 DateOfEvent: e.target[5].value,
                 AvailableTickets: parseInt(e.target[6].value),
                 EventCategory: this.state.EventCategory,
-                Tickets: this.state.Tickets   
+                Tickets: this.state.Tickets
             }
 
-    
-    console.log(event)
-        const headers = {
-                'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('token'))}`
+
+            console.log(event)
+            const headers = {
+                'Authorization': `Bearer ${JSON.parse(localStorage.getItem('token'))}`
             }
-        
-           axios.post("https://localhost:44359/api/events", event, {
-                   headers: headers
-               })
+
+            axios.post("https://localhost:44359/api/events", event, {
+                headers: headers
+            })
                 .then(response => {
-                        console.log(response)
-                    }).then(response=>{
-                        alert("Created Successfully")
-                        window.location.reload(true)
-                    })
-                    .catch(error => {
-                            console.log(error)
-                    
-                        })
-                
+                    console.log(response)
+                }).then(response => {
+                    alert("Created Successfully")
+                    window.location.reload(true)
+                })
+                .catch(error => {
+                    console.log(error)
+
+                })
+
+        }
+        else {
+            alert("Please input a Valid Date");
+        }
+    }
+    checkDate = e => {
+        if (e.target.value < new Date().toJSON().slice(0, 16)) {
+            alert("Invalid Date");
+            e.target.value = new Date().toJSON().slice(0, 16);
+        }
     }
 
 
 
 
-
-
     render() {
-      
+
+        const popoverTitle = (
+
+            <Popover id="popover-basic">
+                <Popover.Header as="h3">Title</Popover.Header>
+                <Popover.Body>
+                    Max length 30 characters
+                </Popover.Body>
+            </Popover>
+        );
+
+        const popoverDescription = (
+
+            <Popover id="popover-basic">
+                <Popover.Header as="h3">Description</Popover.Header>
+                <Popover.Body>
+                    Max length 500 characters
+                </Popover.Body>
+            </Popover>
+        );
+        const popoverEventHappening = (
+
+            <Popover id="popover-basic">
+                <Popover.Header as="h3">Event Happening</Popover.Header>
+                <Popover.Body>
+                    Max length 30 characters. Building, Property, Hotel ect
+                </Popover.Body>
+            </Popover>
+        );
+
+        const popoverAddress = (
+
+            <Popover id="popover-basic">
+                <Popover.Header as="h3">Address</Popover.Header>
+                <Popover.Body>
+                    Max length 50 characters
+                </Popover.Body>
+            </Popover>
+        );
+
+        const popoverPrice = (
+
+            <Popover id="popover-basic">
+                <Popover.Header as="h3">Price</Popover.Header>
+                <Popover.Body>
+                    Only the Amount (Amount is Converted to (&euro;))
+                </Popover.Body>
+            </Popover>
+        );
+
+        function setFile(e) {
+            var file = e.target.files[0];
+            console.log(file);
+            const url = "https://localhost:44359/api/pictures/upload";
+            const formData = new FormData();
+            formData.append('body', file);
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data',
+                },
+            };
+            console.log(url, formData, config)
+            axios.post(url, formData, config)
+                .then(response => {
+                    console.log(response)
+                }).then(response => {
+                    alert("Uploaded Successfully")
+                    window.location.reload(true)
+                })
+                .catch(error => {
+                    console.log(error)
+
+                })
+        }
+
         return (
 
 
@@ -144,65 +222,67 @@ changeHandlerCategory= e => {
                     <div className={classes.eventinfo}>
 
                         <h4>Event Title</h4>
-                        <input type="text" name="Title" placeholder="Title"></input>
+                        <OverlayTrigger trigger="focus" placement="left" overlay={popoverTitle}>
+                            <input type="text" name="Title" placeholder="Title" maxLength="30"></input>
+                        </OverlayTrigger>
                         <h4>Insert Your Pictures</h4>
-                        <input type="file" multiple></input>
+                        <input type="file" onChange={setFile} multiple></input>
                         <h4>Event happening</h4>
-                        <input type="text" name="PlaceName" placeholder="Building, Property etc"></input>
+                        <OverlayTrigger trigger="focus" placement="left" overlay={popoverEventHappening}>
+                            <input type="text" name="PlaceName" maxLength="30" placeholder="Building, Property etc"></input>
+                        </OverlayTrigger>
                         <h4>Address</h4>
-                        <input type="text" name="PlaceAddress" placeholder="PlaceAddress"></input>
+                        <OverlayTrigger trigger="focus" placement="left" overlay={popoverAddress}>
+                            <input type="text" name="PlaceAddress" maxLength="50" placeholder="PlaceAddress"></input>
+                        </OverlayTrigger>
                         <h4>Description</h4>
-                        <textarea id="txtid" style={{ maxHeight: "150px" }} name="Description" rows="4" cols="50" maxLength="500"></textarea>
+                        <OverlayTrigger trigger="focus" placement="left" overlay={popoverDescription}>
+                            <textarea id="txtid" style={{ maxHeight: "150px" }} maxLength="500" name="Description" rows="4" cols="50" maxLength="500"></textarea>
+                        </OverlayTrigger>
                         <h4>Date Of Event</h4>
-                        <input type="datetime-local" name="DateOfEvent" placeholder="Date Of Event"></input>
+                        <input type="datetime-local" onChange={this.checkDate} name="DateOfEvent" placeholder="Date Of Event"></input>
                         <h4>Available Tickets</h4>
                         <input type="number" name="AvailableTickets" placeholder="Available Tickets"></input>
-
-
                     </div>
 
-                        <div className={classes.categorytickets}>
-                            <h4>Choose Your Event Category</h4>
-                            <div>
-                                <select onChange={this.changeHandler}>
-                                    <option hidden>Choose A Category</option>
-                                    {this.state.eventcategories.map((evc) => (
+                    <div className={classes.categorytickets}>
+                        <h4>Choose Your Event Category</h4>
+                        <div>
+                            <select onChange={this.changeHandler}>
+                                <option hidden>Choose A Category</option>
+                                {this.state.eventcategories.map((evc) => (
 
-                                        <option key={evc.Id} value={JSON.stringify(evc)}>{evc.Name}</option>
-                                    ))}
-                                </select>
-                            </div>
-                            <h4>Choose your Ticket Categories</h4>
-                            <div>
-                                        Normal
-                                       <input type="text" placeholder='Price' disabled={this.checkboxToggle} name="Price"></input>
-                                {this.state.ticketcategories.map((t,index) => (
-
-                                     index > 0 &&
-                                        <div id={classes.categorydiv} key={t.Id}>{t.Name}
-
-                                       
-                                        
-                                        <input type="checkbox" value={JSON.stringify(t)} name="Category" onClick={this.changeHandlerCategory}></input>
-                                       
-                                        <input type="text" placeholder='Price' disabled={this.state.checkboxToggle} name="Price"></input>
-                                        </div>
-                                        
-                                    
+                                    <option key={evc.Id} value={JSON.stringify(evc)}>{evc.Name}</option>
                                 ))}
-                            </div>
-
+                            </select>
                         </div>
-                <button type="submit">Create</button>
+                        <h4>Choose your Ticket Categories</h4>
+                        <div>
+                            Normal
+                            <OverlayTrigger trigger="focus" placement="right" overlay={popoverPrice}>
+                                <input type="text" placeholder='Price' disabled={this.checkboxToggle} name="Price"></input>
+                            </OverlayTrigger>
+                            {this.state.ticketcategories.map((t, index) => (
+
+                                index > 0 &&
+                                <div id={classes.categorydiv} key={t.Id}>{t.Name}
+
+
+
+                                    <input type="checkbox" value={JSON.stringify(t)} name="Category" onClick={this.changeHandlerCategory}></input>
+
+                                    <input type="text" placeholder='Price' disabled={this.state.checkboxToggle} name="Price"></input>
+                                </div>
+                            ))}
+                        </div>
+
+                        <button type="submit">Create</button>
+                    </div>
                 </form>
             </div>
-
-
         )
     }
 
 }
 
 export default CreateNewEvent;
-
-

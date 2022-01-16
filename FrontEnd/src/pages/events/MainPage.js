@@ -171,8 +171,9 @@ class FeaturedEvents extends React.Component {
                     <button className={classes.detailsButton}>Details</button>
                   </Link>
                   {
-                    localStorage.getItem("token") &&
-                    <button className={classes.purchaseButton} onClick={() => this.addToCart(ev)} disabled={!this.state.ticketDisabled.includes(ev.Id)}>Add to Cart</button>
+                    (localStorage.getItem("token")) && (ev.DateOfEvent > new Date().toJSON().slice(0,10)) ?
+                    (<button className={classes.purchaseButton} onClick={() => this.addToCart(ev)} disabled={!this.state.ticketDisabled.includes(ev.Id)}>Add to Cart</button>)
+                    :<p>Event Finished</p>
                   }
 
                   {

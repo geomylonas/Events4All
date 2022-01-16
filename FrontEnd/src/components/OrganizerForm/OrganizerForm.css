@@ -8,12 +8,14 @@
     box-shadow: 5px 5px 10px 2px #425664;
 }
 
-
 .organizerForm{
     margin: auto;
-    
+    padding: 30px;
 }
 
+.organizerForm form p {
+    color: red;
+}
 
 .organizertitle{
     padding-bottom: 30px;
@@ -49,7 +51,6 @@
     border: 1px solid #C6AD8F; 
     
 }
-
 
 .organizerfilledButton:hover{
     color: #425664;
