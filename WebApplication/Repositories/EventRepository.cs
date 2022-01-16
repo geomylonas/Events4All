@@ -41,7 +41,7 @@ namespace WebApplication.Repositories
             var oldEvent = _context.Set<Event>().Find(@event.Id);
             if (user.Events.Contains(_context.Set<Event>().Find(@event.Id)))
             {
-                if (CheckIfTickesAreSold(@event))
+                if (CheckIfTickesAreSold(oldEvent))
                 {
                     throw new Exception("Event has already sold tickets and cannot be Updated");
                     return;
@@ -108,10 +108,11 @@ namespace WebApplication.Repositories
 
         public new void Delete(Event @event)
         {
+            
             var user = _context.Set<Organizer>().Find(AccountController.GetUserID());
             if (user.Events.Contains(_context.Set<Event>().Find(@event.Id)))
             {
-                if (CheckIfTickesAreSold(@event))
+                if (CheckIfTickesAreSold(_context.Set<Event>().Find(@event.Id)))
                 {
                     throw new Exception("Event has already sold tickets and cannot be deleted");
                     return;
@@ -150,6 +151,12 @@ namespace WebApplication.Repositories
                 var ticketCategory = _context.Set<Category>().Find(ticket.Category.Id);
                 ticket.Category = ticketCategory;
 
+            }
+           
+
+            foreach (var picture in @event.Pictures)
+            {
+               
             }
 
             var user = _context.Set<Organizer>().Find(AccountController.GetUserID());
