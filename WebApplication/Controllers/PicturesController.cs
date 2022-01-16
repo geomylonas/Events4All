@@ -71,7 +71,8 @@ namespace WebApplication.Controllers
 
             return StatusCode(HttpStatusCode.NoContent);
         }
-
+        
+       
         // POST: api/Pictures
         [ResponseType(typeof(Picture))]
         public async Task<IHttpActionResult> PostPicture(Picture picture)
@@ -88,12 +89,16 @@ namespace WebApplication.Controllers
         }
 
 
-
+        [HttpPost]
+        [Route("api/Picture/upload")]
         public async Task<IHttpActionResult> Uploadfile()
         {
             try
             {
-                var fileuploadPath = "..\\..\\Files";
+                var fileuploadPath = HttpContext.Current.Server.MapPath("..\\..\\Files");
+
+                if (!System.IO.Directory.Exists(fileuploadPath));
+                    System.IO.Directory.CreateDirectory(fileuploadPath);
 
                 var provider = new MultipartFormDataStreamProvider(fileuploadPath);
                 var content = new StreamContent(HttpContext.Current.Request.GetBufferlessInputStream(true));
@@ -114,18 +119,15 @@ namespace WebApplication.Controllers
                 picture.Url = filename;
                 UnitOfWork.Pictures.Add(picture);
                 await  UnitOfWork.Complete();
+                
 
-
-                //Stotefile sf = new Stotefile();
-                //sf.File = filename;
-                //DB.Stotefiles.Add(sf);
-                //DB.SaveChanges();
+            
                 return Ok("Uploaded Successfuly");
                 
             }
             catch (Exception ex)
             {
-                return Content(HttpStatusCode.BadRequest, "There was and error during upload");
+                return Content(HttpStatusCode.BadRequest, "There was and error during upload "+ex.Message);
 
             }
         }

@@ -15,6 +15,7 @@ namespace DAL.Entities
         public int Id { get; set; }
         [Required]
         [MaxLength(200)]
+        [Index(IsUnique =true)]
         public string Url { get; set; }
         [JsonIgnore]
         public virtual Event Event { get; set; }
