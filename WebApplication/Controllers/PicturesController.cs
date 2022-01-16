@@ -94,8 +94,12 @@ namespace WebApplication.Controllers
         public async Task<IHttpActionResult> Uploadfile()
         {
             try
-            {
-                var fileuploadPath = HttpContext.Current.Server.MapPath("..\\..\\Files");
+            { 
+                var tempPath = HttpContext.Current.Server.MapPath("..\\..\\");
+                var fileuploadPath = tempPath + "\\..\\FrontEnd\\src\\Files";
+
+
+
 
                 if (!System.IO.Directory.Exists(fileuploadPath));
                     System.IO.Directory.CreateDirectory(fileuploadPath);
@@ -115,10 +119,7 @@ namespace WebApplication.Controllers
                     File.Delete(originalFileName);
                 }
                 File.Move(uploadingFileName, originalFileName);
-                Picture picture = new Picture();
-                picture.Url = filename;
-                UnitOfWork.Pictures.Add(picture);
-                await  UnitOfWork.Complete();
+             
                 
 
             
