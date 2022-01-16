@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import classes from './EventInfo.module.css';
-import { Image, Card, Button, Modal } from "react-bootstrap";
+import { Image, Card, ProgressBar } from "react-bootstrap";
 import Cart from '../../components/Cart/Cart';
 import { propTypes } from 'react';
+import { Link } from 'react-router-dom';
 
 
 
@@ -60,7 +61,7 @@ function EventInfo(props) {
 
 
     if (data.length == 0) return null;
-    const selectedProduct = { eventId: data.Id, eventTitle: data.Title, ticketId: ticketId, ticketPrice: checked, ticketCategory: category }
+    const selectedProduct = { eventId: data.Id, eventTitle: data.Title, ticketId: ticketId, ticketPrice: checked, ticketCategory: category, availableTickets: data.AvailableTickets }
     return (
         <div className={classes.eventSection} key={data.Id}>
 
@@ -91,7 +92,11 @@ function EventInfo(props) {
                             ))}
                         </div>
                     </div>
-                    <button className={classes.filledButton} onClick={() => props.addToCart(selectedProduct)} disabled={disabled}>Add to Cart</button>
+                    {
+                        localStorage.getItem('token') ?
+                        <button className={classes.filledButton} onClick={() => props.addToCart(selectedProduct)} disabled={disabled}>Add to Cart</button>
+                        : <Link to="/register"><button className={classes.filledButton}>Add To Cart</button></Link>
+                    }
 
                 </div>
             </div>
@@ -113,6 +118,8 @@ function EventInfo(props) {
                 <Card body className={classes.eventBox}>
                     {data.DateOfEvent}
                 </Card>
+                <h4>AvailableTickets</h4>
+                <ProgressBar now={data.AvailableTickets} label={`${data.AvailableTickets}`} />
             </div>
 
 

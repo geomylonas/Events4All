@@ -1,7 +1,7 @@
 
 import './App.css';
 import NavigationBar from './components/NavigationBar/NavigationBar';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Homepage from './pages/homepage/homepage';
 import { Component } from 'react';
 import { useMediaQuery } from 'react-responsive';
@@ -22,6 +22,8 @@ import Payment from './components/Paypal/Payment';
 import { stringify } from 'qs';
 import EditEvent from './pages/events/EventsByOrganizer/EditEvent';
 import SuccessPayment from './components/Paypal/SuccessPayment';
+import axios from 'axios';
+import { Redirect } from 'react-router';
 
 
 class App extends Component {
@@ -43,7 +45,9 @@ class App extends Component {
     
     cartItems.map(item => {
       if(item.eventId == p.eventId && item.ticketCategory == p.ticketCategory){
-        item.count++
+        if(p.availableTickets > item.count){
+          item.count++
+        }
         alreadyInCart=true;
       }
     });
@@ -59,7 +63,9 @@ class App extends Component {
   }
 
   addQuantity = (p) => {
-    ++p.count;
+    if(p.availableTickets > p.count){
+      ++p.count;
+    }
     console.log(p.count);
     let cartStorage = JSON.parse(localStorage.getItem("cart"));
     cartStorage.map(pr => {
@@ -75,7 +81,7 @@ class App extends Component {
   }
 
   subtractQuantity = (p) => {
-    if(p.count>1){
+    if(p.count>1 && p.count){
       --p.count;
       console.log(p.count);
       let cartStorage = JSON.parse(localStorage.getItem("cart"));
@@ -107,8 +113,36 @@ class App extends Component {
   proceedToPayment = (p) =>{
     this.setState({product: p});
     console.log(this.state.product);
-  }
+    let PurchaseDetails=[]
+    let PurchaseDetail={}
+    p.map(pr=>{
+      PurchaseDetail={
+        TotalPrice: pr.count*pr.ticketPrice,
+        Quantity: pr.count,
+        TicketId: pr.ticketId,
+      }
+      PurchaseDetails=[...PurchaseDetails,PurchaseDetail]
+    })
+   let Purchase={
+    PurchaseDetails: PurchaseDetails,
+    DateOfPurchase: new Date().toJSON().slice(0,10),
+    Amount: p.reduce((c, p) => c + (p.count*p.ticketPrice), 0)
+   }
+   console.log(Purchase)
+   const headers = {
+    'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('token'))}`
+}
 
+   axios.post("https://localhost:44359/api/purchases/check",Purchase,{
+    headers: headers
+   }).then(res=>{
+     console.log(res);
+     window.location.href="/payment";
+   }).catch(error=>{
+     console.log(error);
+     alert("This action cannot be done")
+   });
+  }
 
 
   
@@ -121,7 +155,9 @@ class App extends Component {
       removeproduct: this.removeProduct,
       proceedtopayment: this.proceedToPayment
     }
+    
 
+    console.log()
     return (
       <div className="customContainer">
         <NavigationBar {...attributes}/>
@@ -144,7 +180,7 @@ class App extends Component {
           <Route path="/editevent/info/:id" element={<EditEvent />} />
           }
          { localStorage.getItem("token") &&
-          <Route path="/payment" element={<Payment product = {this.state.product}/>} />
+          <Route path="/payment" element={<Payment product={JSON.parse(localStorage.getItem("cart"))}/>} />
         }
          { localStorage.getItem("token") &&
           <Route path="/successpayment" element={<SuccessPayment/>} />

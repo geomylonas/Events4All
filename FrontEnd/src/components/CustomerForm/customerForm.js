@@ -5,12 +5,25 @@ import axios from "axios";
 import ReactDatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import  "./CustomerForm.module.css";
-function CustomerForm() {
+import { useNavigate } from "react-router-dom";
 
-    const [startDate, setStartDate] = useState(null);
+
+function CustomerForm() {
+    const [forms,setForms] = useState({});
+    const [errors,setErrors] = useState({});
+    const navigate = useNavigate();
+
+
+  
+      
+
 
 function RegisterCustomer(e){
     e.preventDefault();
+    
+  
+
+
         let registerCustCredentials = {
             FirstName: e.target[0].value,
             LastName: e.target[1].value,
@@ -23,12 +36,14 @@ function RegisterCustomer(e){
     
         ).then(res =>{
             console.log(res);
-            return true;
+            alert("You have been successfully registered!");
+            navigate("/");
         }).catch(err =>{
             console.log(err);
-            return true;
+            
 
         });
+      
 }
 
     return (
@@ -62,7 +77,7 @@ function RegisterCustomer(e){
                             id="floatingInputCustom"
                             type="email"
                             placeholder="name@example.com"
-                        />
+                            />
                         <label htmlFor="floatingInputCustom">Email address</label>
                     </Form.Floating>
                     <Form.Floating style={{ margin: "15px 0" }}>
@@ -70,7 +85,7 @@ function RegisterCustomer(e){
                             id="floatingPasswordCustom"
                             type="password"
                             placeholder="Password"
-                        />
+                           />
                         <label htmlFor="floatingPasswordCustom">Password</label>
                     </Form.Floating>
                     <Form.Floating style={{ margin: "15px 0" }}>
