@@ -36,7 +36,7 @@ namespace WebApplication.Repositories
             foreach (var purchaseDetails in purchase.PurchaseDetails)
             {
                 var ticket = _context.Set<Ticket>().Find(purchaseDetails.TicketId);
-                //ticket.Event.AvailableTickets -= purchaseDetails.Quantity;
+                ticket.Event.AvailableTickets -= purchaseDetails.Quantity;
                 purchaseDetails.TicketCodes = TicketCodeGenerator(purchaseDetails, rnd);
             }
 
@@ -76,9 +76,9 @@ namespace WebApplication.Repositories
                     var ticket = _context.Set<Ticket>().Find(purchaseDetails.TicketId);
                     //ticket.Event.AvailableTickets -= purchaseDetails.Quantity;
                     Event @event = _context.Set<Event>().Find(ticket.Event.Id);
-                    @event.AvailableTickets -= purchaseDetails.Quantity;
+                    //@event.AvailableTickets -= purchaseDetails.Quantity;
       
-                    _context.Entry(@event).State = EntityState.Modified;
+                    //_context.Entry(@event).State = EntityState.Modified;
 
                 }
                 return "OK";
@@ -108,7 +108,7 @@ namespace WebApplication.Repositories
            
             for (var i=0;i<purchaseDetails.Quantity;i++)
             {
-                string randomID = rnd.Next(1, 9999).ToString();
+                string randomID = rnd.Next(1000000, 2000000).ToString();
                 ticketCode = new TicketCode { Code = eventID + ticketID + randomID, PurchaseDetail = purchaseDetails };
                 ticketCodes.Add(ticketCode.Code);
                 _context.Set<TicketCode>().Add(ticketCode);
@@ -123,8 +123,8 @@ namespace WebApplication.Repositories
             {
                 var ticket = _context.Set<Ticket>().Find(purchaseDetails.TicketId);
                 Event @event = _context.Set<Event>().Find(ticket.Event.Id);
-                @event.AvailableTickets += purchaseDetails.Quantity;
-                _context.Entry(@event).State = EntityState.Modified;
+                //@event.AvailableTickets += purchaseDetails.Quantity;
+                //_context.Entry(@event).State = EntityState.Modified;
             }
         }
 
