@@ -33,6 +33,7 @@ function EventInfo(props) {
                 )
                 .then((res) => {
                     setData(res.data);
+                    
                 })
                 .catch((err) => console.log(err));
         }

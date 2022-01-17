@@ -63,7 +63,7 @@ class NavigationBar extends React.Component {
             CreateEventLink =
                 <Nav.Item>
                     <LinkContainer to='/mytickets'>
-                        <Nav.Link>My Events</Nav.Link>
+                        <Nav.Link>My Tickets</Nav.Link>
                     </LinkContainer>
                 </Nav.Item>
         }

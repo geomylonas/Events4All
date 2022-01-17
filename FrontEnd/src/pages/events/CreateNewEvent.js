@@ -73,6 +73,7 @@ class CreateNewEvent extends React.Component {
             this.setState({ checkboxToggle: true });
         }
     }
+    
     submitHandler = e => {
         e.preventDefault();
         

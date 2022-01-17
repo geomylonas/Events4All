@@ -25,6 +25,7 @@ import SuccessPayment from './components/Paypal/SuccessPayment';
 import axios from 'axios';
 import { Redirect } from 'react-router';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import Purchases from './pages/purchases/Purchases';
 
 
 
@@ -190,6 +191,9 @@ class App extends Component {
         }
          { localStorage.getItem("token") &&
           <Route path="/successpayment" element={<SuccessPayment/>} />
+        }
+        { localStorage.getItem("token") &&
+          <Route path="/mytickets" element={<Purchases/>} />
         }
         </Routes>
         <UpButton />

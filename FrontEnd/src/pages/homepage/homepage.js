@@ -36,6 +36,20 @@ function Homepage() {
                             <p>Find Professional meetings</p>
                         </Carousel.Caption>
                     </Carousel.Item>
+                    <Carousel.Item>
+                        <Image src={require("../../images/convention.jpg")} className={classes.homeImage} />
+                        <Carousel.Caption>
+                            <h3>Conventions</h3>
+                            <p>Find Professional meetings</p>
+                        </Carousel.Caption>
+                    </Carousel.Item>
+                    <Carousel.Item>
+                        <Image src={require("../../images/lecture.jpg")} className={classes.homeImage} />
+                        <Carousel.Caption>
+                            <h3>Lectures</h3>
+                            <p>Attend Lectures</p>
+                        </Carousel.Caption>
+                    </Carousel.Item>
                 </Carousel>
             </div>
             <div className={classes.aboutUs}>
@@ -54,22 +68,21 @@ function Homepage() {
                             <Card.Title>The Idea</Card.Title>
                             <Card.Subtitle className="mb-2 text-muted">How this idea came up.</Card.Subtitle>
                             <Card.Text>
-                                Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.
+                                The idea came up from one of our group members, who was really into concerts, events etc. Taking that into consideration we designed a web application where users will be able to buy tickets and publish events. 
                             </Card.Text>
                         </Card.Body>
                     </Card>
-
-
+ 
+ 
                     <Card style={{ margin: "15px 0" }}>
                         <Card.Body>
                             <Card.Title>The Customers</Card.Title>
                             <Card.Subtitle className="mb-2 text-muted">Logging in as a Costumer.</Card.Subtitle>
                             <Card.Text>
-                                Consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
-                            </Card.Text>
+                                Joining in our delighted Customer Community you will be able to browse throught our list of events, find information about them, check ticket availability and purchase tickets.                            </Card.Text>
                         </Card.Body>
                     </Card>
-
+ 
                 </div>
                 <div className={classes.col2}>
                     <Card style={{ margin: "15px 0" }}>
@@ -77,18 +90,18 @@ function Homepage() {
                             <Card.Title>Who we are</Card.Title>
                             <Card.Subtitle className="mb-2 text-muted">The team behind this project.</Card.Subtitle>
                             <Card.Text>
-                                Amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.
+                                We are a team of four ambitious junior Web Developers, eager to start our journey in this industry, learn new technologies and gain experience so we can evolve and have a successful career.
                             </Card.Text>
                         </Card.Body>
                     </Card>
-
-
+ 
+ 
                     <Card style={{ margin: "15px 0" }}>
                         <Card.Body>
                             <Card.Title>The Organizer</Card.Title>
                             <Card.Subtitle className="mb-2 text-muted">Logging in as a Organizer.</Card.Subtitle>
                             <Card.Text>
-                                Eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora.
+                                Become a member of our experienced event organizer team where you will be able to manage and publish your event and their respective tickets. <br/><strong>Join Now!</strong>
                             </Card.Text>
                         </Card.Body>
                     </Card>
@@ -111,10 +124,9 @@ function Homepage() {
                         <h4>Title</h4>
                         <h5>Description</h5>
                         <div>
-                            <Link to="/register">
+                            <Link to="/events/mainpage">
                                 <button className={classes.outlineButton}>Details</button>
                             </Link>
-                            <button className={classes.filledButton}>Quick Purchase</button>
                         </div>
                     </div>
                 </div>
@@ -124,8 +136,9 @@ function Homepage() {
                         <h4>Title</h4>
                         <h5>Description</h5>
                         <div>
-                            <button className={classes.outlineButton}>Details</button>
-                            <button className={classes.filledButton}>Quick Purchase</button>
+                        <Link to="/events/mainpage">
+                                <button className={classes.outlineButton}>Details</button>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -135,8 +148,9 @@ function Homepage() {
                         <h4>Title</h4>
                         <h5>Description</h5>
                         <div>
-                            <button className={classes.outlineButton}>Details</button>
-                            <button className={classes.filledButton}>Quick Purchase</button>
+                        <Link to="/events/mainpage">
+                                <button className={classes.outlineButton}>Details</button>
+                            </Link>
                         </div>
                     </div>
                 </div>

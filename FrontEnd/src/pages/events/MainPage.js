@@ -40,6 +40,7 @@ class FeaturedEvents extends React.Component {
         .then((res) => {
           this.setState({ events: [...this.state.events, ...res.data] });
           this.setState({ loading: false });
+          
         })
         .catch((err) => {
           console.log(err);
@@ -149,10 +150,21 @@ class FeaturedEvents extends React.Component {
           {this.state.events.map(ev => (
 
             <div className={classes.individualSampleEvent} key={ev.Id}>
-              
               <Link to={`/events/info/${ev.Id}`}>
-                <img src="https://images.pexels.com/photos/3171837/pexels-photo-3171837.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" className={classes.eventPicture} />
+                {ev.Pictures.map((i,index)=>{
+                  if(index == 0){
+
+                    return  (
+                      // <img src={require(`../../Files/${i.Url}`)} className={classes.eventPicture} />
+                      <></>
+                      )
+                    }
+                  
+                  
+                })}
+
               </Link>
+              
               <div className={classes.sampleEventBody}>
                 <h4>{ev.Title}</h4>
                 <p className={classes.overflow}>{ev.Description}</p>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import classes from '../EventInfo.module.css';
-import { Card, ProgressBar } from "react-bootstrap";
+import { Card, Carousel, ProgressBar } from "react-bootstrap";
 import "./EventInfoOrganizer.css";
 import DeleteModal from '../DeleteEventModal';
 import { Link } from 'react-router-dom';
@@ -25,6 +25,7 @@ function OrganizerEventInfo(props) {
                 )
                 .then((res) => {
                     setData(res.data);
+                    console.log(res.data)
                     
                 })
                 .catch((err) => console.log(err));
@@ -50,8 +51,18 @@ function OrganizerEventInfo(props) {
 
 
             <div className={classes.col1}>
-                <img src="https://images.pexels.com/photos/3171837/pexels-photo-3171837.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" className={classes.eventImage} />
-
+            <Carousel style={{width: "100%"}} fade>
+                {data.Pictures.map(i=>{
+                    
+                    return(
+                        
+                        <Carousel.Item >
+                        <img src={require(`../../../Files/${i.Url}`)} className="orgImg" />
+                        </Carousel.Item>
+                    )
+                            
+                })}
+            </Carousel>
                 <div className="orgticketBox">
                     <h4>Tickets</h4>
                     <div className="orgcategorytickets">

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import DeleteModal from '../DeleteEventModal';
 import "./OrganizerEvents.css";
-import { Overlay, Tooltip } from "react-bootstrap";
+import { Carousel, Overlay, Tooltip } from "react-bootstrap";
 
 class OrganizerEvents extends React.Component {
   constructor(props) {
@@ -107,7 +107,7 @@ class OrganizerEvents extends React.Component {
     };
     const loadingTextCSS = { display: this.state.loading ? "block" : "none" };
    
-  
+    
    
 
     return (
@@ -115,7 +115,10 @@ class OrganizerEvents extends React.Component {
       <div >
         <div id="createbutton">
           <Link to="/createnewevent">
-            <button ref={this.state.myRef}>Create New Event</button>
+            <button>Create New Event</button>
+          </Link>
+          <Link to="/mytickets">
+            <button ref={this.state.myRef}>My Tickets</button>
           </Link>
         </div>
         
@@ -128,9 +131,24 @@ class OrganizerEvents extends React.Component {
                   ev.Tickets.map((tic, index) => ( tic.PurchaseDetails.length == 0 && index < 1) &&
                    <img key={tic.Id} className="trashcan" src={require("../../../images/trashcan.png")} alt="trashcan" onClick={() => this.onClickButton(ev)} /> ) 
                 }
-              <Link to={`/myeventsorganizer/info/${ev.Id}`}>
-                {/* <img src={require(process.env.PUBLIC_URL+`../../../../.././WebApplication/Files/TestLogo.png`)} className={classes.eventPicture} /> */}
+                
+
+                  <Link to={`/myeventsorganizer/info/${ev.Id}`}>
+                 
+                {ev.Pictures.map((i,index)=>{
+                  if(index == 0){
+
+                    return  (
+                      <img src={require(`../../../Files/${i.Url}`)} className={classes.eventPicture} />
+                      
+                      )
+                    }
+                  
+                  
+                })}
+          
               </Link>
+              
               <div className={classes.sampleEventBody}>
                 <h4>{ev.Title}</h4>
                 <p className={classes.overflow}>{ev.Description}</p>

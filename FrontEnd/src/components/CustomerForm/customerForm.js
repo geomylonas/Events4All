@@ -51,6 +51,13 @@ function RegisterCustomer(e){
     }
 }
 
+function checkBirthday(e){
+    var date = new Date (e.target.value)
+    if(date.getFullYear() > (new Date().getFullYear() - 18)){
+        alert("You must be at least 18 years old!");
+        e.target.value=null;
+    }
+}
 
 function checkFName(e){
     let check = /^[A-Za-z]+$/;
@@ -216,7 +223,7 @@ const popoverPassword = (
                             id="dateOfBirth"
                             type="date"
                             placeholder="Date Of Birth"
-                        /> 
+                        onChange={checkBirthday}/> 
                         <label htmlFor="dateOfBirth">Date Of Birth</label>
                     </Form.Floating>
                     <div className={classes.customerButton}>

@@ -1,9 +1,17 @@
 /* white: #F6F4F2, mpez: #C6AD8F, dark: #425664 */
 
+
+.orgImg{
+    height: 500px;
+    width: 100%;
+    object-fit: cover;
+}
+
 #createbutton{
     display: flex;
     justify-content: center;
     margin-top: 50px;
+    gap: 20px;
 }
 
 #createbutton button{
