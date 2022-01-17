@@ -44,8 +44,8 @@ export default function Payment(props) {
        setPaidFor(true);
      }).catch(error=>{
        console.log(error);
-       alert("The transaction cannot be completed")
-       navigate("/")
+       alert("The transaction cannot be completed");
+       navigate("/");
      })
     console.log(orderId);
     
