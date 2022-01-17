@@ -8,6 +8,7 @@ using DAL.Entities;
 using WebApplication.Controllers;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Data.Entity;
 
 namespace WebApplication.Repositories
 {
@@ -35,7 +36,7 @@ namespace WebApplication.Repositories
             foreach (var purchaseDetails in purchase.PurchaseDetails)
             {
                 var ticket = _context.Set<Ticket>().Find(purchaseDetails.TicketId);
-                ticket.Event.AvailableTickets -= purchaseDetails.Quantity;
+                //ticket.Event.AvailableTickets -= purchaseDetails.Quantity;
                 purchaseDetails.TicketCodes = TicketCodeGenerator(purchaseDetails, rnd);
             }
 
@@ -74,7 +75,10 @@ namespace WebApplication.Repositories
                 {
                     var ticket = _context.Set<Ticket>().Find(purchaseDetails.TicketId);
                     //ticket.Event.AvailableTickets -= purchaseDetails.Quantity;
-                    _context.Set<Event>().Find(ticket.Event.Id).AvailableTickets -= purchaseDetails.Quantity;
+                    Event @event = _context.Set<Event>().Find(ticket.Event.Id);
+                    @event.AvailableTickets -= purchaseDetails.Quantity;
+      
+                    _context.Entry(@event).State = EntityState.Modified;
 
                 }
                 return "OK";
@@ -118,7 +122,9 @@ namespace WebApplication.Repositories
             foreach (var purchaseDetails in purchase.PurchaseDetails)
             {
                 var ticket = _context.Set<Ticket>().Find(purchaseDetails.TicketId);
-                ticket.Event.AvailableTickets += purchaseDetails.Quantity;
+                Event @event = _context.Set<Event>().Find(ticket.Event.Id);
+                @event.AvailableTickets += purchaseDetails.Quantity;
+                _context.Entry(@event).State = EntityState.Modified;
             }
         }
 

@@ -44,7 +44,7 @@ export default function Payment(props) {
        setPaidFor(true);
      }).catch(error=>{
        console.log(error);
-       axios.post("https://localhost:44359/api/release/",Purchase,{
+         axios.post("https://localhost:44359/api/Purchases/Release/",Purchase,{
       headers: headers
      }).then(res=>{
        console.log(res);
