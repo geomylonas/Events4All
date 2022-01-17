@@ -4,10 +4,11 @@ import CustomerForm from "../../components/CustomerForm/customerForm";
 import classes from "./homepage.module.css";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
+import { propTypes } from "react-bootstrap/esm/Image";
 
 
-function Homepage() {
-    const scrollToRef = useRef();
+function Homepage(props) {
+    const scrollToRef = useRef(null);
 
     return (
         <div className={classes.container}>
@@ -60,7 +61,7 @@ function Homepage() {
 
 
 
-            <div className={classes.cards}>
+            <div className={classes.cards} ref={props.refAbout}>
 
                 <div className={classes.col1}>
                     <Card style={{ margin: "15px 0" }}>

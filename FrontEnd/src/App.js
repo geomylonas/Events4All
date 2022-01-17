@@ -32,7 +32,8 @@ class App extends Component {
     this.state = {
       cartItems: JSON.parse(localStorage.getItem("cart")),
       userRole: "",
-      product: []
+      product: [],
+      myRef: React.createRef()
     };
   }
 
@@ -146,7 +147,10 @@ class App extends Component {
       });
   };
 
-
+  scrollTo = () =>{
+    console.log(this.state.myRef);
+    this.state.myRef.current.scrollIntoView();
+  }
 
 
   render() {
@@ -157,6 +161,7 @@ class App extends Component {
       subtractquantity: this.subtractQuantity,
       removeproduct: this.removeProduct,
       proceedtopayment: this.proceedToPayment,
+      scrollto: this.scrollTo
     };
 
     console.log();
@@ -164,7 +169,7 @@ class App extends Component {
       <div className="customContainer">
         <NavigationBar {...attributes} />
         <Routes>
-          <Route path="/" element={<Homepage />} />
+          <Route path="/" element={<Homepage refAbout={this.myRef}/>} />
           <Route
             path="/events/mainpage"
             element={<FeaturedEvents addToCart={this.addToCart} />}

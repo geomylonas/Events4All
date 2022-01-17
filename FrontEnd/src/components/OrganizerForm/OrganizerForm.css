@@ -6,6 +6,7 @@
     margin: 200px auto;
     border-radius: 5px;
     box-shadow: 5px 5px 10px 2px #425664;
+    min-height: 550px;
 }
 
 .organizerForm{

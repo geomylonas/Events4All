@@ -44,16 +44,7 @@ export default function Payment(props) {
        setPaidFor(true);
      }).catch(error=>{
        console.log(error);
-       axios.post("https://localhost:44359/api/release/",Purchase,{
-      headers: headers
-     }).then(res=>{
-       console.log(res);
-     }).catch(er=>{
-      alert("The transaction cannot be completed");
-      navigate("/");
-     })
-       
-     })
+     });
     console.log(orderId);
     
     console.log("done");
@@ -85,12 +76,46 @@ export default function Payment(props) {
     alert(error);
   }
 
+
   const onApprove = async (data, actions) => {
     const order = await actions.order.capture();
     console.log("order", order)
 
     handleApprove(data.orderID)
   };
+
+
+  function cancelRequest (){
+    alert("There was an error");
+    let PurchaseDetails=[]
+    let PurchaseDetail={}
+    product.map(pr=>{
+      PurchaseDetail={
+        TotalPrice: pr.count*pr.ticketPrice,
+        Quantity: pr.count,
+        TicketId: pr.ticketId,
+      }
+      PurchaseDetails=[...PurchaseDetails,PurchaseDetail]
+    })
+   let Purchase={
+    PurchaseDetails: PurchaseDetails,
+    DateOfPurchase: new Date().toJSON().slice(0,10),
+    Amount: product.reduce((c, p) => c + (p.count*p.ticketPrice), 0)
+   }
+
+   console.log(product)
+    const headers = {
+      'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('token'))}`
+  }
+       axios.post("https://localhost:44359/api/purchases/release/",Purchase,{
+      headers: headers
+     }).then(res=>{
+       console.log(res);
+     }).catch(er=>{
+      alert("The transaction cannot be completed");
+      navigate("/");
+     })
+  }
   return (
       <div id="payment">
         
@@ -99,7 +124,7 @@ export default function Payment(props) {
       createOrder={(data, actions) => createOrder(data, actions)}
       onApprove={(data, actions) => onApprove(data, actions)}
       onCancel={()=>
-      alert("payment Canceled")}
+      cancelRequest()}
       />
       </div>
   );
