@@ -35,8 +35,8 @@ const GoogleMaps = (props) => {
       data: {
         access_key: "9350aa2e25610bf0c074fca63e4ce1ca",
         query: props.address,
+        country: "GR",
         limit: 1,
-        // country: "GR",
       },
     }).done(function (data) {
       setCenter({

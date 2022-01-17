@@ -41,11 +41,11 @@ namespace WebApplication.Repositories
             var oldEvent = _context.Set<Event>().Find(@event.Id);
             if (user.Events.Contains(_context.Set<Event>().Find(@event.Id)))
             {
-                if (CheckIfTickesAreSold(oldEvent))
-                {
-                    throw new Exception("Event has already sold tickets and cannot be Updated");
-                    return;
-                }
+                //if (CheckIfTickesAreSold(oldEvent))
+                //{
+                //    throw new Exception("Event has already sold tickets and cannot be Updated");
+                //    return;
+                //}
 
                 //var newPictures=@event.Pictures.Where(p => !oldEvent.Pictures.Contains(p)).Select(x => x);
                 //var deletedPictures = oldEvent.Pictures.Where(p => !@event.Pictures.Contains(p)).Select(x => x);

@@ -43,7 +43,7 @@ namespace WebApplication.Repositories
             _context.Set<Purchase>().Add(purchase);
             
         }
-        [Authorize]
+        
         public string CheckPurchase(Purchase purchase)
         {
             double totalPrice=0;
@@ -70,6 +70,11 @@ namespace WebApplication.Repositories
             }
             else
             {
+                foreach (var purchaseDetails in purchase.PurchaseDetails)
+                {
+                    var ticket = _context.Set<Ticket>().Find(purchaseDetails.TicketId);
+                    ticket.Event.AvailableTickets -= purchaseDetails.Quantity;       
+                }
                 return "OK";
             }
 
@@ -104,6 +109,15 @@ namespace WebApplication.Repositories
             }
             
             return ticketCodes;
+        }
+
+        public void ReleaseTickets(Purchase purchase)
+        {
+            foreach (var purchaseDetails in purchase.PurchaseDetails)
+            {
+                var ticket = _context.Set<Ticket>().Find(purchaseDetails.TicketId);
+                ticket.Event.AvailableTickets += purchaseDetails.Quantity;
+            }
         }
 
     }

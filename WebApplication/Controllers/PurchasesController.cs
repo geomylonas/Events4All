@@ -54,17 +54,33 @@ namespace WebApplication.Controllers
 
         [HttpPost]
         [Route("api/Purchases/Check/")]
+        [Authorize]
         public async Task<IHttpActionResult> Check(Purchase purchase)
         {
             var result=await Task.FromResult(UnitOfWork.Purchases.CheckPurchase(purchase));
             if (result == "OK")
             {
+                UnitOfWork.Complete();
                 return Ok();
             }
             else
             {
                 return Content(HttpStatusCode.BadRequest, result);
             }
+
+        }
+
+
+        [HttpPost]
+        [Route("api/Purchases/Release/")]
+        [Authorize]
+        public async void ReleaseTickets(Purchase purchase)
+        {
+            UnitOfWork.Purchases.ReleaseTickets(purchase);
+           
+           await UnitOfWork.Complete();
+               
+           
 
         }
 
