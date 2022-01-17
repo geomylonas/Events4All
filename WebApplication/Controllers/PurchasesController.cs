@@ -25,23 +25,23 @@ namespace WebApplication.Controllers
         Random rnd = new Random();
 
         // GET: api/Purchases
-        public async Task<ICollection<Purchase>> GetPurchases()
-        {
-            return await UnitOfWork.Purchases.GetAll();
-        }
+        //public async Task<ICollection<Purchase>> GetPurchases()
+        //{
+        //    return await UnitOfWork.Purchases.GetAll();
+        //}
 
         // GET: api/Purchases/5
-        [ResponseType(typeof(Purchase))]
-        public async Task<IHttpActionResult> GetPurchase(int id)
-        {
-            Purchase purchase = await UnitOfWork.Purchases.Get(id);
-            if (purchase == null)
-            {
-                return NotFound();
-            }
+        //[ResponseType(typeof(Purchase))]
+        //public async Task<IHttpActionResult> GetPurchase(int id)
+        //{
+        //    Purchase purchase = await UnitOfWork.Purchases.Get(id);
+        //    if (purchase == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return Ok(purchase);
-        }
+        //    return Ok(purchase);
+        //}
         [Authorize]
         // GET: api/Purchases/ByPerson
         [Route("api/Purchases/Byperson")]
@@ -85,36 +85,36 @@ namespace WebApplication.Controllers
         }
 
         // PUT: api/Purchases/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutPurchase(Purchase purchase)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[ResponseType(typeof(void))]
+        //public async Task<IHttpActionResult> PutPurchase(Purchase purchase)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
        
 
-            UnitOfWork.Purchases.Update(purchase);
+        //    UnitOfWork.Purchases.Update(purchase);
 
-            try
-            {
-                await UnitOfWork.Complete();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PurchaseExists(purchase.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await UnitOfWork.Complete();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!PurchaseExists(purchase.Id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
         [Authorize]
         // POST: api/Purchases
         [ResponseType(typeof(Purchase))]
@@ -132,20 +132,20 @@ namespace WebApplication.Controllers
         }
 
         // DELETE: api/Purchases/5
-        [ResponseType(typeof(Purchase))]
-        public async Task<IHttpActionResult> DeletePurchase(int id)
-        {
-            Purchase purchase = await UnitOfWork.Purchases.Get(id);
-            if (purchase == null)
-            {
-                return NotFound();
-            }
+        //[ResponseType(typeof(Purchase))]
+        //public async Task<IHttpActionResult> DeletePurchase(int id)
+        //{
+        //    Purchase purchase = await UnitOfWork.Purchases.Get(id);
+        //    if (purchase == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            UnitOfWork.Purchases.Delete(purchase);
-            await UnitOfWork.Complete();
+        //    UnitOfWork.Purchases.Delete(purchase);
+        //    await UnitOfWork.Complete();
 
-            return Ok(purchase);
-        }
+        //    return Ok(purchase);
+        //}
 
         protected override void Dispose(bool disposing)
         {

@@ -25,68 +25,68 @@ namespace WebApplication.Controllers
         private IUnitOfWork UnitOfWork = WindsorConfig.RegisterContainer();
 
         // GET: api/Pictures
-        public async Task<ICollection<Picture>> GetPictures()
-        {
-            return await UnitOfWork.Pictures.GetAll();
-        }
+        //public async Task<ICollection<Picture>> GetPictures()
+        //{
+        //    return await UnitOfWork.Pictures.GetAll();
+        //}
 
         // GET: api/Pictures/5
-        [ResponseType(typeof(Picture))]
-        public async Task<IHttpActionResult> GetPicture(int id)
-        {
-            Picture picture = await UnitOfWork.Pictures.Get(id);
-            if (picture == null)
-            {
-                return NotFound();
-            }
+        //[ResponseType(typeof(Picture))]
+        //public async Task<IHttpActionResult> GetPicture(int id)
+        //{
+        //    Picture picture = await UnitOfWork.Pictures.Get(id);
+        //    if (picture == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return Ok(picture);
-        }
+        //    return Ok(picture);
+        //}
 
         // PUT: api/Pictures/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutPicture(Picture picture)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[ResponseType(typeof(void))]
+        //public async Task<IHttpActionResult> PutPicture(Picture picture)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
            
-            try
-            {
-                await UnitOfWork.Complete();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PictureExists(picture.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await UnitOfWork.Complete();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!PictureExists(picture.Id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
         
        
         // POST: api/Pictures
-        [ResponseType(typeof(Picture))]
-        public async Task<IHttpActionResult> PostPicture(Picture picture)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[ResponseType(typeof(Picture))]
+        //public async Task<IHttpActionResult> PostPicture(Picture picture)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            UnitOfWork.Pictures.Add(picture);
-            await UnitOfWork.Complete();
+        //    UnitOfWork.Pictures.Add(picture);
+        //    await UnitOfWork.Complete();
 
-            return CreatedAtRoute("DefaultApi", new { id = picture.Id }, picture);
-        }
+        //    return CreatedAtRoute("DefaultApi", new { id = picture.Id }, picture);
+        //}
 
 
         [HttpPost]
@@ -150,21 +150,21 @@ namespace WebApplication.Controllers
 
 
 
-            // DELETE: api/Pictures/5
-            [ResponseType(typeof(Picture))]
-        public async Task<IHttpActionResult> DeletePicture(int id)
-        {
-            Picture picture = await UnitOfWork.Pictures.Get(id);
-            if (picture == null)
-            {
-                return NotFound();
-            }
+        //    // DELETE: api/Pictures/5
+        //    [ResponseType(typeof(Picture))]
+        //public async Task<IHttpActionResult> DeletePicture(int id)
+        //{
+        //    Picture picture = await UnitOfWork.Pictures.Get(id);
+        //    if (picture == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            UnitOfWork.Pictures.Delete(picture);
-            await UnitOfWork.Complete();
+        //    UnitOfWork.Pictures.Delete(picture);
+        //    await UnitOfWork.Complete();
 
-            return Ok(picture);
-        }
+        //    return Ok(picture);
+        //}
 
         protected override void Dispose(bool disposing)
         {

@@ -9,8 +9,8 @@ import {
 import axios from "axios";
 
 const containerStyle = {
-  width: "400px",
-  height: "400px",
+  width: "100%",
+  height: "500px",
   margin: "20px auto"
 };
 
@@ -45,7 +45,7 @@ const GoogleMaps = (props) => {
         lng: data.data[0].longitude,
       });
     });
-  });
+  },[]);
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyDn8rRqJ6keQQ0dvkCI3bkH-eyp0jSBRb0">

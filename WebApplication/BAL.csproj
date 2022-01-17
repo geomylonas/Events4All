@@ -242,7 +242,6 @@
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\PurchaseDTOController.cs" />
     <Compile Include="Controllers\PurchasesController.cs" />
-    <Compile Include="Controllers\TicketsController.cs" />
     <Compile Include="DTO\AccountDetailsDTO.cs" />
     <Compile Include="DTO\PurchaseDTO.cs" />
     <Compile Include="Global.asax.cs">

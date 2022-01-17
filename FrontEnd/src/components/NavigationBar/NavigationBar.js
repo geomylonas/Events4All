@@ -38,9 +38,6 @@ class NavigationBar extends React.Component {
         this.setState({ cartModal: false, loginModal: false, logoutModal: false });
     }
 
-    scrollTo = () =>{
-        this.props.scrollto();
-    }
 
     render() {
         const cartAttributes = {
@@ -150,9 +147,9 @@ class NavigationBar extends React.Component {
                 </div>
                 <div className={classes.navLinks}>
                     <Nav.Item>
-                        
-                            <Nav.Link onClick={this.scrollTo}>About Us</Nav.Link>
-                        
+                        <LinkContainer onClick={this.props.scroll} to="/">
+                            <Nav.Link >About Us</Nav.Link>
+                        </LinkContainer>
                     </Nav.Item>
                     <Nav.Item>
                         <LinkContainer to='/events/mainpage'>

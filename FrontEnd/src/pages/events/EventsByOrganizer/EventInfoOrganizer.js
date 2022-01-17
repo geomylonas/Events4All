@@ -56,7 +56,7 @@ function OrganizerEventInfo(props) {
                     return(
                         
                         <Carousel.Item >
-                        <img src={require(`../../../Files/${i.Url}`)} className="orgImg" />
+                        <img src={require(`../../../Files/${i.Url}`)} className="orgImg" alt={`${i.Url}`} />
                         </Carousel.Item>
                     )
                             

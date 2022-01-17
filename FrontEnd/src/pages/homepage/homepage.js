@@ -10,6 +10,7 @@ import { propTypes } from "react-bootstrap/esm/Image";
 function Homepage(props) {
     const scrollToRef = useRef(null);
 
+    
     return (
         <div className={classes.container}>
             
@@ -58,10 +59,10 @@ function Homepage(props) {
             </div>
 
 
+            
 
 
-
-            <div className={classes.cards} ref={props.refAbout}>
+            <div ref={props.refProp} className={classes.cards}>
 
                 <div className={classes.col1}>
                     <Card style={{ margin: "15px 0" }}>
@@ -117,7 +118,8 @@ function Homepage(props) {
                 <CustomerForm />
             </div>
 
-
+                
+                <h1 id={classes.h1}>Our Hosted Events Look Like</h1>
             <div className={classes.sampleEventsDiv}>
                 <div className={classes.individualSampleEvent}>
                     <img src="https://images.pexels.com/photos/3171837/pexels-photo-3171837.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />

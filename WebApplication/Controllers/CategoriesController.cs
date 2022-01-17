@@ -46,64 +46,64 @@ namespace WebApplication.Controllers
         }
 
         // PUT: api/Categories/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutCategory(Category category)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[ResponseType(typeof(void))]
+        //public async Task<IHttpActionResult> PutCategory(Category category)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            UnitOfWork.Categories.Update(category);
+        //    UnitOfWork.Categories.Update(category);
 
-            try
-            {
-                await UnitOfWork.Complete();            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CategoryExists(category.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await UnitOfWork.Complete();            }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!CategoryExists(category.Id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
 
-        // POST: api/Categories
-        [ResponseType(typeof(Category))]
-        public async Task<IHttpActionResult> PostCategory(Category category)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //// POST: api/Categories
+        //[ResponseType(typeof(Category))]
+        //public async Task<IHttpActionResult> PostCategory(Category category)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            UnitOfWork.Categories.Add(category);
-            await UnitOfWork.Complete();
+        //    UnitOfWork.Categories.Add(category);
+        //    await UnitOfWork.Complete();
 
-            return CreatedAtRoute("DefaultApi", new { id = category.Id }, category);
-        }
+        //    return CreatedAtRoute("DefaultApi", new { id = category.Id }, category);
+        //}
 
-        // DELETE: api/Categories/5
-        [ResponseType(typeof(Category))]
-        public async Task<IHttpActionResult> DeleteCategory(int id)
-        {
-            Category category = await UnitOfWork.Categories.Get(id);
-            if (category == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/Categories/5
+        //[ResponseType(typeof(Category))]
+        //public async Task<IHttpActionResult> DeleteCategory(int id)
+        //{
+        //    Category category = await UnitOfWork.Categories.Get(id);
+        //    if (category == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            UnitOfWork.Categories.Delete(category);
-            await UnitOfWork.Complete();
+        //    UnitOfWork.Categories.Delete(category);
+        //    await UnitOfWork.Complete();
 
-            return Ok(category);
-        }
+        //    return Ok(category);
+        //}
 
         protected override void Dispose(bool disposing)
         {

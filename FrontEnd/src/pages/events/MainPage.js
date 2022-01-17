@@ -155,8 +155,8 @@ class FeaturedEvents extends React.Component {
                   if(index == 0){
 
                     return  (
-                      // <img src={require(`../../Files/${i.Url}`)} className={classes.eventPicture} />
-                      <></>
+                      <img key={i.Id} src={require(`../../Files/${i.Url}`)} alt={`${i.Url}`} className={classes.eventPicture} />
+                      
                       )
                     }
                   
@@ -175,7 +175,7 @@ class FeaturedEvents extends React.Component {
                 <select onChange={this.selectPrice(ev.Id)}>
                   <option defaultValue hidden>Select Ticket</option>
                 {ev.Tickets.map(cat=>(
-                  <option key={cat.Category.Name} value={JSON.stringify(cat)}>{cat.Category.Name} {cat.Price}&euro;</option>
+                  <option key={cat.Id} value={JSON.stringify(cat)}>{cat.Category.Name} {cat.Price}&euro;</option>
                 ))}
                   </select>
                 <div>
@@ -183,7 +183,7 @@ class FeaturedEvents extends React.Component {
                     <button className={classes.detailsButton}>Details</button>
                   </Link>
 
-                  {ev.DateOfEvent > new Date().toJSON().slice(0, 10) ? (
+                  {(ev.DateOfEvent > new Date().toJSON().slice(0, 10) && ev.AvailableTickets > 0)? (
             localStorage.getItem("token") ? (
               <button className={classes.purchaseButton} onClick={() => this.addToCart(ev)} disabled={!this.state.ticketDisabled.includes(ev.Id)}>Add to Cart</button>
             ) : (

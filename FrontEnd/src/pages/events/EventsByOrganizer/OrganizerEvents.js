@@ -139,7 +139,7 @@ class OrganizerEvents extends React.Component {
                   if(index == 0){
 
                     return  (
-                      <img src={require(`../../../Files/${i.Url}`)} className={classes.eventPicture} />
+                      <img key={i.Id} src={require(`../../../Files/${i.Url}`)} alt={`${i.Url}`} className={classes.eventPicture} />
                       
                       )
                     }

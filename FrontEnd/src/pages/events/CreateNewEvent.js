@@ -85,6 +85,7 @@ class CreateNewEvent extends React.Component {
         const config = {
             headers: {
                 'content-type': 'multipart/form-data',
+                "Authorization": `Bearer ${JSON.parse(localStorage.getItem('token'))}` 
             },
         };
         let Picture;
