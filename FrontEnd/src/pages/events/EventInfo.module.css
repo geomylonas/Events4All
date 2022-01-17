@@ -158,3 +158,9 @@ font-weight: bold;
     border-color .15s ease-in-out,
     box-shadow .15s ease-in-out;
 }
+
+.eventinfobuttons {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}

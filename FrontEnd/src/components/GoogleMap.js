@@ -11,6 +11,7 @@ import axios from "axios";
 const containerStyle = {
   width: "400px",
   height: "400px",
+  margin: "20px auto"
 };
 
 const GoogleMaps = (props) => {
@@ -48,7 +49,7 @@ const GoogleMaps = (props) => {
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyDn8rRqJ6keQQ0dvkCI3bkH-eyp0jSBRb0">
-      <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={10}>
+      <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={15}>
         <Marker position={center} />
         {/* Child components, such as markers, info windows, etc. */}
         <></>

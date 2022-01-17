@@ -95,6 +95,7 @@ function EventInfo(props) {
               ))}
             </div>
           </div>
+          <div className={classes.eventinfobuttons}>
           {data.DateOfEvent > new Date().toJSON().slice(0, 10) ? (
             localStorage.getItem("token") ? (
               <button
@@ -112,6 +113,7 @@ function EventInfo(props) {
           ) : (
             <button className={classes.filledButton} disabled>Event Finished</button>
           )}
+          </div>
         </div>
       </div>
 
@@ -130,7 +132,11 @@ function EventInfo(props) {
         </Card>
         <h4>Date Of Event</h4>
         <Card body className={classes.eventBox}>
-          {data.DateOfEvent}
+          {data.DateOfEvent.slice(0, 10)}
+        </Card>
+        <h4>Time Of Event</h4>
+        <Card body className={classes.eventBox}>
+          {data.DateOfEvent.slice(11, 16)}
         </Card>
         <h4>AvailableTickets</h4>
         <ProgressBar
