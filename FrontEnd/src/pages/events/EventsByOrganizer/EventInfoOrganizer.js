@@ -41,8 +41,7 @@ function OrganizerEventInfo(props) {
         setDeletemodal(false);
         
     } 
-
-    
+  
 
     if (data.length == 0) return null;
     return (
@@ -98,10 +97,13 @@ function OrganizerEventInfo(props) {
             {
                  data.Tickets.map((tic) => ( tic.PurchaseDetails.length > 0) &&
                  <button key={tic.Id} disabled={true}>Delete</button>)
-            }   
+            }  
+            {
+                (data.DateOfEvent > new Date().toJSON().slice(0, 16)) &&
                 <Link to={`/editevent/info/${data.Id}`}>
-                    <button>Edit</button>
+                    <button >Edit</button>
                 </Link>
+            } 
             </div>
 
             <div className={classes.col2}>

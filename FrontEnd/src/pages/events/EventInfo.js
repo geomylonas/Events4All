@@ -45,6 +45,7 @@ function EventInfo(props) {
     const ticketId = p.Id;
     const chosenCategory = p.Category.Name;
     setChecked(price);
+    setTicketId(p.Id);
     setCategory(chosenCategory);
     console.log(pr);
     setDisabled(false);
@@ -109,7 +110,7 @@ function EventInfo(props) {
               </Link>
             )
           ) : (
-            <p>Event Finished</p>
+            <button className={classes.filledButton} disabled>Event Finished</button>
           )}
         </div>
       </div>

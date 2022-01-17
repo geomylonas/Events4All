@@ -32,7 +32,7 @@ class App extends Component {
     this.state = {
       cartItems: JSON.parse(localStorage.getItem("cart")),
       userRole: "",
-      product: [],
+      product: []
     };
   }
 
@@ -146,6 +146,9 @@ class App extends Component {
       });
   };
 
+
+
+
   render() {
     const attributes = {
       chosenproducts: this.state.cartItems,
@@ -181,11 +184,11 @@ class App extends Component {
           {localStorage.getItem("userRole") == JSON.stringify("Organizer") && (
             <Route
               path="/myeventsorganizer/info/:id"
-              element={<OrganizerEventInfo />}
+              element={<OrganizerEventInfo getId={this.getId}/>}
             />
           )}
           {localStorage.getItem("userRole") == JSON.stringify("Organizer") && (
-            <Route path="/editevent/info/:id" element={<EditEvent />} />
+            <Route path="/editevent/info/:id" element={<EditEvent/>} />
           )}
           {localStorage.getItem("token") && (
             <Route
