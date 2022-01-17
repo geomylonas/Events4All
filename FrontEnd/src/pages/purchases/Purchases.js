@@ -2,14 +2,17 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./Purchases.css";
+import Qr from "./Qrcode";
 
 
-
-export default function Purchases(){
+export default function Purchases(props){
 
     const [data,setData] = useState([]);
+    
+
     useEffect(() => {
         getPurchases();
+        
     }, []);
 
 
@@ -23,7 +26,6 @@ export default function Purchases(){
         )
         .then((res) => {
             setData(res.data);
-            console.log(res.data);
         })
         .catch((err) => console.log(err));
     }
@@ -37,10 +39,13 @@ export default function Purchases(){
         </div>
         <div id="tickets">
             {data.map(p=>{
-
+                let TicketCode={EventTitle: p.EventTitle, 
+                    Name:localStorage.getItem("username"), 
+                    TicketCodes:p.TicketCodes}
                 return(
-
+                    
                     <div className="purchase" key={p.TicketCodes[0]}>
+                        <Qr code={TicketCode}></Qr>
                         <h4>Title</h4>
                         {p.EventTitle}
                         <h4>Address</h4>
