@@ -47,6 +47,7 @@ namespace WebApplication.Repositories
                     purchaseDTO.TicketQuantity = purchaseDetail.Quantity;
                     purchaseDTO.EventTitle = ticket.Event.Title;
                     purchaseDTO.EventAddress = ticket.Event.PlaceAddress;
+                    purchaseDTO.EventId = ticket.Event.Id;
                     purchaseDTO.TicketCodes = _context.Set<TicketCode>().Where(tc => (tc.PurchaseDetail.PurchaseId == purchaseDetail.PurchaseId) &&(tc.PurchaseDetail.TicketId==purchaseDetail.TicketId)).Select(tc=>tc.Code).ToList();
                     purchaseDTOs.Add(purchaseDTO);
                 }
