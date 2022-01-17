@@ -73,7 +73,9 @@ namespace WebApplication.Repositories
                 foreach (var purchaseDetails in purchase.PurchaseDetails)
                 {
                     var ticket = _context.Set<Ticket>().Find(purchaseDetails.TicketId);
-                    ticket.Event.AvailableTickets -= purchaseDetails.Quantity;       
+                    //ticket.Event.AvailableTickets -= purchaseDetails.Quantity;
+                    _context.Set<Event>().Find(ticket.Event.Id).AvailableTickets -= purchaseDetails.Quantity;
+
                 }
                 return "OK";
             }

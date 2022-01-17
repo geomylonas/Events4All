@@ -182,18 +182,19 @@ class FeaturedEvents extends React.Component {
                   <Link to={`/events/info/${ev.Id}`}>
                     <button className={classes.detailsButton}>Details</button>
                   </Link>
-                  {
-                    (localStorage.getItem("token")) && (ev.DateOfEvent > new Date().toJSON().slice(0,10)) ?
-                    (<button className={classes.purchaseButton} onClick={() => this.addToCart(ev)} disabled={!this.state.ticketDisabled.includes(ev.Id)}>Add to Cart</button>)
-                    :<p>Event Finished</p>
-                  }
 
-                  {
-                    !localStorage.getItem("token") &&
-                    <Link to={`/register`}>
+                  {ev.DateOfEvent > new Date().toJSON().slice(0, 10) ? (
+            localStorage.getItem("token") ? (
+              <button className={classes.purchaseButton} onClick={() => this.addToCart(ev)} disabled={!this.state.ticketDisabled.includes(ev.Id)}>Add to Cart</button>
+            ) : (
+              <Link to={`/register`}>
                       <button className={classes.purchaseButton} disabled={!this.state.ticketDisabled.includes(ev.Id)}>Add to Cart</button>
                   </Link>
-                  }
+            )
+          ) : (
+            <button className={classes.purchaseButton} disabled>Event Finished</button>
+          )}
+             
                 </div>
               
                 

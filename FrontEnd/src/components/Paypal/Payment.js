@@ -44,8 +44,15 @@ export default function Payment(props) {
        setPaidFor(true);
      }).catch(error=>{
        console.log(error);
-       alert("The transaction cannot be completed");
-       navigate("/");
+       axios.post("https://localhost:44359/api/release/",Purchase,{
+      headers: headers
+     }).then(res=>{
+       console.log(res);
+     }).catch(er=>{
+      alert("The transaction cannot be completed");
+      navigate("/");
+     })
+       
      })
     console.log(orderId);
     

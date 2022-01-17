@@ -16,6 +16,6 @@ namespace WebApplication.Interfaces
         string CheckPurchase(Purchase purchase);
 
         void Add(Purchase purchase, Random rnd);
-        void ReleaseTickets(Purchase purchase)
+        void ReleaseTickets(Purchase purchase);
     }
 }
