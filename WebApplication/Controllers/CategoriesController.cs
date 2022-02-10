@@ -20,16 +20,13 @@ namespace WebApplication.Controllers
 {
     [EnableCors("*", "*", "*")]
     public class CategoriesController : ApiController
-    {
-        
+    {     
         private IUnitOfWork UnitOfWork = WindsorConfig.RegisterContainer();
-
-        
-
+      
         // GET: api/Categories
-        public async Task<ICollection<Category>> GetCategories()
+        public async Task<IHttpActionResult> GetCategories()
         {
-            return  await UnitOfWork.Categories.GetAll();
+            return   Ok(UnitOfWork.Categories.GetAll());
         }
 
         // GET: api/Categories/5
@@ -53,9 +50,7 @@ namespace WebApplication.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             UnitOfWork.Categories.Update(category);
-
             try
             {
                 await UnitOfWork.Complete();            }
@@ -70,7 +65,6 @@ namespace WebApplication.Controllers
                     throw;
                 }
             }
-
             return StatusCode(HttpStatusCode.NoContent);
         }
 
@@ -82,10 +76,8 @@ namespace WebApplication.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             UnitOfWork.Categories.Add(category);
             await UnitOfWork.Complete();
-
             return CreatedAtRoute("DefaultApi", new { id = category.Id }, category);
         }
 
@@ -98,10 +90,8 @@ namespace WebApplication.Controllers
             {
                 return NotFound();
             }
-
             UnitOfWork.Categories.Delete(category);
             await UnitOfWork.Complete();
-
             return Ok(category);
         }
 

@@ -43,11 +43,8 @@ namespace WebApplication.Models
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Organizer> Organizers { get; set; }
         public virtual DbSet<Person> Persons { get; set; }
- 
         public virtual DbSet<PurchaseDetail> PurchaseDetails { get; set; }
-
         public virtual DbSet<EventCategory> EventCategories { get; set; }
-
         public virtual DbSet<TicketCode> TicketCodes { get; set; }
 
 

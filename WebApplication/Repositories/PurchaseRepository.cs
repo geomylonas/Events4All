@@ -16,12 +16,9 @@ namespace WebApplication.Repositories
     {
         public PurchaseRepository(IApplicationDbContext context) : base(context)
         {
-
         }
-
         public  void Add(Purchase purchase, Random rnd)
         {
-
             var user = _context.Set<Person>().Find(AccountController.GetUserID());
           
             foreach(var purchaseDetails in purchase.PurchaseDetails)
@@ -64,7 +61,6 @@ namespace WebApplication.Repositories
                 var ticket = _context.Set<Ticket>().Find(purchaseDetails.TicketId);
                 totalPrice += (ticket.Price * purchaseDetails.Quantity);
             }
-
             if (totalPrice != purchase.Amount)
             {
                 return "Something went wrong with the purchase";
@@ -74,21 +70,10 @@ namespace WebApplication.Repositories
                 foreach (var purchaseDetails in purchase.PurchaseDetails)
                 {
                     var ticket = _context.Set<Ticket>().Find(purchaseDetails.TicketId);
-                    //ticket.Event.AvailableTickets -= purchaseDetails.Quantity;
                     Event @event = _context.Set<Event>().Find(ticket.Event.Id);
-                    //@event.AvailableTickets -= purchaseDetails.Quantity;
-      
-                    //_context.Entry(@event).State = EntityState.Modified;
-
                 }
                 return "OK";
-            }
-
-       
-
-
-
-
+            }   
         }
 
         public Task<ICollection<Purchase>> GetPurchasesByUser()
@@ -112,8 +97,7 @@ namespace WebApplication.Repositories
                 ticketCode = new TicketCode { Code = eventID + ticketID + randomID, PurchaseDetail = purchaseDetails };
                 ticketCodes.Add(ticketCode.Code);
                 _context.Set<TicketCode>().Add(ticketCode);
-            }
-            
+            }           
             return ticketCodes;
         }
 
@@ -123,8 +107,6 @@ namespace WebApplication.Repositories
             {
                 var ticket = _context.Set<Ticket>().Find(purchaseDetails.TicketId);
                 Event @event = _context.Set<Event>().Find(ticket.Event.Id);
-                //@event.AvailableTickets += purchaseDetails.Quantity;
-                //_context.Entry(@event).State = EntityState.Modified;
             }
         }
 

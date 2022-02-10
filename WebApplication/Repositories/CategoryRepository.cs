@@ -12,7 +12,6 @@ namespace WebApplication.Repositories
     {
         public CategoryRepository(IApplicationDbContext context) : base(context)
         {
-
         }
     }
 }

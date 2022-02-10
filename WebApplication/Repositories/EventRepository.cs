@@ -41,41 +41,14 @@ namespace WebApplication.Repositories
             var oldEvent = _context.Set<Event>().Find(@event.Id);
             if (user.Events.Contains(_context.Set<Event>().Find(@event.Id)))
             {
-                //if (CheckIfTickesAreSold(oldEvent))
-                //{
-                //    throw new Exception("Event has already sold tickets and cannot be Updated");
-                //    return;
-                //}
-
-                //var newPictures=@event.Pictures.Where(p => !oldEvent.Pictures.Contains(p)).Select(x => x);
-                //var deletedPictures = oldEvent.Pictures.Where(p => !@event.Pictures.Contains(p)).Select(x => x);
-
-                //foreach (var picture in deletedPictures)
-                //{
-                //    oldEvent.Pictures.Remove(picture);
-                //    _context.Set<Picture>().Remove(picture);       
-                //}
-                //foreach (var picture in newPictures)
-                //{
-                //    oldEvent.Pictures.Add(picture);
-                //}
-
-                
-              
-                _context.Set<Picture>().RemoveRange(oldEvent.Pictures);
-              
+                _context.Set<Picture>().RemoveRange(oldEvent.Pictures); 
                 oldEvent.Pictures.Clear();
-
                 foreach(var picture in @event.Pictures)
                 {
                     oldEvent.Pictures.Add(picture);
                 }
-                
-
-                
-
                 oldEvent.Tickets.ToList().Find(t => t.Category.Name == "Normal").Price = @event.Tickets.ToList().Find(t => t.Category.Name == "Normal").Price;
-                if(@event.Tickets.Count>1)
+                if (@event.Tickets.Count > 1)
                 {
                     if (oldEvent.Tickets.Count > 1)
                     {
@@ -86,12 +59,10 @@ namespace WebApplication.Repositories
                         oldEvent.Tickets.Add(@event.Tickets.ToList().Find(t => t.Category.Name == "VIP"));
                     }
                 }
-                else if(oldEvent.Tickets.Count > 1)
+                else if (oldEvent.Tickets.Count > 1)
                 {
-                    //oldEvent.Tickets.Remove(oldEvent.Tickets.ToList().Find(t => t.Category.Name == "VIP"));
                     _context.Set<Ticket>().Remove(oldEvent.Tickets.ToList().Find(t => t.Category.Name == "VIP"));
                 }
-
                 oldEvent.PlaceAddress = @event.PlaceAddress;
                 oldEvent.PlaceName = @event.PlaceName;
                 oldEvent.Title = @event.Title;
@@ -107,8 +78,7 @@ namespace WebApplication.Repositories
         }
 
         public new void Delete(Event @event)
-        {
-            
+        {    
             var user = _context.Set<Organizer>().Find(AccountController.GetUserID());
             if (user.Events.Contains(_context.Set<Event>().Find(@event.Id)))
             {
@@ -118,8 +88,7 @@ namespace WebApplication.Repositories
                     return;
                 }
                 foreach (var picture in _context.Set<Picture>().Where(p => p.Event.Id == @event.Id).ToList())
-                {
-                  
+                {    
                     _context.Set<Picture>().Remove(picture);
                 }
                 foreach (var ticket in _context.Set<Ticket>().Where(p => p.Event.Id == @event.Id).ToList())
@@ -129,9 +98,7 @@ namespace WebApplication.Repositories
                         _context.Set<PurchaseDetail>().Remove(purchaseDetail);
                     }
                     _context.Set<Ticket>().Remove(ticket);
-
                 }
-
                 _context.Set<Event>().Remove(@event);
             }
             else
@@ -147,20 +114,13 @@ namespace WebApplication.Repositories
 
             foreach (var ticket in @event.Tickets)
             {
-
                 var ticketCategory = _context.Set<Category>().Find(ticket.Category.Id);
                 ticket.Category = ticketCategory;
-
-            }
-           
-
-        
-
+            }                
             var user = _context.Set<Organizer>().Find(AccountController.GetUserID());
             user.Events.Add(@event);
             _context.Set<Event>().Add(@event);
         }
-
 
         public bool CheckIfTickesAreSold(Event @event)
         {

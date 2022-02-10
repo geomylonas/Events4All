@@ -14,7 +14,6 @@ namespace WebApplication.Interfaces
     {
         ICollection<Event> GetByPage(int pageNumber, int pageSize);
         ICollection<Event> GetByCategory(int pageNumber, int pageSize, int eventCategoryId);
-
         ICollection<Event> GetByOrganizerId(string id, int pageNumber, int pageSize);
 
     }

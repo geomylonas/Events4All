@@ -15,7 +15,6 @@ namespace WebApplication.Controllers
 {
     public class PurchaseDTOController : ApiController
     {
-
         private IUnitOfWork UnitOfWork = WindsorConfig.RegisterContainer();
 
 
@@ -23,7 +22,6 @@ namespace WebApplication.Controllers
        [Authorize]
         public async Task<ICollection<PurchaseDTO>> GetAll()
         {
-
             return await UnitOfWork.PurchaseDTO.GetAll();
         }
 

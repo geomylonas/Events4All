@@ -11,8 +11,6 @@ namespace WebApplication.Repositories
     {
         public EventCategoryRepository(IApplicationDbContext context) : base(context)
         {
-
         }
-
     }
 }

@@ -21,7 +21,6 @@ namespace WebApplication.Controllers
     public class PurchasesController : ApiController
     {
         private IUnitOfWork UnitOfWork = WindsorConfig.RegisterContainer();
-
         Random rnd = new Random();
 
         // GET: api/Purchases
@@ -48,8 +47,7 @@ namespace WebApplication.Controllers
         [ResponseType(typeof(Purchase))]
         public async Task<ICollection<Purchase>> GetPurchaseByPerson()
         {
-            return await UnitOfWork.Purchases.GetPurchasesByUser();
-      
+            return await UnitOfWork.Purchases.GetPurchasesByUser();      
         }
 
         [HttpPost]
@@ -67,7 +65,6 @@ namespace WebApplication.Controllers
             {
                 return Content(HttpStatusCode.BadRequest, result);
             }
-
         }
 
 
@@ -76,12 +73,8 @@ namespace WebApplication.Controllers
         [Authorize]
         public async void ReleaseTickets(Purchase purchase)
         {
-            UnitOfWork.Purchases.ReleaseTickets(purchase);
-           
-           await UnitOfWork.Complete();
-               
-           
-
+            UnitOfWork.Purchases.ReleaseTickets(purchase);         
+           await UnitOfWork.Complete();                        
         }
 
         // PUT: api/Purchases/5
@@ -92,11 +85,7 @@ namespace WebApplication.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-       
-
             UnitOfWork.Purchases.Update(purchase);
-
             try
             {
                 await UnitOfWork.Complete();
@@ -112,7 +101,6 @@ namespace WebApplication.Controllers
                     throw;
                 }
             }
-
             return StatusCode(HttpStatusCode.NoContent);
         }
         [Authorize]
@@ -124,10 +112,8 @@ namespace WebApplication.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             UnitOfWork.Purchases.Add(purchase,rnd);
             await UnitOfWork.Complete();
-
             return CreatedAtRoute("DefaultApi", new { id = purchase.Id }, purchase);
         }
 
@@ -140,10 +126,8 @@ namespace WebApplication.Controllers
             {
                 return NotFound();
             }
-
             UnitOfWork.Purchases.Delete(purchase);
             await UnitOfWork.Complete();
-
             return Ok(purchase);
         }
 

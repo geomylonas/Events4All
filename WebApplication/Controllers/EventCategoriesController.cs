@@ -20,7 +20,6 @@ namespace WebApplication.Controllers
     [EnableCors("*", "*", "*")]
     public class EventCategoriesController : ApiController
     {
-       
         private IUnitOfWork UnitOfWork = WindsorConfig.RegisterContainer();
 
         // GET: api/EventCategories
@@ -38,75 +37,8 @@ namespace WebApplication.Controllers
             {
                 return NotFound();
             }
-
             return Ok(eventCategory);
         }
-
-        //// PUT: api/EventCategories/5
-        //[ResponseType(typeof(void))]
-        //public async Task<IHttpActionResult> PutEventCategory(int id, EventCategory eventCategory)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    if (id != eventCategory.Id)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    db.Entry(eventCategory).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        await db.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!EventCategoryExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return StatusCode(HttpStatusCode.NoContent);
-        //}
-
-        //// POST: api/EventCategories
-        //[ResponseType(typeof(EventCategory))]
-        //public async Task<IHttpActionResult> PostEventCategory(EventCategory eventCategory)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    db.EventCategories.Add(eventCategory);
-        //    await db.SaveChangesAsync();
-
-        //    return CreatedAtRoute("DefaultApi", new { id = eventCategory.Id }, eventCategory);
-        //}
-
-        //// DELETE: api/EventCategories/5
-        //[ResponseType(typeof(EventCategory))]
-        //public async Task<IHttpActionResult> DeleteEventCategory(int id)
-        //{
-        //    EventCategory eventCategory = await db.EventCategories.FindAsync(id);
-        //    if (eventCategory == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    db.EventCategories.Remove(eventCategory);
-        //    await db.SaveChangesAsync();
-
-        //    return Ok(eventCategory);
-        //}
 
         protected override void Dispose(bool disposing)
         {

@@ -34,7 +34,7 @@ namespace DAL
 
 
 
-        //internal static void RelateFluent(System.Data.Entity.DbModelBuilder builder)
+      
         protected override void OnModelCreating(DbModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -58,12 +58,7 @@ namespace DAL
                 .HasRequired(q => q.Ticket)
                 .WithMany(q => q.PurchaseDetails)
                 .HasForeignKey(q => q.TicketId);
-
-
-        }
-
-
-            
+        }            
     }
 
         //public class MyEntity

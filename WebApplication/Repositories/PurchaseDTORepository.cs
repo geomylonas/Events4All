@@ -17,31 +17,22 @@ namespace WebApplication.Repositories
 
         public PurchaseDTORepository(IApplicationDbContext context) : base(context)
         {
-
         }
-
-
-        //event - purchateDetail -ticketcategory - purchasedate
-
+      
         public new Task<ICollection<PurchaseDTO>> GetAll()
         {
             var userID = AccountController.GetUserID();
             var person = _context.Set<Person>().Where(o => o.Id == userID).FirstOrDefault();
             PurchaseDTO purchaseDTO;
             ICollection<PurchaseDTO> purchaseDTOs = new Collection<PurchaseDTO>();
-
             ICollection<Purchase> purchases = person.Purchases;
             foreach(var purchase in purchases)
-            {
-                
-                
+            {                            
                 var purchaseDetails=purchase.PurchaseDetails;
                 foreach(var purchaseDetail in purchaseDetails)
                 {
                     purchaseDTO = new PurchaseDTO();
                     Ticket ticket = _context.Set<Ticket>().Where(t => t.Id == purchaseDetail.TicketId).FirstOrDefault();
-
-
                     purchaseDTO.CategoryName = ticket.Category.Name;
                     purchaseDTO.PurchaseDate = purchase.DateOfPurchase;
                     purchaseDTO.TicketQuantity = purchaseDetail.Quantity;

@@ -37,7 +37,6 @@ namespace WebApplication.Controllers
             {
                 return NotFound();
             }
-
             return Ok(ticket);
         }
 
@@ -49,10 +48,7 @@ namespace WebApplication.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-
             UnitOfWork.Tickets.Update(ticket);
-
             try
             {
                 await UnitOfWork.Complete();
@@ -68,7 +64,6 @@ namespace WebApplication.Controllers
                     throw;
                 }
             }
-
             return StatusCode(HttpStatusCode.NoContent);
         }
 
@@ -80,10 +75,8 @@ namespace WebApplication.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             UnitOfWork.Tickets.Add(ticket);
             await  UnitOfWork.Complete();
-
             return CreatedAtRoute("DefaultApi", new { id = ticket.Id }, ticket);
         }
 
@@ -96,10 +89,8 @@ namespace WebApplication.Controllers
             {
                 return NotFound();
             }
-
             UnitOfWork.Tickets.Delete(ticket);
             await UnitOfWork.Complete();
-
             return Ok(ticket);
         }
 

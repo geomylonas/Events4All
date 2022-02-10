@@ -12,7 +12,6 @@ namespace WebApplication.Repositories
     {
         public PictureRepository(IApplicationDbContext context) : base(context)
         {
-
         }
     }
 }

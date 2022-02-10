@@ -44,10 +44,8 @@ namespace WebApplication.Controllers
         public AccountDetailsDTO GetProvideAccountDetails()
         {
             var Id = GetUserID();
-            AccountDetailsDTO accountDetails = new AccountDetailsDTO();
-            
+            AccountDetailsDTO accountDetails = new AccountDetailsDTO();       
             var userRole = UserManager.GetRoles(Id)[0];
-
             if (userRole == "Organizer")
             {
                 var user= context.Organizers.Find(Id);

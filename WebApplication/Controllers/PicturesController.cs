@@ -39,7 +39,6 @@ namespace WebApplication.Controllers
             {
                 return NotFound();
             }
-
             return Ok(picture);
         }
 
@@ -50,9 +49,7 @@ namespace WebApplication.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-
-           
+            }       
             try
             {
                 await UnitOfWork.Complete();
@@ -68,7 +65,6 @@ namespace WebApplication.Controllers
                     throw;
                 }
             }
-
             return StatusCode(HttpStatusCode.NoContent);
         }
         
@@ -81,10 +77,8 @@ namespace WebApplication.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             UnitOfWork.Pictures.Add(picture);
             await UnitOfWork.Complete();
-
             return CreatedAtRoute("DefaultApi", new { id = picture.Id }, picture);
         }
 
@@ -98,13 +92,8 @@ namespace WebApplication.Controllers
             { 
                 var tempPath = HttpContext.Current.Server.MapPath("..\\..\\");
                 var fileuploadPath = tempPath + "\\..\\FrontEnd\\src\\Files";
-
-
-
-
                 if (!System.IO.Directory.Exists(fileuploadPath));
                     System.IO.Directory.CreateDirectory(fileuploadPath);
-
                 var provider = new MultipartFormDataStreamProvider(fileuploadPath);
                 var content = new StreamContent(HttpContext.Current.Request.GetBufferlessInputStream(true));
                 foreach (var header in Request.Content.Headers)
@@ -120,17 +109,11 @@ namespace WebApplication.Controllers
                     File.Delete(originalFileName);
                 }
                 File.Move(uploadingFileName, originalFileName);
-             
-                
-
-
-                return Ok("Uploaded Successfuly");
-                
+                return Ok("Uploaded Successfuly");               
             }
             catch (Exception ex)
             {
                 return Content(HttpStatusCode.BadRequest, "There was and error during upload "+ex.Message);
-
             }
         }
 

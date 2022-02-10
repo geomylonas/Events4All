@@ -32,7 +32,7 @@ namespace WebApplication
             );
 
             config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling
-= Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 
         }
     }

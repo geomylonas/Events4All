@@ -42,11 +42,8 @@ namespace WebApplication.Controllers
         // GET: api/Events/0/5/3
         [Route("api/Events/{pageNumber}/{pageSize}/{eventCategoryId}")]
         public async Task<ICollection<Event>> GetAllByPageByCategory(int pageNumber, int pageSize, int eventcategoryId)
-        {
-            
-            
-                return await Task.FromResult(UnitOfWork.Events.GetByCategory(pageNumber, pageSize, eventcategoryId));
-           
+        {       
+                return await Task.FromResult(UnitOfWork.Events.GetByCategory(pageNumber, pageSize, eventcategoryId));      
         }
 
         // GET: api/Events/organizer
@@ -55,10 +52,8 @@ namespace WebApplication.Controllers
         [ResponseType(typeof(Event))]
         public async Task<ICollection<Event>> GetEventsByOrganizerId(int pageNumber,int pageSize)
         {
-
             var id = AccountController.GetUserID();
-            return await Task.FromResult(UnitOfWork.Events.GetByOrganizerId(id,pageNumber,pageSize));
-           
+            return await Task.FromResult(UnitOfWork.Events.GetByOrganizerId(id,pageNumber,pageSize));      
         }
 
         // GET: api/Events/5
@@ -71,7 +66,6 @@ namespace WebApplication.Controllers
             {
                 return NotFound();
             }
-
             return Ok(@event);
         }
         // PUT: api/Events/5
@@ -82,12 +76,8 @@ namespace WebApplication.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-
-           
-            
+            }        
             UnitOfWork.Events.Update(@event);
-
             try
             {
                 await UnitOfWork.Complete();
@@ -103,12 +93,10 @@ namespace WebApplication.Controllers
                     throw;
                 }
             }
-
             return StatusCode(HttpStatusCode.NoContent);
         }
 
        
-
         // POST: api/Events
         [Authorize(Roles = "Organizer")]
         [ResponseType(typeof(Event))]
@@ -117,12 +105,9 @@ namespace WebApplication.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-
-           
+            }      
             UnitOfWork.Events.Add(@event);
             await UnitOfWork.Complete();
-
             return CreatedAtRoute("DefaultApi", new { id = @event.Id }, @event);
         }
 
@@ -136,10 +121,8 @@ namespace WebApplication.Controllers
             {
                 return NotFound();
             }
-
             UnitOfWork.Events.Delete(@event);
             await UnitOfWork.Complete();
-
             return Ok(@event);
         }
 

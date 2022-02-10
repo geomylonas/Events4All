@@ -11,7 +11,6 @@ namespace WebApplication.Repositories
     {
         public PurchaseDetailRepository(IApplicationDbContext context) : base(context)
         {
-
         }
     }
 }
