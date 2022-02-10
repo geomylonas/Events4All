@@ -29,11 +29,12 @@ import Purchases from "./pages/purchases/Purchases";
 class App extends Component {
   constructor(props) {
     super(props);
+    this.myRef = React.createRef()  
     this.state = {
       cartItems: JSON.parse(localStorage.getItem("cart")),
       userRole: "",
       product: [],
-      myRef: React.createRef()
+      about: false
     };
   }
 
@@ -146,13 +147,16 @@ class App extends Component {
         alert("This action cannot be done");
       });
   };
+  scroll = () =>{
+   this.setState({about: true});
+}
+componentDidUpdate(){
+if(this.state.about){
+  this.myRef.current.scrollIntoView();
 
-  scrollTo = () =>{
-    console.log(this.state.myRef);
-    this.state.myRef.current.scrollIntoView();
-  }
-
-
+}
+}
+ 
   render() {
     const attributes = {
       chosenproducts: this.state.cartItems,
@@ -161,15 +165,15 @@ class App extends Component {
       subtractquantity: this.subtractQuantity,
       removeproduct: this.removeProduct,
       proceedtopayment: this.proceedToPayment,
-      scrollto: this.scrollTo
+      scroll: this.scroll
     };
 
     console.log();
     return (
-      <div className="customContainer">
+      <div className="customContainer" id="about">
         <NavigationBar {...attributes} />
         <Routes>
-          <Route path="/" element={<Homepage refAbout={this.myRef}/>} />
+          <Route path="/" element={<Homepage refProp={this.myRef}/>} />
           <Route
             path="/events/mainpage"
             element={<FeaturedEvents addToCart={this.addToCart} />}
@@ -212,6 +216,7 @@ class App extends Component {
         </Routes>
         <UpButton />
         <FooterDiv />
+        
       </div>
     );
   }

@@ -8,7 +8,10 @@ export default function FooterDiv(){
         
         <footer>
             <div>
-                <p>Event Manager
+                <p>Mylonas<br/> Giorgos
+                </p>
+                
+                <p>Valsamakis<br/> Chrisostomos
                 </p>
             </div>
             <div className={classes.image}>
@@ -16,11 +19,13 @@ export default function FooterDiv(){
                 <Image src={require("../../images/logo-mple-aspro.png")} roundedCircle />
                 </div>
                 
-                <div>&copy; SyDreamia 2022 All Rights Reserved</div>
+                <div>&copy; BreakPointers 2022 All Rights Reserved</div>
                 
             </div>
             <div>
-                <p>Event Manager
+                <p>Thodoris<br/> Maragkoudakis
+                </p>
+                <p>Katerina<br/> Choutouriadi
                 </p>
             </div>
              

@@ -5,8 +5,7 @@ footer{
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 50px 0;
-    gap: 20px;
+    padding: 50px;
     border-top: 1px solid #425664;
 }    
 
@@ -23,7 +22,11 @@ footer div {
     flex: 1;
     display: flex;
     justify-content: center;
+    text-align: center;
+    gap: 50px;
+    font-size: 18px;
 }
+
 
 footer img{
     width: 100px;

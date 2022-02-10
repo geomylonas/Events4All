@@ -24,23 +24,23 @@ namespace WebApplication.Controllers
         Random rnd = new Random();
 
         // GET: api/Purchases
-        public async Task<ICollection<Purchase>> GetPurchases()
-        {
-            return await UnitOfWork.Purchases.GetAll();
-        }
+        //public async Task<ICollection<Purchase>> GetPurchases()
+        //{
+        //    return await UnitOfWork.Purchases.GetAll();
+        //}
 
         // GET: api/Purchases/5
-        [ResponseType(typeof(Purchase))]
-        public async Task<IHttpActionResult> GetPurchase(int id)
-        {
-            Purchase purchase = await UnitOfWork.Purchases.Get(id);
-            if (purchase == null)
-            {
-                return NotFound();
-            }
+        //[ResponseType(typeof(Purchase))]
+        //public async Task<IHttpActionResult> GetPurchase(int id)
+        //{
+        //    Purchase purchase = await UnitOfWork.Purchases.Get(id);
+        //    if (purchase == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return Ok(purchase);
-        }
+        //    return Ok(purchase);
+        //}
         [Authorize]
         // GET: api/Purchases/ByPerson
         [Route("api/Purchases/Byperson")]

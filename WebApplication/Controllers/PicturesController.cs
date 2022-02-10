@@ -25,10 +25,10 @@ namespace WebApplication.Controllers
         private IUnitOfWork UnitOfWork = WindsorConfig.RegisterContainer();
 
         // GET: api/Pictures
-        public async Task<ICollection<Picture>> GetPictures()
-        {
-            return await UnitOfWork.Pictures.GetAll();
-        }
+        //public async Task<ICollection<Picture>> GetPictures()
+        //{
+        //    return await UnitOfWork.Pictures.GetAll();
+        //}
 
         // GET: api/Pictures/5
         [ResponseType(typeof(Picture))]
@@ -133,21 +133,21 @@ namespace WebApplication.Controllers
 
 
 
-            // DELETE: api/Pictures/5
-            [ResponseType(typeof(Picture))]
-        public async Task<IHttpActionResult> DeletePicture(int id)
-        {
-            Picture picture = await UnitOfWork.Pictures.Get(id);
-            if (picture == null)
-            {
-                return NotFound();
-            }
+        //    // DELETE: api/Pictures/5
+        //    [ResponseType(typeof(Picture))]
+        //public async Task<IHttpActionResult> DeletePicture(int id)
+        //{
+        //    Picture picture = await UnitOfWork.Pictures.Get(id);
+        //    if (picture == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            UnitOfWork.Pictures.Delete(picture);
-            await UnitOfWork.Complete();
+        //    UnitOfWork.Pictures.Delete(picture);
+        //    await UnitOfWork.Complete();
 
-            return Ok(picture);
-        }
+        //    return Ok(picture);
+        //}
 
         protected override void Dispose(bool disposing)
         {

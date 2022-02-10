@@ -149,7 +149,7 @@ function OrganizerForm() {
                                     type="text"
                                     placeholder="First name"
                                     maxLength="20" 
-                                    onChange={checkLName}/>
+                                    onChange={checkFName}/>
                                 <label htmlFor="floatingFirstNameOrg">First Name</label>
                             </Form.Floating>
                             </OverlayTrigger>
@@ -207,6 +207,7 @@ function OrganizerForm() {
                         <button className="organizerfilledButton">Register</button>
                     </div>
                 </Form >
+                    
             </div>
         </Card>
         </div>

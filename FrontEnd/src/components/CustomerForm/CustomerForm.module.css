@@ -6,12 +6,12 @@
     margin: 200px auto;
     border-radius: 5px;
     box-shadow: 5px 5px 10px 2px #425664;
-    min-height: 550px;
 }
 
 .customerForm{
     padding: 30px;
     margin: auto;
+    min-height: 600px;
 }
 
 .customerForm form p {
@@ -26,6 +26,9 @@
 .customerButton{
     display: flex;
     align-items: start;
+    position: absolute;
+    right: 30px;
+    bottom: 30px; 
 }
 
 .filledButton{

@@ -13,6 +13,7 @@ export default function EditEvent() {
     const [ticketCategories, setTicketCategories] = useState([]);
     const [newCategory, setNewCategory] = useState();
     const [Pictures, setPictures] = useState([]);
+    const [upload, setUpload] = useState(true)
 
     useEffect(() => {
         fetchEvent();
@@ -34,7 +35,7 @@ export default function EditEvent() {
                 .then((res) => {
                     setData(res.data);
                     setPictures(res.data.Pictures);
-                    
+
                 })
                 .catch((err) => console.log(err));
         }
@@ -72,71 +73,77 @@ export default function EditEvent() {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        if(e.target[1].files.length != 0){
+        if (e.target[1].files.length != 0) {
 
             var files = e.target[1].files;
-            let filesArr=[]
+            let filesArr = []
             const url = "https://localhost:44359/api/pictures/upload";
-            
+
             const config = {
                 headers: {
                     'content-type': 'multipart/form-data',
+                    "Authorization": `Bearer ${JSON.parse(localStorage.getItem('token'))}` 
                 },
             };
             let Picture;
-            Array.from(files).forEach(file=>{
-                Picture = {Url: file.name}
-                filesArr=[...filesArr, Picture];
+            Array.from(files).forEach(file => {
+                Picture = { Url: file.name }
+                filesArr = [...filesArr, Picture];
                 const formData = new FormData();
                 formData.append('body', file);
                 axios.post(url, formData, config)
+                    .then(response => {
+                        console.log(response);
+                    }).then(response => {
+                        alert("Uploaded Successfully")
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        alert("Something Went Wrong with Uploading Images");
+
+                    }).then(r => {
+                        window.location.reload(true);
+                        setUpload(false);
+                    })
+            });
+        }
+
+
+
+        
+
+            var event = {
+                Title: e.target[0].value,
+                Id: data.Id,
+                Pictures: Pictures,
+                PlaceName: data.PlaceName,
+                PlaceAddress: data.PlaceAddress,
+                Description: data.Description,
+                DateOfEvent: data.DateOfEvent,
+                AvailableTickets: data.AvailableTickets,
+                EventCategory: data.EventCategory,
+                Tickets: data.Tickets
+            }
+
+            console.log(event);
+            const headers = {
+                'Authorization': `Bearer ${JSON.parse(localStorage.getItem('token'))}`
+            }
+
+            axios.put("https://localhost:44359/api/events", event, {
+                headers: headers
+            })
                 .then(response => {
-                    console.log(response);
+                    console.log(response)
                 }).then(response => {
-                    alert("Uploaded Successfully")
+                    alert("Updated Successfully")
+                    window.location.reload(true);
                 })
                 .catch(error => {
                     console.log(error)
-                    alert("Something Went Wrong");
-                    window.location.reload(true);
+
                 })
-            });
-        }
         
-       
-
-
-        var event = {
-            Title: e.target[0].value,
-            Id: data.Id,
-            Pictures: Pictures,
-            PlaceName: data.PlaceName,
-            PlaceAddress: data.PlaceAddress,
-            Description: data.Description,
-            DateOfEvent: data.DateOfEvent,
-            AvailableTickets: data.AvailableTickets,
-            EventCategory: data.EventCategory,
-            Tickets: data.Tickets
-        }
-
-        console.log(event);
-        const headers = {
-            'Authorization': `Bearer ${JSON.parse(localStorage.getItem('token'))}`
-        }
-
-        axios.put("https://localhost:44359/api/events", event, {
-            headers: headers
-        })
-            .then(response => {
-                console.log(response)
-            }).then(response => {
-                alert("Updated Successfully")
-                window.location.reload(true);
-            })
-            .catch(error => {
-                console.log(error)
-
-            })
     }
 
     const changeHandler = e => {
@@ -146,12 +153,12 @@ export default function EditEvent() {
 
     const setFile = e => {
         var files = e.target.files;
-        let filesArr=[]
+        let filesArr = []
         console.log(files);
         let Picture;
-        Array.from(files).forEach(file=>{
-        Picture = {Url: file.name}
-        filesArr=[...filesArr, Picture];
+        Array.from(files).forEach(file => {
+            Picture = { Url: file.name }
+            filesArr = [...filesArr, Picture];
         });
         setPictures(filesArr);
     }
@@ -170,7 +177,6 @@ export default function EditEvent() {
                     <div className="Event">
                         <h4>Event Title</h4>
                         <input type="text" name="Title" defaultValue={data.Title} placeholder="Title" />
-                        {/* <img src="https://images.pexels.com/photos/3171837/pexels-photo-3171837.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"/> */}
                         {data.Pictures.map(t => {
                             <span key={t}>{t}</span>
                         }
@@ -184,13 +190,13 @@ export default function EditEvent() {
                         <input defaultValue={data.PlaceName} disabled />
                         <h4>Address</h4>
 
-                        <input defaultValue={data.PlaceAddress} disabled/>
+                        <input defaultValue={data.PlaceAddress} disabled />
                         <h4>Description</h4>
 
-                        <textarea style={{ maxHeight: "100px" }} defaultValue={data.Description} disabled/>
+                        <textarea style={{ maxHeight: "100px" }} defaultValue={data.Description} disabled />
                         <h4>Date Of Event</h4>
 
-                        <input defaultValue={data.DateOfEvent} type="datetime-local" disabled/>
+                        <input defaultValue={data.DateOfEvent} type="datetime-local" disabled />
 
                         <h4>Available Tickets</h4>
                         <input type="number" defaultValue={data.AvailableTickets} name="AvailableTickets" placeholder="Available Tickets" disabled></input>
@@ -200,7 +206,7 @@ export default function EditEvent() {
                     <div className="Ticket">
                         <h4>Change Category</h4>
 
-                        <select onChange={changeHandler} disabled> 
+                        <select onChange={changeHandler} disabled>
                             <option hidden>{data.EventCategory.Name}</option>
                             {eventCategories.map((evc) => (
 
@@ -218,7 +224,7 @@ export default function EditEvent() {
 
                                 <div className="Categories" key={p.Category.Name}>
                                     {p.Category.Name}
-                                    <input key={p.Category.Name} defaultValue={p.Price} name={p.Price} disabled/>
+                                    <input key={p.Category.Name} defaultValue={p.Price} name={p.Price} disabled />
                                 </div>
 
                             ))}

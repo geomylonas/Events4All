@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import classes from "./EventInfo.module.css";
-import { Image, Card, ProgressBar } from "react-bootstrap";
+import { Image, Card, ProgressBar, Carousel } from "react-bootstrap";
 import Cart from "../../components/Cart/Cart";
 import { propTypes } from "react";
 import { Link } from "react-router-dom";
@@ -63,10 +63,18 @@ function EventInfo(props) {
   return (
     <div className={classes.eventSection} key={data.Id}>
       <div className={classes.col1}>
-        <img
-          src="https://images.pexels.com/photos/3171837/pexels-photo-3171837.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-          className={classes.eventImage}
-        />
+      <Carousel style={{width: "100%"}} fade>
+                {data.Pictures.map(i=>{
+                    
+                    return(
+                        
+                        <Carousel.Item >
+                        <img key={i.Id + i.Url} src={require(`../../Files/${i.Url}`)} alt={`${i.Url}`} className="orgImg" />
+                        </Carousel.Item>
+                    )
+                            
+                })}
+            </Carousel>
 
         <div className={classes.ticketBox}>
           <h4>Choose a Ticket</h4>
@@ -74,7 +82,7 @@ function EventInfo(props) {
             <div>
               <h6>Category</h6>
               {data.Tickets.map((p) => (
-                <div className={classes.categorydiv} key={p.Category.Name}>
+                <div className={classes.categorydiv} key={p.Category.Name + p.Id}>
                   {p.Category.Name}
                 </div>
               ))}
@@ -82,7 +90,7 @@ function EventInfo(props) {
             <div>
               <h6>Price</h6>
               {data.Tickets.map((p) => (
-                <div key={p.Category.Name}>
+                <div key={p.Id + p.Category.Name}>
                   <input
                     type="radio"
                     name={p.Price}
@@ -96,7 +104,7 @@ function EventInfo(props) {
             </div>
           </div>
           <div className={classes.eventinfobuttons}>
-          {data.DateOfEvent > new Date().toJSON().slice(0, 10) ? (
+          {(data.DateOfEvent > new Date().toJSON().slice(0, 10) && (data.AvailableTickets > 0)) ? (
             localStorage.getItem("token") ? (
               <button
                 className={classes.filledButton}

@@ -51,7 +51,7 @@
 .sectionForm div{
     background-color: #C6AD8F;
     color: #425664;
-    
+    border: none;
 }
 
 
@@ -137,7 +137,8 @@ color:#F6F4F2;
     box-shadow .15s ease-in-out;
     background-color: #C6AD8F;
     color: #425664;
-    border: 1px solid #C6AD8F;    
+    border: 1px solid #C6AD8F;   
+    
 }
 
 
@@ -173,5 +174,11 @@ color:#F6F4F2;
 
 .outlineButton:hover{
     background-color: #C6AD8F;
+    color:#425664;
+}
+
+#h1{
+    text-align: center;
+    margin-bottom: 50px;
     color:#425664;
 }

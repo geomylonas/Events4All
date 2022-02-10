@@ -111,8 +111,10 @@ export default function Payment(props) {
       headers: headers
      }).then(res=>{
        console.log(res);
+       alert("The transaction cannot be completed");
+       navigate("/")
      }).catch(er=>{
-      alert("The transaction cannot be completed");
+      alert("The transaction was terminated");
       navigate("/");
      })
   }
